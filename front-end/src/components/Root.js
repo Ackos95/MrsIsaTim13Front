@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import App from './App/App';
+import Login from './Login/Login';
 
 const NotFound = () => (
   <div>
@@ -18,6 +19,7 @@ const Root = ({ store, history }) => (
       <div>
         <Route exact path="/" component={App} />
         <Route path="/about" component={NotFound} />
+        <Route path="/login" component={Login} />
       </div>
     </Router>
   </Provider>

@@ -14,6 +14,8 @@ const App = ({ user }) => (
     <p className="App-intro">
       To get started, edit <code>src/components/App/App.js</code> : {user.name} and save to reload.
     </p>
+    <br/>
+    hotness test
   </div>
 );
 
