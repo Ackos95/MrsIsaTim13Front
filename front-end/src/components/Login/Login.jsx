@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form } from 'react-form';
+import { PropTypes } from 'prop-types';
 import LoginFields from './LoginFields';
 
 
