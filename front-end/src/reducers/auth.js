@@ -15,7 +15,7 @@ const initialState = new Auth();
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.USER_NAME:
-      console.log('HERE with action USER_NAME');
+      console.log('HERE with action USER_NAME', action);
       return state;
 
     default:
