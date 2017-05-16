@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
 
 const App = ({ user }) => (
   <div className="App">
