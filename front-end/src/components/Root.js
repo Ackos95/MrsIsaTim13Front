@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import App from './App/App';
-import Login from './Login/Login';
+import Login from './Login/LoginAlex';
 
 const NotFound = () => (
   <div>
