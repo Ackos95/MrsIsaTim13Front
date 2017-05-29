@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form } from 'react-form';
 import { PropTypes } from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import LoginFields from './LoginFields';
 
 
@@ -14,20 +15,26 @@ const validateLoginForm = (values) => {
   }
 }
 
-const Login = ({ login }) => (
-  <div className='container'>
-    <div className='panel panel-default'>
-      <div className='panel-body'>
-        <Form
-          onSubmit={login}
-          validate={validateLoginForm}
-        >
-          {LoginFields}
-        </Form>
+const Login = ({ user, login }) => {
+  console.log(user);
+  if (user)
+    return <Redirect to="/" />
+
+  return (
+    <div className='container'>
+      <div className='panel panel-default'>
+        <div className='panel-body'>
+          <Form
+            onSubmit={login}
+            validate={validateLoginForm}
+          >
+            {LoginFields}
+          </Form>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+}
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,

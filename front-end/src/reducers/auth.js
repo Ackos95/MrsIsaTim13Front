@@ -3,20 +3,16 @@ import { Record } from 'immutable';
 import * as types from '../constants';
 
 const Auth = new Record({
-  id: 'test',
-  user: {
-    name: "Acko",
-    password: "password"
-  }
+  user: null,
 });
 
 const initialState = new Auth();
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.USER_NAME:
-      console.log('HERE with action USER_NAME', action);
-      return state;
+
+    case types.LOGIN_SUCCESS:
+      return state.set('user', action.payload);
 
     default:
       return state;

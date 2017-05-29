@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import logo from './logo.svg';
 import './css/App.css';
@@ -12,8 +13,10 @@ const App = ({ user }) => (
       <h2>Welcome to React</h2>
     </div>
     <p className="App-intro">
-      To get started, edit <code>src/components/App/App.js</code> : {user.name} and save to reload.
+      To get started, edit <code>src/components/App/App.js</code> : and save to reload.
     </p>
+    <p>{user ? `${user.email} ${user.password}` : ''}</p>
+    <Link to="/login">Log in</Link>
   </div>
 );
 
