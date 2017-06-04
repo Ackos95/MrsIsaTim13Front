@@ -6,7 +6,8 @@ import { addEmployee } from '../../actions/manager';
 import Manager from './Manager';
 
 const mapStateToProps = state => ({
-  user: state.auth.user
+  user: state.auth.user,
+  createdEmployee: state.manager.createdEmployee,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

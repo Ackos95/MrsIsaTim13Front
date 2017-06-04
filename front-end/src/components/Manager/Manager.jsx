@@ -22,7 +22,7 @@ class Manager extends Component {
   }
 
   render() {
-    const { user, addEmployee } = this.props;
+    const { user, createdEmployee, addEmployee } = this.props;
     return (
       <div className='container' style={{marginTop: '20px'}}>
         {/*"col-xs-12 col-sm-12 col-md-6 col-lg-6 toppad"*/}
@@ -51,6 +51,7 @@ class Manager extends Component {
           <button onClick={addEmployee}>
             Dodaj! isto kao na form submit
           </button>
+          { createdEmployee.id !== null ? <div>nema napravljenog</div> : null }
         </Col>
       </div>
     );
