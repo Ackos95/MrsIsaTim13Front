@@ -16,7 +16,7 @@ const RestaurantManager = new Record({
   inProgress: false
 });
 
-const initialState = new RestaurantManager;
+const initialState = new RestaurantManager();
 
 const managerReducer = ( state = initialState, action ) => {
   switch (action.type) {
