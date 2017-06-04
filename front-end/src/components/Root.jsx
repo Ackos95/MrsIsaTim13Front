@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import App from './App/App';
 import Login from './Login/LoginContainer';
 import Signup from './Signup/Signup';
-import Guest from './Guest/Guest';
+import Guest from './Guest/GuestContainer';
 import Manager from './Manager/Manager';
 import SystemManager from './SystemManager/SystemManager';
 
@@ -19,7 +19,7 @@ const NotFound = () => (
 
 const Root = ({ store, history }) => (
   <Provider store={store}>
-     <Router>
+    <Router>
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/login" component={Login} />

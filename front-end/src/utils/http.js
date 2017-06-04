@@ -1,9 +1,39 @@
-export const get = (uri, params) => {
+import axios from 'axios';
 
-  let stringParams = params ? '?' : '';
-  for (let key in params)
-    stringParams += `${key}=${params[key]}&`;
-  stringParams = stringParams.substring(0, stringParams.length - 1);
+export const $get = (url, params, options = {}) => axios({
+  method: 'GET',
+  url,
+  params,
+  ...options
+});
 
-  return fetch(`${uri}${stringParams}`)
+export const $post = (url, data, options = {}) => axios({
+  method: 'POST',
+  url,
+  data,
+  ...options
+});
+
+export const $put = (url, data, options = {}) => axios({
+    method: 'PUT',
+  url,
+  data,
+  ...options
+});
+
+
+export const $delete = (url, options = {}) => axios({
+  method: 'DELETE',
+  url,
+  ...options
+});
+
+export const addAuthHeader = (authToken, obj = {}) => {
+  obj.headers = { ...(obj.headers || {}), Authorization: `Basic ${authToken}` };
+
+  return obj;
 }
+
+export const getToken = (userName, password) => btoa(`${userName}:${password}`);
+
+export const checkPassword = (token, userName, password) => token === getToken(userName, password);

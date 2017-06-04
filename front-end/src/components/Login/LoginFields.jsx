@@ -4,10 +4,10 @@ import { Text } from 'react-form';
 const LoginFields = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
     <div className='form-group'>
-      <label htmlFor='email'>Email</label>
+      <label htmlFor='userName'>Username</label>
       <Text
-        field='email'
-        placeholder='Email'
+        field='userName'
+        placeholder='Username'
         className='form-control'
       />
     </div>

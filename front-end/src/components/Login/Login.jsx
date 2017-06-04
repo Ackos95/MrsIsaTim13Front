@@ -2,22 +2,24 @@ import React from 'react';
 import { Form } from 'react-form';
 import { PropTypes } from 'prop-types';
 import { Redirect } from 'react-router-dom';
+
 import LoginFields from './LoginFields';
+import Loading from '../common/Loading/Loading';
 
 
 // This should be imported from utils
 const validateLoginForm = (values) => {
-  const { email, password } = values;
+  const { userName, password } = values;
 
   return {
-    email: !email ? 'Email is required' : undefined,
+    userName: !userName ? 'Username is required' : undefined,
     password: !password ? 'Password is required' : undefined
   }
 }
 
-const Login = ({ user, login }) => {
+const Login = ({ user, inProgress, login }) => {
   console.log(user);
-  if (user)
+  if (user.token)
     return <Redirect to="/" />
 
   return (
@@ -30,6 +32,7 @@ const Login = ({ user, login }) => {
           >
             {LoginFields}
           </Form>
+          { inProgress ? <Loading /> : null }
         </div>
       </div>
     </div>

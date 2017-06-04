@@ -15,8 +15,13 @@ const App = ({ user }) => (
     <p className="App-intro">
       To get started, edit <code>src/components/App/App.js</code> : and save to reload.
     </p>
-    <p>{user ? `${user.email} ${user.password}` : ''}</p>
+    {
+      user.token
+      ? (<p>You are logged in as: `{user.firstName} {user.lastName} ({user.userName})`</p>)
+      : ''
+    }
     <Link to="/login">Log in</Link>
+    <Link to="/guest">Guest</Link>
   </div>
 );
 
