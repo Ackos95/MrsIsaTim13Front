@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 import { Form } from 'react-form';
 
 import NewEmployeeForm from './Forms/NewEmployeeForm';
+import NewSupplierForm from './Forms/NewSupplierForm';
 
 import Profile from '../common/Profile/ProfileContainer';
+
+import Loading from '../common/Loading/Loading';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Row, Col, Panel, Accordion } from 'react-bootstrap'
@@ -15,17 +18,27 @@ class Manager extends Component {
     super(props);
 
     this.addEmployee = this.addEmployee.bind(this);
+    this.addSupplier = this.addSupplier.bind(this);
   }
 
-  addEmployee() {
+  addEmployee(event) {
+    console.log(event);
+    console.log(event.target);
+
     this.props.addEmployee();
   }
 
+  addSupplier(event) {
+    console.log(event);
+    console.log(event.target);
+
+    this.props.addSupplier();
+  }
+
   render() {
-    const { user, createdEmployee, addEmployee } = this.props;
+    const { user, created, inProgress, addEmployee, addSupplier } = this.props;
     return (
       <div className='container' style={{marginTop: '20px'}}>
-        {/*"col-xs-12 col-sm-12 col-md-6 col-lg-6 toppad"*/}
         <Col xs={12} sm={12} md={6} lg={6}>
           <div className='panel panel-default'>
             <div className='panel-body'>
@@ -36,6 +49,7 @@ class Manager extends Component {
           </div>
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
+          { inProgress ? <Loading /> : null }
           <Accordion>
             <Panel header="Employee addition" eventKey="1">
               <Form onSubmit={addEmployee}>
@@ -43,16 +57,16 @@ class Manager extends Component {
               </Form>
             </Panel>
             <Panel header="Supplier addition" eventKey="2">
+              <Form onSubmit={addSupplier}>
+                {NewSupplierForm}
+              </Form>
               Supplier addition form
             </Panel>
             <Panel header="Manage supply requests" eventKey="3">
               Manage supply requests
             </Panel>
           </Accordion>
-          <button onClick={addEmployee}>
-            Dodaj! isto kao na form submit
-          </button>
-          { createdEmployee.id !== null ? <div>nema napravljenog</div> : null }
+          { created.id !== null ? <div>IMA napravljenog</div> : <div>nema napravljenog</div> }
         </Col>
       </div>
     );
