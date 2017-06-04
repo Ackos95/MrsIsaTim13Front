@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { login } from '../../actions/auth';
-import { changeName } from '../../actions/guest';
+import { changeName, getVisitedRestaurants } from '../../actions/guest';
 
 import Guest from './Guest';
 
@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   login,
   changeName,
+	getVisitedRestaurants,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Guest);

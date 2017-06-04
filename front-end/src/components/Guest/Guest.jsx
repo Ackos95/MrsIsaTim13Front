@@ -8,6 +8,16 @@ import Profile from '../common/Profile/ProfileContainer';
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Row, Col, Panel } from 'react-bootstrap'
 
+/* styles
+ https://facebook.github.io/react/docs/dom-elements.html
+ */
+const buttonStyle = {
+	marginBottom: 20 + 'px', marginLeft: 20 + 'px'
+}
+
+const tableStyle = {
+	visibility: 'hidden', border: '1em solid black', padding: 2, width: '100%'
+}
 
 class Guest extends Component {
 
@@ -15,36 +25,51 @@ class Guest extends Component {
     super(props);
 
     this.changeName = this.changeName.bind(this);
-  }
+		this.getVisitedRestaurants = this.getVisitedRestaurants.bind(this);
+	}
 
   changeName(e) {
     e.preventDefault();
 
     this.props.changeName(e.target.value);
   }
+	
+	getVisitedRestaurants(e) {
+  	e.preventDefault();
+  	
+  	this.props.getVisitedRestaurants(e.target.value);
+	}
 
   render() {
-    const { user, inProgress, login } = this.props;
+    const { user, inProgress, login, getVisitedRestaurants } = this.props;
     return (
-      <div className="">
-        <div className="panel panel-info">
-          <Profile/>
-          <div className="panel-footer">
-            <div className="row">
-							{
-								inProgress ?
-                  <Loading /> :
-                  <button className="btn btn-primary" type="button" style={{margin: '0 0 20px 20px'}} data-toggle="collapse" href="#toggle2">
-                    Dodavanje zaposlenog </button>
-							}
-              <button className="btn btn-primary" type="button" style={{margin: '0 0 20px 20px'}} data-toggle="collapse" href="#toggle3">
-                Dodavanje dobavljača </button>
-              <button className="btn btn-primary" type="button" style={{margin: '0 0 20px 20px'}} data-toggle="collapse" href="#toggle1">
-                Potražnja </button>
+      <Col xs={12} sm={12} md={6} lg={6}>
+        <div className='panel panel-default'>
+          <div className='panel-body'>
+            <div className="panel panel-info">
+              <Profile/>
+              <div className="panel-footer">
+                <div className="row">
+									<div className="row">
+										<button className="btn btn-primary" type="button" onClick={getVisitedRestaurants} style={buttonStyle}>
+											Svi posjećeni restorani</button>
+									</div>
+									<table id="visited-restaurants-table" style={tableStyle}>
+									</table>
+									<br/>
+									<form id="restaurant-name-filter">
+										Filtriranje po imenu(focusOut):
+										<input type="text" id="focusOutInput" />
+										<input type="submit" value="Pretraga" />
+									</form>
+									<table id="restaurants-table" style={tableStyle}>
+									</table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Col>
     );
   }
 }
