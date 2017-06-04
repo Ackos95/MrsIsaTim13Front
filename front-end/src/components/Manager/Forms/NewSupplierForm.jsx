@@ -4,7 +4,7 @@ import { Text, Select } from 'react-form';
 
 import { Row, Col, Button } from 'react-bootstrap';
 
-const NewEmployeeForm = ({ submitForm, resetForm }) => (
+const NewSupplierForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
     <Col sm={12}>
       <Row className='form-group'>
@@ -66,32 +66,10 @@ const NewEmployeeForm = ({ submitForm, resetForm }) => (
         </Col>
       </Row>
     </Col>
-    <div className="form-group">
-      <label htmlFor="employeeType">Employee type</label>
-      <Select
-        field='employeeType'
-        options={[
-          {label: 'Barman', values: 'barman'},
-          {label: 'Cook', value: 'cook'},
-          {label: 'Waiter', value: 'waiter'}]}
-      />
-      <label htmlFor="shirtSize">Shirt size</label>
-      <Text
-        field='shirtSize'
-        placeholder='Shirt'
-        className='form-control'
-      />
-      <label htmlFor="shoeSize">Shoe size</label>
-      <Text
-        field='shoeSize'
-        placeholder='Shoe'
-        className='form-control'
-      />
-    </div>
     <div className='form-group'>
       <button type='submit' className='btn btn-default'>Submit Form</button>
     </div>
   </form>
 );
 
-export default NewEmployeeForm;
+export default NewSupplierForm;
