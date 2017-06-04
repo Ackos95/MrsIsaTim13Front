@@ -11,7 +11,6 @@ import Root from './components/Root';
 import './index.css';
 import './styles/css/bootstrap.min.css';
 
-
 const store = createStore(
   reducers,
   applyMiddleware(

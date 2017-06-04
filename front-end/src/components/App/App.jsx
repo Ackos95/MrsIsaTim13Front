@@ -21,7 +21,10 @@ const App = ({ user }) => (
       : ''
     }
     <Link to="/login">Log in</Link>
+    <br/>
     <Link to="/guest">Guest</Link>
+    <br/>
+    <Link to="/manager">Manager</Link>
   </div>
 );
 

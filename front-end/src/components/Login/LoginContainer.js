@@ -6,7 +6,7 @@ import { login } from '../../actions/auth';
 const mapStateToProps = state => ({
   user: state.auth.user,
   inProgress: state.auth.inProgress,
-})
+});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   login,

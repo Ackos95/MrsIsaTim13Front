@@ -7,7 +7,7 @@ import App from './App/App';
 import Login from './Login/LoginContainer';
 import Signup from './Signup/Signup';
 import Guest from './Guest/GuestContainer';
-import Manager from './Manager/Manager';
+import Manager from './Manager/ManagerContainer';
 import SystemManager from './SystemManager/SystemManager';
 
 const NotFound = () => (
