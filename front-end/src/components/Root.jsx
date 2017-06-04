@@ -10,6 +10,8 @@ import Guest from './Guest/Guest';
 import Manager from './Manager/Manager';
 import SystemManager from './SystemManager/SystemManager';
 
+// import CorsTester from './CorsTester/CorsTester';
+
 const NotFound = () => (
   <div>
     Page you are looking for doesn't exist, go to 
@@ -27,6 +29,7 @@ const Root = ({ store, history }) => (
         <Route path="/guest" component={Guest} />
         <Route path="/manager" component={Manager} />
         <Route path="/system-manager" component={SystemManager} />
+        {/*<Route path="/cors" component={CorsTester} />*/}
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>

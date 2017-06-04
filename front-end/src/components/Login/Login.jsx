@@ -15,7 +15,7 @@ const validateLoginForm = (values) => {
   }
 }
 
-const Login = ({ user, login }) => {
+const Login = ({ user, login, testCors }) => {
   console.log(user);
   if (user)
     return <Redirect to="/" />
@@ -31,6 +31,7 @@ const Login = ({ user, login }) => {
             {LoginFields}
           </Form>
         </div>
+        <button onClick={testCors}>CORS</button>
       </div>
     </div>
   );
@@ -38,6 +39,7 @@ const Login = ({ user, login }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  testCors: PropTypes.func.isRequired,
 }
 
 export default Login;

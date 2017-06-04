@@ -17,6 +17,8 @@ const App = ({ user }) => (
     </p>
     <p>{user ? `${user.email} ${user.password}` : ''}</p>
     <Link to="/login">Log in</Link>
+    <br/>
+    <Link to="/cors">Cors testing ?</Link>
   </div>
 );
 

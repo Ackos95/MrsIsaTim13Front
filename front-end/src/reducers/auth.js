@@ -14,6 +14,18 @@ const authReducer = (state = initialState, action) => {
     case types.LOGIN_SUCCESS:
       return state.set('user', action.payload);
 
+    case types.CORS_SUCCESS:
+    {
+      console.log('iz cors reducera SUCCESS');
+      return state.set('user', action.payload);
+    }
+
+    case types.CORS_ERROR:
+    {
+      console.log('iz cors reducera ERROR');
+      return state.set('user', action.payload);
+    }
+
     default:
       return state;
   }
