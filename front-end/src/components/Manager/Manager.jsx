@@ -4,7 +4,7 @@ import { Form } from 'react-form';
 
 import NewEmployeeForm from './Forms/NewEmployeeForm';
 
-import Profile from '../common/Profile/Profile';
+import Profile from '../common/Profile/ProfileContainer';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Row, Col, Panel, Accordion } from 'react-bootstrap'
@@ -29,8 +29,9 @@ class Manager extends Component {
         <Col xs={12} sm={12} md={6} lg={6}>
           <div className='panel panel-default'>
             <div className='panel-body'>
-              <Profile user={`${user}`} />
-              <br/> a <br/> {`${user.firstName}`}
+              <div className="">
+                <Profile />
+              </div>
             </div>
           </div>
         </Col>
