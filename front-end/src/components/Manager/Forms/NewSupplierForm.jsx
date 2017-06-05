@@ -1,8 +1,8 @@
 import React from 'react'
 //noinspection JSUnresolvedVariable
-import { Text, Select } from 'react-form';
+import { Text } from 'react-form';
 
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 const NewSupplierForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
