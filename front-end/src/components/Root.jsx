@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import App from './App/App';
 import Login from './Login/LoginContainer';
 import Signup from './Signup/Signup';
-import Guest from './Guest/GuestContainer';
+import Guest from './Guest/Guest';
 import Manager from './Manager/ManagerContainer';
 import SystemManager from './SystemManager/SystemManager';
 

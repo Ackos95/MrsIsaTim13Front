@@ -39,8 +39,37 @@ export const getVisitedRestaurants = ( token ) => dispatch => {
 		});
 	
 }
-/*
-return dispatch(getVisitedRestaurantsSuccess({
- restaurants : data,
- token : getToken(userName, password)
- */
+
+// restaurantsByName
+
+export const getRestaurantsByNameSuccess =  (restaurantsByName) => ({
+	type: types.GET_RESTAURANTS_BY_NAME_SUCCESS,
+	payload: restaurantsByName
+})
+
+export const getRestaurantsByNameStart =  () => ({
+	type: types.GET_RESTAURANTS_BY_NAME_START
+})
+
+export const getRestaurantsByNameError =  (error) => ({
+	type: types.GET_RESTAURANTS_BY_NAME_ERROR,
+	payload: { error }
+})
+
+export const getRestaurantsByName = ( restaurantName, token ) => dispatch => {
+	dispatch(getRestaurantsByNameStart());
+	
+	$get(`${SERVER_URL}/restaurant/byName/` + restaurantName, null , addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(getRestaurantsByNameError());
+			
+			const { data } = res;
+			return dispatch(getRestaurantsByNameSuccess({
+				restaurantsByName : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(getRestaurantsByNameError(err));
+		});
+	
+}
