@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { login } from '../../actions/auth';
 import { changeName, getVisitedRestaurants, getRestaurantsByName } from '../../actions/guest';
 
-import Guest from './Guest';
+import GuestProfile from './GuestProfile';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -18,4 +18,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getRestaurantsByName,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Guest);
+export default connect(mapStateToProps, mapDispatchToProps)(GuestProfile);
