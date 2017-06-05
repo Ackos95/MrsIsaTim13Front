@@ -101,31 +101,31 @@ class Guest extends Component {
 									</div>
 									{
 										gettingRestsByName ?
-											<Loading/> :
-											<table id="restaurants-table">
-												{
-													restaurantsByName !== undefined && restaurantsByName.length > 0 ?
-														<tbody>
-														<tr>
-															<th>Name</th>
-															<th>City</th>
-															<th>Distance</th>
-														</tr>
-														{ restaurantsByName.map(function (restaurant, index) {
-															return <tr key={ index }>
-																<td>{`${restaurantsByName[index].name}`}</td>
-																<td>{`${restaurantsByName[index].city}`}</td>
-																<td>{`667`}</td>
-															</tr>
-														}) }
-														</tbody>
-														: <tbody>
+										<Loading/> :
+										<table id="restaurants-table">
+											{
+												restaurantsByName !== undefined && restaurantsByName.length > 0 ?
+													<tbody>
 													<tr>
-														<th>All visited restaurants</th>
+														<th>Name</th>
+														<th>City</th>
+														<th>Distance</th>
 													</tr>
+													{ restaurantsByName.map(function (restaurant, index) {
+														return <tr key={ index }>
+															<td>{`${restaurantsByName[index].name}`}</td>
+															<td>{`${restaurantsByName[index].city}`}</td>
+															<td>{`667`}</td>
+														</tr>
+													}) }
 													</tbody>
-												}
-											</table>
+													: <tbody>
+												<tr>
+													<th>All visited restaurants</th>
+												</tr>
+												</tbody>
+											}
+										</table>
 									}
                 </div>
               </div>
