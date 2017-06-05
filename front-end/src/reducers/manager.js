@@ -13,6 +13,13 @@ const RestaurantManager = new Record({
     shirtSize: null,
     shoeSize: null,
   },
+  createdRequest: { // created supply request
+    id: null,
+    publishingDate: null,
+    endingDate: null,
+    ended: null,
+    restaurant: { id: null }
+  },
   inProgress: false
 });
 
@@ -22,25 +29,28 @@ const managerReducer = ( state = initialState, action ) => {
   switch (action.type) {
     case types.ADD_EMPLOYEE_SUCCESS:
       return state
-        .set('created',action.payload.created)
+        .set('created',action.payload.created) // novi zaposleni
         .set('inProgress', false);
-
-    case types.ADD_EMPLOYEE_ERROR:
-      return state.set('inProgress', false);
-
-    case types.ADD_EMPLOYEE_STARTED:
-      return state.set('inProgress', true);
-
-    case types.ADD_SUPPLIER_ERROR:
-      return state.set('inProgress', false);
 
     case types.ADD_SUPPLIER_SUCCESS:
       return state
-        .set('created',action.payload.created)
+        .set('created',action.payload.created) // novi dobavljač
         .set('inProgress', false);
 
+    case types.ADD_SUPPLY_REQUEST_SUCCESS:
+      return state
+        .set('new',action.payload.createdRequest) // nova potražnja
+        .set('inProgress', false);
+
+    case types.ADD_EMPLOYEE_ERROR:
+    case types.ADD_SUPPLIER_ERROR:
+    case types.ADD_SUPPLY_REQUEST_ERROR:
+      return state.set('inProgress', false);
+
+    case types.ADD_EMPLOYEE_STARTED:
     case types.ADD_SUPPLIER_STARTED:
-      return state.set('inProgress', true);
+    case types.ADD_SUPPLY_REQUEST_STARTED:
+      return state.set('inProgress', false);
 
     default:
       return state;
