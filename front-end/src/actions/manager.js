@@ -42,7 +42,7 @@ export const addEmployee = ({ firstName, lastName, email, userName, password, em
         id: data.id,
         email: data.email,
         userName: data.userName,
-        token: getToken('m2', 'password'),
+        token: getToken('m2', 'password'), // state.auth.user.token <--- OVDJE JE
         firstName: data.firstName,
         lastName: data.lastName
       }))
@@ -66,19 +66,20 @@ export const addSupplierSuccess = ( created ) => ({
 });
 
 
-export const addSupplier = ({ firstName, lastName, email, userName, password }) => dispatch => {
+export const addSupplier = ({ values }) => dispatch => {
   dispatch(addSupplierStart());
 
-  console.log('parametri: ' + firstName + ' ' + lastName + ' userName: ' + userName);
+  console.log('values ~ tu je i token~');
+  console.log(values); // tu je i token
 
   $post(`${SERVER_URL}/manager/supplier-addition`,
     {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      userName: userName,
-      password: password
-    }, addAuthHeader(getToken('m2', 'password'))) // ako bi se dobijao u addEmployee >>> user.userName, user.password
+      firstName: values.firstName,
+      lastName: values.lastName,
+      email: values.email,
+      userName: values.userName,
+      password: values.password
+    }, addAuthHeader(values.token)) // Bilo >>> getToken('m2', 'password')
     .then((res) => {
       // here will go if (res.status > 400) dispatch(loginError());
 
@@ -87,12 +88,65 @@ export const addSupplier = ({ firstName, lastName, email, userName, password }) 
         id: data.id,
         email: data.email,
         userName: data.userName,
-        token: getToken('m2', 'password'),
+        token: values.token, // getToken('m2', 'password') // treba li mi ovdje?? NE!?
         firstName: data.firstName,
         lastName: data.lastName
       }))
     })
     .catch((err) => {
       return dispatch(addSupplierError());
+    });
+};
+
+
+/**
+ * Supply request
+ */
+export const addSupplyRequestStart = () => ({
+  type: types.ADD_SUPPLY_REQUEST_STARTED
+});
+
+export const addSupplyRequestError = () => ({
+  type: types.ADD_SUPPLY_REQUEST_ERROR
+});
+
+export const addSupplyRequestSuccess = ( createdRequest ) => ({
+  type: types.ADD_SUPPLY_REQUEST_SUCCESS,
+  payload: { createdRequest }
+});
+
+
+export const addSupplyRequest = ({ items }) => dispatch => {
+  dispatch(addSupplyRequestStart());
+
+  console.log('items');
+  console.log(items);
+
+  // prepare items for sending
+  var separatedItems = [];
+  Object.keys(items).forEach(function (prop) {
+
+    var value = items[prop];
+    console.log(value);
+  });
+
+  $post(`${SERVER_URL}/supplies/request`,
+    {
+      items: items
+    }, addAuthHeader(items.token))
+    .then((res) => {
+      // here will go if (res.status > 400) dispatch(loginError());
+
+      const { data } = res;
+      return dispatch(addSupplyRequestSuccess({
+        id: data.id,
+        dateFrom: data.publishingDate,
+        dateTo: data.endingDate,
+        ended: data.ended,
+        restaurant: data.restaurant
+      }))
+    })
+    .catch((err) => {
+      return dispatch(addSupplyRequestError());
     });
 };
