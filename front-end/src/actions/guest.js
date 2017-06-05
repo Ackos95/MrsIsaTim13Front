@@ -1,6 +1,6 @@
 import * as types from '../constants'
 import { SERVER_URL } from '../config';
-import { $get, getToken, addAuthHeader } from '../utils/http';
+import { $get, addAuthHeader } from '../utils/http';
 
 // changeName('acko');
 export const changeName = (name) => ({
@@ -10,7 +10,7 @@ export const changeName = (name) => ({
 
 export const getVisitedRestaurantsSuccess =  (restaurants) => ({
 	type: types.GET_VISITED_RESTAURANTS_SUCCESS,
-	payload: { restaurants }
+	payload: restaurants
 })
 
 export const getVisitedRestaurantsStart =  () => ({
@@ -22,10 +22,10 @@ export const getVisitedRestaurantsError =  (error) => ({
 	payload: { error }
 })
 
-export const getVisitedRestaurants = ({ userName, password }) => dispatch => {
+export const getVisitedRestaurants = ( token ) => dispatch => {
 	dispatch(getVisitedRestaurantsStart());
 	
-	$get(`${SERVER_URL}/restaurant/visited`, null, addAuthHeader(getToken(userName, password)))
+	$get(`${SERVER_URL}/restaurant/visited`, null , addAuthHeader(token))
 		.then((res) => {
 			if (res.status > 400) dispatch(getVisitedRestaurantsError());
 			
@@ -37,6 +37,7 @@ export const getVisitedRestaurants = ({ userName, password }) => dispatch => {
 		.catch((err) => {
 			return dispatch(getVisitedRestaurantsError(err));
 		});
+	
 }
 /*
 return dispatch(getVisitedRestaurantsSuccess({

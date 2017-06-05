@@ -1,4 +1,4 @@
-import axios from 'axios';
+	import axios from 'axios';
 
 export const $get = (url, params, options = {}) => axios({
   method: 'GET',
@@ -29,7 +29,7 @@ export const $delete = (url, options = {}) => axios({
 });
 
 export const addAuthHeader = (authToken, obj = {}) => {
-  obj.headers = { ...(obj.headers || {}), Authorization: `Basic ${authToken}` };
+  obj.headers = { ...(obj.headers || {}), Authorization: `Basic ${authToken}`};
 
   return obj;
 }

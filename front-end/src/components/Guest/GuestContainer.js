@@ -8,6 +8,7 @@ import Guest from './Guest';
 const mapStateToProps = state => ({
   user: state.auth.user,
   inProgress: state.auth.inProgress,
+	guest: state.guest
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

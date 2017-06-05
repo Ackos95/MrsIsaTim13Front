@@ -19,7 +19,8 @@ const guestReducer = (state = initialState, action) => {
 			return state.set('gettingRestaurants', true);
 	
 		case types.GET_VISITED_RESTAURANTS_SUCCESS:
-			return state.set('restaurants', action.payload).set('gettingRestaurants', false);
+			return state.set('restaurants', action.payload.restaurants)
+									.set('gettingRestaurants', false);
 	
 		case types.GET_VISITED_RESTAURANTS_ERROR:
 			return state.set('gettingRestaurants', false);
