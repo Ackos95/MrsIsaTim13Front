@@ -1,5 +1,5 @@
 import React from 'react'
-//noinspection JSUnresolvedVariable
+
 import { Text, Select } from 'react-form';
 
 import { Row, Col, Button, Input, Label, FormGroup } from 'react-bootstrap';

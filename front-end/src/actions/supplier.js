@@ -19,7 +19,7 @@ export const getRequestsError = () => ({
 
 export const getRequestsSuccess = ( requests ) => ({
   type: types.GET_REQUESTS_SUCCESS,
-  payload: { requests }
+  payload: requests
 });
 
 
@@ -37,8 +37,8 @@ export const getRequests = ( token ) => dispatch => {
       console.log('res');
       console.log(res);
 
-      const { requests } = res;
-      return dispatch(getRequestsSuccess(requests))
+      const { data } = res;
+      return dispatch(getRequestsSuccess({requests: data}))
     })
     .catch((err) => {
       console.log('err');
