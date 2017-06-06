@@ -5,7 +5,8 @@ import React, { Component } from 'react';
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Nav, Row,  Tab, NavItem} from 'react-bootstrap';
 import './css/guest.css';
-import GuestProfile from "./GuestContainer";
+import GuestProfile from "./GuestProfileContainer";
+import GuestFriends from "./GuestFriendsContainer";
 
 class Guest extends Component {
 
@@ -18,7 +19,7 @@ class Guest extends Component {
   render() {
     return (
     	<div>
-				<Tab.Container id="tabs-with-dropdown" defaultActiveKey="first">
+				<Tab.Container id="tabs-with-dropdown" defaultActiveKey="third">
 					<Row className="clearfix">
 						<Col sm={12}>
 							<Nav bsStyle="tabs">
@@ -32,7 +33,7 @@ class Guest extends Component {
 						<Col sm={12}>
 							<Tab.Content animation>
 								<Tab.Pane eventKey="first">
-									Prijatelji komponenta
+									<GuestFriends/>
 								</Tab.Pane>
 								<Tab.Pane eventKey="second">
 									Restorani komponenta
