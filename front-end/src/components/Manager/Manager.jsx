@@ -47,26 +47,6 @@ class Manager extends Component {
     this.props.addSupplyRequest({ values });
   }
 
-  nested(a, b, c, d) {
-    a.preventDefault();
-    console.log('a');
-    console.log(a);
-
-    console.log('b');
-    console.log(b);
-
-    console.log('c');
-    console.log(c);
-
-    console.log('d');
-    console.log(d);
-
-    // console.log('values');
-    // console.log(values);
-    //
-    // console.log('\nvalues.values');
-    // console.log(values.values);
-  }
 
   render() {
     const { user, created, createdRequest, inProgress, addEmployee, addSupplier } = this.props;

@@ -48,6 +48,8 @@ export const addEmployee = ({ firstName, lastName, email, userName, password, em
       }))
     })
     .catch((err) => {
+      console.log('err');
+      console.log(err);
       return dispatch(addEmployeeError());
     });
 };
@@ -94,6 +96,8 @@ export const addSupplier = ({ values }) => dispatch => {
       }))
     })
     .catch((err) => {
+      console.log('err');
+      console.log(err);
       return dispatch(addSupplierError());
     });
 };
@@ -124,11 +128,11 @@ export const addSupplyRequest = ({ values }) => dispatch => {
 
   // prepare values for sending
   // iterate: https://weblog.west-wind.com/posts/2017/Mar/04/Getting-JavaScript-Properties-for-Object-Maps-by-Index-or-Name
-  var items= []; // supplyItems
+  let items= []; // supplyItems
   Object.keys(values).forEach(function (prop) {
     console.log(values[prop]);
     if (prop[0] === 'i') {
-      console.log('item jeEEEEE');
+      console.log('item je');
 
       console.log(values[prop]['unit']);
       if (values[prop]['unit'] === undefined)
@@ -157,6 +161,8 @@ export const addSupplyRequest = ({ values }) => dispatch => {
       }))
     })
     .catch((err) => {
+      console.log('err');
+      console.log(err);
       return dispatch(addSupplyRequestError());
     });
 };
