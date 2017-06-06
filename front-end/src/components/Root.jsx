@@ -8,6 +8,8 @@ import Login from './Login/LoginContainer';
 import Signup from './Signup/Signup';
 import Guest from './Guest/Guest';
 import Manager from './Manager/ManagerContainer';
+import Supplier from './Supplier/SupplierContainer';
+
 import SystemManager from './SystemManager/SystemManager';
 
 const NotFound = () => (
@@ -26,6 +28,7 @@ const Root = ({ store, history }) => (
         <Route path="/signup" component={Signup} />
         <Route path="/guest" component={Guest} />
         <Route path="/manager" component={Manager} />
+        <Route path="/supplier" component={Supplier} />
         <Route path="/system-manager" component={SystemManager} />
         <Route path="*" component={NotFound} />
       </Switch>

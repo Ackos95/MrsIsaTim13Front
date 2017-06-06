@@ -25,6 +25,8 @@ const App = ({ user }) => (
     <Link to="/guest">Guest</Link>
     <br/>
     <Link to="/manager">Manager</Link>
+    <br/>
+    <Link to="/supplier">Supplier</Link>
   </div>
 );
 

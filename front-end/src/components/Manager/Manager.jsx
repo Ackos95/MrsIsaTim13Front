@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Form } from 'react-form';
+import { Form, Text } from 'react-form';
 
 import NewEmployeeForm from './Forms/NewEmployeeForm';
 import NewSupplierForm from './Forms/NewSupplierForm';
@@ -13,7 +13,7 @@ import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Panel, Accordion, Label } from 'react-bootstrap';
+import { Col, Panel, Accordion, Label, Carousel, Badge } from 'react-bootstrap';
 
 class Manager extends Component {
 
@@ -23,6 +23,8 @@ class Manager extends Component {
     this.addEmployee = this.addEmployee.bind(this);
     this.addSupplier = this.addSupplier.bind(this);
     this.addSupplyRequest = this.addSupplyRequest.bind(this);
+
+    this.nested = this.nested.bind(this);
   }
 
   addEmployee() {
@@ -37,15 +39,14 @@ class Manager extends Component {
     this.props.addSupplier({ values });
   }
 
-  addSupplyRequest(items) {
-    items['token'] = this.props.user.token;
-    console.log('items iz funkcije menadžera');
-    console.log(items);
+  addSupplyRequest(values) {
+    values['token'] = this.props.user.token;
+    console.log('values iz funkcije menadžera');
+    console.log(values);
 
-    console.log(this.refs.itemsFields);
-
-    this.props.addSupplyRequest({ items });
+    this.props.addSupplyRequest({ values });
   }
+
 
   render() {
     const { user, created, createdRequest, inProgress, addEmployee, addSupplier } = this.props;
@@ -69,22 +70,28 @@ class Manager extends Component {
                 {NewSupplierForm}
               </Form>
             </Panel>
+
             <Panel header="Supply request creation" eventKey="3">
+              // nested forms:
+              // https://react-form.js.org/?selectedKind=2.%20Demos&selectedStory=Kitchen%20Sink&full=0&down=0&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel#/story/readme-documentation
+              // StackOvrflw [KEY]: https://stackoverflow.com/questions/37762991/react-nested-form-values
               <Form onSubmit={(values) => (this.addSupplyRequest(values))}>
                 {SupplyRequestForm}
-                {/*<DocumentsFieldSet ref='itemsFields' /> /!* dugme ima Col sm={2} *!/*/}
               </Form>
             </Panel>
           </Accordion>
           {
             created.id !== null ?
-            <Label>Napravljen korisnik: {`${created.firstName}`}</Label>
+            <Badge>Napravljen user: {`${created.firstName}`}</Badge>
             :
             null
           }
           {
             createdRequest.id !== null ?
-              <Label>Napravljena potražnja: {`${createdRequest.publishingDate} ~ ${createdRequest.endingDate}`}</Label>
+              <Badge>
+                Napravljen SupplyRequest:
+                {`${createdRequest.publishingDate} ~ ${createdRequest.endingDate}`}
+              </Badge>
               :
               null
           }

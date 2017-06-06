@@ -39,7 +39,7 @@ const managerReducer = ( state = initialState, action ) => {
 
     case types.ADD_SUPPLY_REQUEST_SUCCESS:
       return state
-        .set('new',action.payload.createdRequest) // nova potražnja
+        .set('createdRequest',action.payload.createdRequest) // nova potražnja
         .set('inProgress', false);
 
     case types.ADD_EMPLOYEE_ERROR:
@@ -50,7 +50,7 @@ const managerReducer = ( state = initialState, action ) => {
     case types.ADD_EMPLOYEE_STARTED:
     case types.ADD_SUPPLIER_STARTED:
     case types.ADD_SUPPLY_REQUEST_STARTED:
-      return state.set('inProgress', false);
+      return state.set('inProgress', true);
 
     default:
       return state;

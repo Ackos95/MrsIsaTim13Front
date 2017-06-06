@@ -6,14 +6,14 @@ import { Col, FormGroup } from 'react-bootstrap';
 class DocumentInput extends React.Component {
   render() {
     return (
-      <Form field={ `field-${ this.props.index }` }>
       <FormGroup>
+      {/*<Form field={ `field-${ this.props.index }` }>*/}
         <br/>
         <Col xs={5}>
           <Text
             key={this.props.index}
             // field={ `itemName-${ this.props.index }` }
-            field='itemName'
+            field={ `item${ this.props.index }[itemName]` }
             placeholder='Item name'
             className='form-control'
           />
@@ -21,14 +21,13 @@ class DocumentInput extends React.Component {
         <Col xs={3}>
           <Text type='number' min='0' step='any' className='form-control'
             // field={`amount-${ this.props.index }`}
-            field='amount'
-            name={`amount-${ this.props.index }`} placeholder='Amount'
+            field={ `item${ this.props.index }[amount]` }
+            name={ `item${ this.props.index }[amount]` } placeholder='Amount'
           />
         </Col>
         <Col xs={3}>
           <Select
-            // field={ `unitSelect-${ this.props.index }` }
-            field='unit'
+            field={ `item${ this.props.index }[unit]` }
             className='form-control'
             options={[
               {label: 'kg', values: 'KG', select: true},
@@ -36,8 +35,8 @@ class DocumentInput extends React.Component {
               {label: 'pcs.', value: 'PCS'}]}
           />
         </Col>
+      {/*</Form> treba van formGroup-a! */}
       </FormGroup>
-      </Form>
     );
   }
 }
@@ -53,7 +52,8 @@ class DocumentsFieldSet extends React.Component{
     this.add = this.add.bind(this);
   }
 
-  add() {
+  add(e) {
+    e.preventDefault(); // da ne submituje?
     const documents = this.state.documents.concat(DocumentInput);
     this.setState({ documents });
   }

@@ -48,6 +48,8 @@ export const addEmployee = ({ firstName, lastName, email, userName, password, em
       }))
     })
     .catch((err) => {
+      console.log('err');
+      console.log(err);
       return dispatch(addEmployeeError());
     });
 };
@@ -94,6 +96,8 @@ export const addSupplier = ({ values }) => dispatch => {
       }))
     })
     .catch((err) => {
+      console.log('err');
+      console.log(err);
       return dispatch(addSupplierError());
     });
 };
@@ -116,24 +120,34 @@ export const addSupplyRequestSuccess = ( createdRequest ) => ({
 });
 
 
-export const addSupplyRequest = ({ items }) => dispatch => {
+export const addSupplyRequest = ({ values }) => dispatch => {
   dispatch(addSupplyRequestStart());
 
-  console.log('items');
-  console.log(items);
+  console.log('values');
+  console.log(values);
 
-  // prepare items for sending
-  var separatedItems = [];
-  Object.keys(items).forEach(function (prop) {
+  // prepare values for sending
+  // iterate: https://weblog.west-wind.com/posts/2017/Mar/04/Getting-JavaScript-Properties-for-Object-Maps-by-Index-or-Name
+  let items= []; // supplyItems
+  Object.keys(values).forEach(function (prop) {
+    console.log(values[prop]);
+    if (prop[0] === 'i') {
+      console.log('item je');
 
-    var value = items[prop];
-    console.log(value);
+      console.log(values[prop]['unit']);
+      if (values[prop]['unit'] === undefined)
+        values[prop]['unit'] = 'KG';
+      items.push(values[prop]);
+    }
   });
 
   $post(`${SERVER_URL}/supplies/request`,
     {
-      items: items
-    }, addAuthHeader(items.token))
+      supplyItems: items,
+      ended: false,
+      restaurant: null,
+      token: values['token']
+    }, addAuthHeader(values.token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(loginError());
 
@@ -147,6 +161,8 @@ export const addSupplyRequest = ({ items }) => dispatch => {
       }))
     })
     .catch((err) => {
+      console.log('err');
+      console.log(err);
       return dispatch(addSupplyRequestError());
     });
 };
