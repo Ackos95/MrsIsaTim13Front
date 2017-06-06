@@ -7,10 +7,9 @@
 import React, { Component } from 'react';
 
 import Loading from '../common/Loading/Loading';
-import Profile from '../common/Profile/ProfileContainer';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Nav, Row,  Tab, NavItem} from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import { buttonRowStyle, buttonStyle} from './css/css'
 import './css/guest.css';
 
@@ -21,110 +20,83 @@ class Guest extends Component {
 		
 		this.state = { key : 1 };
 		
-		this.changeName = this.changeName.bind(this);
-		this.getVisitedRestaurants = this.getVisitedRestaurants.bind(this);
-		this.getRestaurantsByName = this.getRestaurantsByName.bind(this);
-		this.handleSelect = this.handleSelect.bind(this);
+		this.getPotentialFriends = this.getPotentialFriends.bind(this);
+		this.getCurrentFriends = this.getCurrentFriends.bind(this);
 		
 	}
 	
-	changeName(e) {
+	getCurrentFriends(e) {
+		e.preventDefault();
+		console.log("getPotentialFriends");
+		this.props.getCurrentFriends(this.props.user.token);
+	}
+	
+	getPotentialFriends(e) {
 		e.preventDefault();
 		
-		this.props.changeName(e.target.value);
-	}
-	
-	handleSelect(key) {
-		this.setState({key: key});
-	}
-	
-	getRestaurantsByName(e) {
-		e.preventDefault();
-		console.log("getRestaurantsByName");
+		console.log("getPotentialFriends");
 		console.log(this.props.user);
 		
-		this.props.getRestaurantsByName(e.target.value, this.props.user.token);
-		
-		console.log(document.getElementById("input-restaurants-by-name"));
+		this.props.getPotentialFriends(e.target.value, this.props.user.token);
 	}
 	
-	getVisitedRestaurants(e) {
-		e.preventDefault();
-		console.log(this.props.user);
-		console.log(this.props.user.token);
-		this.props.getVisitedRestaurants(this.props.user.token);
-	}
 	
 	render() {
-		const { restaurants , restaurantsByName , gettingVisitedRests, gettingRestsByName } = this.props.guest;
+		const { currentFriends, potentialFriends, gettingCurrentFriends, gettingPotentialFriends } = this.props.guest;
 		return (
 			<div>
 				<Col xs={12} sm={12} md={6} lg={6}>
 					<div className='panel panel-default'>
 						<div className='panel-body'>
+							<div className="row" style={buttonRowStyle}>
+								{
+									gettingCurrentFriends ? <Loading /> :
+										<button className="btn btn-primary" type="button" onClick={this.getCurrentFriends}
+														style={buttonStyle}> Moji prijatelji </button>
+								}
+							</div>
+							<table id="visited-restaurants-table">
+								{
+									currentFriends !== undefined && currentFriends.length > 0 ?
+										<tbody><tr><th>Name</th><th>Last name</th><th>Visits</th></tr>
+										{ currentFriends.map(function (currentFriend, index) {
+											return <tr key={ index }>
+												<td>{`${currentFriends[index].firstName}`}</td>
+												<td>{`${currentFriends[index].lastName}`}</td>
+												<td>{`667`}</td>
+											</tr>
+										}) }
+										</tbody>
+										: <tbody><tr><th> Current friends </th></tr></tbody>
+								}
+							</table>
+							<br/>
 							<div className="panel panel-info">
-								<Profile/>
-								<div className="panel-footer">
-									<div className="row">
-										<div className="row" style={buttonRowStyle}>
+								<div style={{marginLeft: 10 + 'px'}}>
+									<div className='form-group'>
+										Search guests by name:
+										<input id="input-potential-friends" type="text" onChange={this.getPotentialFriends}/>
+									</div>
+								</div>
+								{
+									gettingPotentialFriends ?
+										<Loading/> :
+										<table id="potential-friends-table">
 											{
-												gettingVisitedRests ? <Loading /> :
-													<button className="btn btn-primary" type="button" onClick={this.getVisitedRestaurants}
-																	style={buttonStyle}> Visited restaurants </button>
-											}
-										</div>
-										<table id="visited-restaurants-table">
-											{
-												restaurants !== undefined && restaurants.length > 0 ?
-													<tbody><tr><th>Name</th><th>City</th><th>Distance</th></tr>
-													{ restaurants.map(function (restaurant, index) {
+												potentialFriends !== undefined && potentialFriends.length > 0 ?
+													<tbody> <tr><th>Name</th><th>Last name</th><th>Visits</th></tr>
+													{ potentialFriends.map(function (potentialFriend, index) {
 														return <tr key={ index }>
-															<td>{`${restaurants[index].name}`}</td>
-															<td>{`${restaurants[index].city}`}</td>
-															<td>{`667`}</td>
+															<td>{`${potentialFriends[index].firstName}`}</td>
+															<td>{`${potentialFriends[index].lastName}`}</td>
+															<td>{`676`}</td>
 														</tr>
 													}) }
 													</tbody>
-													: <tbody><tr><th>All visited restaurants</th></tr></tbody>
+													: <tbody><tr><th> Potential friends </th></tr></tbody>
 											}
 										</table>
-										<br/>
-										<div style={{marginLeft: 10 + 'px'}}>
-											<div className='form-group'>
-												Filter by name:
-												<input id="input-restaurants-by-name" type="text" onChange={this.getRestaurantsByName}/>
-											</div>
-										</div>
-										{
-											gettingRestsByName ?
-												<Loading/> :
-												<table id="restaurants-table">
-													{
-														restaurantsByName !== undefined && restaurantsByName.length > 0 ?
-															<tbody>
-															<tr>
-																<th>Name</th>
-																<th>City</th>
-																<th>Distance</th>
-															</tr>
-															{ restaurantsByName.map(function (restaurant, index) {
-																return <tr key={ index }>
-																	<td>{`${restaurantsByName[index].name}`}</td>
-																	<td>{`${restaurantsByName[index].city}`}</td>
-																	<td>{`667`}</td>
-																</tr>
-															}) }
-															</tbody>
-															: <tbody>
-														<tr>
-															<th>All visited restaurants</th>
-														</tr>
-														</tbody>
-													}
-												</table>
-										}
-									</div>
-								</div>
+								}
 							</div>
 						</div>
 					</div>

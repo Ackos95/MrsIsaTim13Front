@@ -11,16 +11,16 @@ export const changeName = (name) => ({
 export const getVisitedRestaurantsSuccess =  (restaurants) => ({
 	type: types.GET_VISITED_RESTAURANTS_SUCCESS,
 	payload: restaurants
-})
+});
 
 export const getVisitedRestaurantsStart =  () => ({
 	type: types.GET_VISITED_RESTAURANTS_START
-})
+});
 
 export const getVisitedRestaurantsError =  (error) => ({
 	type: types.GET_VISITED_RESTAURANTS_ERROR,
 	payload: { error }
-})
+});
 
 export const getVisitedRestaurants = ( token ) => dispatch => {
 	dispatch(getVisitedRestaurantsStart());
@@ -38,23 +38,24 @@ export const getVisitedRestaurants = ( token ) => dispatch => {
 			return dispatch(getVisitedRestaurantsError(err));
 		});
 	
-}
+};
+
 
 // restaurantsByName
 
 export const getRestaurantsByNameSuccess =  (restaurantsByName) => ({
 	type: types.GET_RESTAURANTS_BY_NAME_SUCCESS,
 	payload: restaurantsByName
-})
+});
 
 export const getRestaurantsByNameStart =  () => ({
 	type: types.GET_RESTAURANTS_BY_NAME_START
-})
+});
 
 export const getRestaurantsByNameError =  (error) => ({
 	type: types.GET_RESTAURANTS_BY_NAME_ERROR,
 	payload: { error }
-})
+});
 
 export const getRestaurantsByName = ( restaurantName, token ) => dispatch => {
 	dispatch(getRestaurantsByNameStart());
@@ -72,4 +73,74 @@ export const getRestaurantsByName = ( restaurantName, token ) => dispatch => {
 			return dispatch(getRestaurantsByNameError(err));
 		});
 	
-}
+};
+
+
+// get potential friends
+
+export const getPotentialFriendsSuccess =  (potentialFriends) => ({
+	type: types.GET_POTENTIAL_FRIENDS_SUCCESS,
+	payload: potentialFriends
+});
+
+export const getPotentialFriendsStart =  () => ({
+	type: types.GET_POTENTIAL_FRIENDS_START
+});
+
+export const getPotentialFriendsError =  (error) => ({
+	type: types.GET_POTENTIAL_FRIENDS_ERROR,
+	payload: { error }
+});
+
+export const getPotentialFriends = ( potentialFriendsName, token ) => dispatch => {
+	dispatch(getPotentialFriendsStart());
+	
+	$get(`${SERVER_URL}/guest/friends/q=` + potentialFriendsName, null , addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(getPotentialFriendsError());
+			
+			const { data } = res;
+			return dispatch(getPotentialFriendsSuccess({
+				potentialFriends : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(getPotentialFriendsError(err));
+		});
+	
+};
+
+
+// get current friends
+
+export const getCurrentFriendsSuccess =  (currentFriends) => ({
+	type: types.GET_CURRENT_FRIENDS_SUCCESS,
+	payload: currentFriends
+});
+
+export const getCurrentFriendsStart =  () => ({
+	type: types.GET_CURRENT_FRIENDS_START
+});
+
+export const getCurrentFriendsError =  (error) => ({
+	type: types.GET_CURRENT_FRIENDS_ERROR,
+	payload: { error }
+});
+
+export const getCurrentFriends = ( token ) => dispatch => {
+	dispatch(getCurrentFriendsStart());
+	
+	$get(`${SERVER_URL}/guest/friends`, null , addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(getCurrentFriendsError());
+			
+			const { data } = res;
+			return dispatch(getCurrentFriendsSuccess({
+				currentFriends : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(getCurrentFriendsError(err));
+		});
+	
+};
