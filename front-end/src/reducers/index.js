@@ -4,6 +4,7 @@ import main from './main';
 import manager from './manager';
 import guest from './guest';
 import supplier from './supplier';
+import supplies from './supplies';
 
 // import visibilityFilter from './visibilityFilter'
 
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   main,
   manager,
   supplier,
+  supplies, // note the 's'
 	guest
 })
 

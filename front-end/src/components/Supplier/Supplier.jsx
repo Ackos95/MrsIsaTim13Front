@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Panel, Accordion, Label, Button, Badge } from 'react-bootstrap';
-import { Form, Text } from 'react-form';
+import { Col, Panel, Button, Badge } from 'react-bootstrap';
+import { Form } from 'react-form';
 
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
-import {NewOfferForm} from './Forms/NewOfferForm';
+import RequestsTable from '../common/Supplies/RequestsTable/RequestsTable';
+
+import NewOfferForm from './Forms/NewOfferForm';
 
 class Supplier extends Component {
   constructor(props) {
@@ -15,35 +17,49 @@ class Supplier extends Component {
 
     this.state =
       {
-        gotRequests: false
+        gotRequests: false,
+        showRequestList: false,
+        selectedRequest: null,
+        showOfferForm: false
       };
 
     this.selected = this.selected.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.getRequests = this.getRequests.bind(this);
+    this.viewRequest = this.viewRequest.bind(this);
+    this.toggleOfferForm = this.toggleOfferForm.bind(this);
+    this.sendOffer = this.sendOffer.bind(this);
   }
 
-  selected(args, b) { // samo prvi put se izvršava
+  toggleOfferForm() {
+    this.setState({showOfferForm: !this.state.showOfferForm});
+  }
+
+  sendOffer() {
+    console.log('sendOffer');
+  }
+
+  viewRequest(idx) {
+    console.log('viewRequest od ' + idx + ' izgleda>>>');
+    console.log(this.props.requests[idx]);
+
+    this.setState({ selectedRequest: this.props.requests[idx]});
+    this.setState({ showOfferForm: true }); // da bi panel reagovao
+
+    console.log(this.state.showOfferForm);
+  }
+
+  selected() { // samo prvi put se izvršava // poslije na REFRESH
+
+    this.setState({showRequestList: true});
+
     if (!this.state.gotRequests)
     {
-      this.state.gotRequests = true; // dobavljeni zahtjevi
+      this.setState({ gotRequests: true}); // dobavljeni zahtjevi
       this.props.getRequests(this.props.token);
     }
   }
 
-  getRequests(args) {
-    console.log('args');
-    console.log(args);
-    console.log('getRequests');
-  }
-
-  handleSelect(activeKey) {
-    this.setState({ activeKey });
-  }
-
   render() {
-    const { token, requests, createdOffer, inProgress } = this.props;
-
+    const { requests, createdOffer, inProgress } = this.props;
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Col xs={12} sm={12} md={6} lg={6}>
@@ -53,42 +69,61 @@ class Supplier extends Component {
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
           { inProgress ? <Loading /> : null }
-          <Accordion >
-            <Panel header='Requests overview' onSelect={this.selected} eventKey="1">
+          <div>
+            <Panel collapsible header='Requests overview' onSelect={this.selected} expanded={this.state.showRequestList}>
               {/*{<Button onClick={this.selected} style={{width: '100%'}}>Requests overview</Button>}*/}
-              <table id="requests-table">
-                {
-                  requests !== undefined && requests.length > 0 ?
-                  <tbody>
+              <RequestsTable requests={requests} viewRequest={this.viewRequest} />
+              <hr/>
+            </Panel>
+            <Panel collapsible expanded={this.state.showOfferForm}
+                   header={<Button onClick={this.toggleOfferForm}>Offer Form</Button>}>
+              <button onClick={(e) => {
+                e.preventDefault();
+                this.setState({showOfferForm: false});
+                this.setState({selectedRequest: null});
+                console.log('showOfferForm na false i selectedRequest na null'); }}>
+                Cancel submission
+              </button>
+              <br/>
+              <Form onSubmit={this.sendOffer}>
+                <table id="request-items">{
+                  this.state.selectedRequest !== undefined && this.state.selectedRequest !== null && this.state.selectedRequest.supplyItems.length > 0 ?
+                    <tbody>
                     <tr>
-                      <th>From</th>
-                      <th>To</th>
-                      <th>ended (?)</th>
-                      <th># of Items</th>
-                      <th># of Offers</th>
+                      <th>Name</th>
+                      <th>amount</th>
+                      <th>unit</th>
                     </tr>
                     {
-                      requests.map(function (request, index) {
-                      return <tr key={ index }>
-                        <td>{`${requests[index].publishingDate}`}</td>
-                        <td>{`${request.endingDate}`}</td>
-                        <td>{`${request.supplyItems.length}`}</td>
-                        <td>{`${request.offers.length}`}</td>
+                      this.state.selectedRequest.supplyItems.map((item, index) => {
+                        return <tr key={ index }>
+                          <td>{`${item.itemName}`}</td>
+                          <td>{`${item.amount}`}</td>
+                          <td>{`${item.unit}`}</td>
+                        </tr>
+                      })}
+                    </tbody>
+                    :
+                    <tbody>
+                      <tr>
+                        <th> No selected supply request. Please select one from the panel above</th>
                       </tr>
-                      })
-                    }
-                  </tbody>
-                  : <tbody><tr><th>All requests</th></tr></tbody>
+                    </tbody>
                 }
-              </table>
-            </Panel>
-            <Panel header="Create offer" eventKey="2">
-              <Form onSubmit={this.getRequests}>
+                </table>
                 {NewOfferForm}
-                <Badge> Nova ponuda </Badge>
               </Form>
+              {
+                createdOffer === null ?
+                  <Badge> null je? </Badge>
+                  :
+                  <Badge>
+                    { `Poslata ponuda sa cijenom ${createdOffer.price}  i
+                    rokom isporuke ${createdOffer.deliveredUntil}.` }
+                  </Badge>
+              }
             </Panel>
-          </Accordion>
+          </div>
         </Col>
       </Panel>
     );

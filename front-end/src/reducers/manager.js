@@ -11,14 +11,15 @@ const RestaurantManager = new Record({
     firstName: null,
     lastName: null,
     shirtSize: null,
-    shoeSize: null,
+    shoeSize: null
   },
   createdRequest: { // created supply request
     id: null,
     publishingDate: null,
     endingDate: null,
     ended: null,
-    restaurant: { id: null }
+    restaurant: { id: null },
+    offers: []
   },
   inProgress: false
 });

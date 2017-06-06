@@ -1,30 +1,67 @@
 
 import React, { Component } from 'react';
-import { Form, Text } from 'react-form';
+import { Form } from 'react-form';
 
 import NewEmployeeForm from './Forms/NewEmployeeForm';
 import NewSupplierForm from './Forms/NewSupplierForm';
 import SupplyRequestForm from  './Forms/SupplyRequestForm';
 
-import DocumentsFieldSet from './Forms/DocumentsFieldSet';
-
+import RequestsTable from '../common/Supplies/RequestsTable/RequestsTable';
 import Profile from '../common/Profile/ProfileContainer';
-
 import Loading from '../common/Loading/Loading';
 
+import DocumentInput from './Forms/DocumentInput';
+
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Panel, Accordion, Label, Carousel, Badge } from 'react-bootstrap';
+import { Col, Panel, Accordion, Badge } from 'react-bootstrap';
 
 class Manager extends Component {
 
   constructor(props) {
     super(props);
 
+    this.state =
+      {
+        gotRequests: false,
+        showRequestList: false,
+        selectedRequest: null,
+        showRequestForm: false
+      };
+
     this.addEmployee = this.addEmployee.bind(this);
     this.addSupplier = this.addSupplier.bind(this);
+
     this.addSupplyRequest = this.addSupplyRequest.bind(this);
 
-    this.nested = this.nested.bind(this);
+    this.selected = this.selected.bind(this);
+    this.viewRequest = this.viewRequest.bind(this);
+    this.updateRequest = this.updateRequest.bind(this);
+  }
+
+  updateRequest() {
+
+  }
+
+  viewRequest(idx) {
+    console.log('viewRequest od ' + idx + ' izgleda>>>');
+    console.log(this.props.requests[idx]);
+
+    this.setState({ selectedRequest: this.props.requests[idx]});
+    this.setState({ showRequestForm: true }); // SET da bi panel reagovao
+
+    console.log(this.state.showRequestForm);
+  }
+
+  selected() { // samo prvi put se izvršava // poslije na REFRESH
+
+    this.setState({showRequestList: true});
+
+    if (!this.state.gotRequests)
+    {
+      this.setState({ gotRequests: true}); // dobavljeni zahtjevi
+
+      this.props.getRequests(this.props.user.token);
+    }
   }
 
   addEmployee() {
@@ -49,7 +86,7 @@ class Manager extends Component {
 
 
   render() {
-    const { user, created, createdRequest, inProgress, addEmployee, addSupplier } = this.props;
+    const { requests, created, createdRequest, inProgress, addEmployee } = this.props;
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Col xs={12} sm={12} md={6} lg={6}>
@@ -70,13 +107,47 @@ class Manager extends Component {
                 {NewSupplierForm}
               </Form>
             </Panel>
-
             <Panel header="Supply request creation" eventKey="3">
-              // nested forms:
-              // https://react-form.js.org/?selectedKind=2.%20Demos&selectedStory=Kitchen%20Sink&full=0&down=0&left=1&panelRight=0&downPanel=kadirahq%2Fstorybook-addon-actions%2Factions-panel#/story/readme-documentation
-              // StackOvrflw [KEY]: https://stackoverflow.com/questions/37762991/react-nested-form-values
               <Form onSubmit={(values) => (this.addSupplyRequest(values))}>
                 {SupplyRequestForm}
+              </Form>
+            </Panel>
+            <Panel collapsible header='Requests overview' onSelect={this.selected}>
+              <RequestsTable requests={requests} viewRequest={this.viewRequest} />
+            </Panel>
+            <Panel collapsible expanded={this.state.showRequestForm}
+                   header='Offer Form'>
+              <button onClick={(e) => {
+                e.preventDefault();
+                this.setState({showRequestForm: false});
+                this.setState({selectedRequest: null});
+                console.log('showRequestForm na false i selectedRequest na null'); }}>
+                Cancel submission
+              </button>
+              <br/>
+              <Form onSubmit={this.updateRequest}>
+                <table id="request-items">{
+                  this.state.selectedRequest !== undefined && this.state.selectedRequest !== null && this.state.selectedRequest.supplyItems.length > 0 ?
+                    <tbody>
+                    <tr>
+                      <th>Name</th>
+                      <th>amount</th>
+                      <th>unit</th>
+                    </tr>
+                    {
+                      this.state.selectedRequest.supplyItems.map((item, index) => {
+                        return <DocumentInput key={index} index={index} item={item}/>
+                      })}
+                    </tbody>
+                    :
+                    <tbody>
+                    <tr>
+                      <th> No selected supply request. Please select one from the panel above</th>
+                    </tr>
+                    </tbody>
+                }
+                </table>
+                {/*{NewOfferForm}*/}
               </Form>
             </Panel>
           </Accordion>
@@ -89,7 +160,7 @@ class Manager extends Component {
           {
             createdRequest.id !== null ?
               <Badge>
-                Napravljen SupplyRequest:
+                Rezultujući SupplyRequest:
                 {`${createdRequest.publishingDate} ~ ${createdRequest.endingDate}`}
               </Badge>
               :

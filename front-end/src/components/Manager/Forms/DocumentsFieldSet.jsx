@@ -1,45 +1,8 @@
 import React from 'react';
 
-import { Form, Text, Select } from 'react-form';
-import { Col, FormGroup } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
-class DocumentInput extends React.Component {
-  render() {
-    return (
-      <FormGroup>
-      {/*<Form field={ `field-${ this.props.index }` }>*/}
-        <br/>
-        <Col xs={5}>
-          <Text
-            key={this.props.index}
-            // field={ `itemName-${ this.props.index }` }
-            field={ `item${ this.props.index }[itemName]` }
-            placeholder='Item name'
-            className='form-control'
-          />
-        </Col>
-        <Col xs={3}>
-          <Text type='number' min='0' step='any' className='form-control'
-            // field={`amount-${ this.props.index }`}
-            field={ `item${ this.props.index }[amount]` }
-            name={ `item${ this.props.index }[amount]` } placeholder='Amount'
-          />
-        </Col>
-        <Col xs={3}>
-          <Select
-            field={ `item${ this.props.index }[unit]` }
-            className='form-control'
-            options={[
-              {label: 'kg', values: 'KG', select: true},
-              {label: 'l', value: 'L'},
-              {label: 'pcs.', value: 'PCS'}]}
-          />
-        </Col>
-      {/*</Form> treba van formGroup-a! */}
-      </FormGroup>
-    );
-  }
-}
+import DocumentInput from './DocumentInput';
 
 class DocumentsFieldSet extends React.Component{
   constructor(props){
@@ -59,13 +22,19 @@ class DocumentsFieldSet extends React.Component{
   }
 
   render () {
+    const {supplyItems} = this.props;
     const documents = this.state.documents.map((Element, index) => {
-      return <Element key={ index } index={ index } style={{marginBottom: '5px'}}/>
+      return <Element key={ index } index={ index }
+                      item={supplyItems == null ? {} : supplyItems}
+                      style={{marginBottom: '5px'}}/>
     });
 
     return (
       <div>
-        <button onClick={ this.add } className="col-sm-2">Add<br/>item</button>
+        <Col sm={1}>
+          <button onClick={ this.add }>Add<br/>item</button>
+        </Col>
+        <hr/>
         <div className='inputs'>
           { documents }
         </div>

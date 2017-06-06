@@ -2,7 +2,7 @@ import React from 'react'
 //noinspection JSUnresolvedVariable
 import { Text, Select } from 'react-form';
 
-import { Row, Col, Button, Input, Label, FormGroup } from 'react-bootstrap';
+import { Row, Col, FormGroup } from 'react-bootstrap';
 
 const NewEmployeeForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
