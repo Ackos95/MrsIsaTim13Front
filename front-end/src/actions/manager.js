@@ -17,7 +17,6 @@ export const addEmployeeSuccess = ( created ) => ({
   payload: { created }
 });
 
-//  [[[ user koji dodaje ]]]  ???
 export const addEmployee = ({ firstName, lastName, email, userName, password, employeeType, shirtSize, shoeSize }) => dispatch => {
   dispatch(addEmployeeStart());
 
@@ -33,16 +32,15 @@ export const addEmployee = ({ firstName, lastName, email, userName, password, em
       employeeType: employeeType,
       shirtSize: shirtSize,
       shoeSize: shoeSize
-    }, addAuthHeader(getToken('m2', 'password'))) // ako bi se dobijao u addEmployee >>> user.userName, user.password
+    }, addAuthHeader(getToken('m2', 'password'))) // TODO: napisati kako treba!
     .then((res) => {
-      // here will go if (res.status > 400) dispatch(loginError());
+      // here will go if (res.status > 400) dispatch(__Error());
 
       const { data } = res;
       return dispatch(addEmployeeSuccess({
         id: data.id,
         email: data.email,
         userName: data.userName,
-        token: getToken('m2', 'password'), // state.auth.user.token <--- OVDJE JE
         firstName: data.firstName,
         lastName: data.lastName
       }))
@@ -81,9 +79,9 @@ export const addSupplier = ({ values }) => dispatch => {
       email: values.email,
       userName: values.userName,
       password: values.password
-    }, addAuthHeader(values.token)) // Bilo >>> getToken('m2', 'password')
+    }, addAuthHeader(values.token))
     .then((res) => {
-      // here will go if (res.status > 400) dispatch(loginError());
+      // here will go if (res.status > 400) dispatch(__Error());
 
       const { data } = res;
       return dispatch(addSupplierSuccess({
@@ -149,7 +147,7 @@ export const addSupplyRequest = ({ values }) => dispatch => {
       token: values['token']
     }, addAuthHeader(values.token))
     .then((res) => {
-      // here will go if (res.status > 400) dispatch(loginError());
+      // here will go if (res.status > 400) dispatch(__Error());
 
       const { data } = res;
       return dispatch(addSupplyRequestSuccess({
