@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { login } from '../../actions/auth';
-import { changeName, getVisitedRestaurants, getRestaurantsByName } from '../../actions/guest';
+import { getVisitedRestaurants, getRestaurantsByName, getFriendRequests, acceptFriend,
+	declineFriend, removeFriendRequest } from '../../actions/guest';
 
 import GuestProfile from './GuestProfile';
 
@@ -12,10 +12,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  login,
-  changeName,
 	getVisitedRestaurants,
 	getRestaurantsByName,
+	getFriendRequests,
+	acceptFriend,
+	declineFriend,
+	removeFriendRequest
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestProfile);

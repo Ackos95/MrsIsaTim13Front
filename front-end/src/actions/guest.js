@@ -1,11 +1,15 @@
 import * as types from '../constants'
 import { SERVER_URL } from '../config';
-import { $get, addAuthHeader } from '../utils/http';
+import { $get, $post, addAuthHeader } from '../utils/http';
 
-// changeName('acko');
-export const changeName = (name) => ({
-  type: types.CHANGE_NAME,
-  payload: { name }
+export const removeFriendRequest = (requestForRemoval) => ({
+	type: types.REMOVE_FRIEND_REQUEST,
+	payload: requestForRemoval
+});
+
+export const removePotentialFriend = (removeFromPotentialFriends) => ({
+	type: types.REMOVE_POTENTIAL_FRIEND,
+	payload: removeFromPotentialFriends
 });
 
 export const getVisitedRestaurantsSuccess =  (restaurants) => ({
@@ -176,6 +180,148 @@ export const getAllRestaurants = ( token ) => dispatch => {
 		})
 		.catch((err) => {
 			return dispatch(getAllRestaurantsError(err));
+		});
+	
+};
+
+
+// add friend
+
+export const addFriendSuccess =  (addedFriendData) => ({
+	type: types.ADD_FRIEND_SUCCESS,
+	payload: addedFriendData
+});
+
+export const addFriendStart =  () => ({
+	type: types.ADD_FRIEND_START
+});
+
+export const addFriendError =  (error) => ({
+	type: types.ADD_FRIEND_ERROR,
+	payload: { error }
+});
+
+export const addFriend = (newFriend , token ) => dispatch => {
+	dispatch(addFriendStart());
+	
+	$post(`${SERVER_URL}/guest/friends/requestFriendship`, newFriend, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(addFriendError());
+			
+			const { data } = res;
+			return dispatch(addFriendSuccess({
+				addedFriendData : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(addFriendError(err));
+		});
+	
+};
+
+
+// get friend requests
+
+export const getFriendRequestsSuccess =  (friendRequests) => ({
+	type: types.GET_FRIEND_REQUESTS_SUCCESS,
+	payload: friendRequests
+});
+
+export const getFriendRequestsStart =  () => ({
+	type: types.GET_FRIEND_REQUESTS_START
+});
+
+export const getFriendRequestsError =  (error) => ({
+	type: types.GET_FRIEND_REQUESTS_ERROR,
+	payload: { error }
+});
+
+export const getFriendRequests = (token) => dispatch => {
+	dispatch(getFriendRequestsStart());
+	
+	$get(`${SERVER_URL}/guest/friends/pending`, null,  addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(getFriendRequestsError());
+			
+			const { data } = res;
+			return dispatch(getFriendRequestsSuccess({
+				friendRequests : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(getFriendRequestsError(err));
+		});
+	
+};
+
+
+
+
+// accept friend
+
+export const acceptFriendSuccess =  (acceptFriendData) => ({
+	type: types.ACCEPT_FRIEND_SUCCESS,
+	payload: acceptFriendData
+});
+
+export const acceptFriendStart =  () => ({
+	type: types.ACCEPT_FRIEND_START
+});
+
+export const acceptFriendError =  (error) => ({
+	type: types.ACCEPT_FRIEND_ERROR,
+	payload: { error }
+});
+
+export const acceptFriend = (friendRequest, token ) => dispatch => {
+	dispatch(acceptFriendStart());
+	
+	$post(`${SERVER_URL}/guest/friends/accept`, friendRequest, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(acceptFriendError());
+			
+			const { data } = res;
+			return dispatch(acceptFriendSuccess({
+				acceptFriendData : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(acceptFriendError(err));
+		});
+	
+};
+
+
+// decline friend
+
+export const declineFriendSuccess =  (acceptFriendData) => ({
+	type: types.DECLINE_FRIEND_SUCCESS,
+	payload: acceptFriendData
+});
+
+export const declineFriendStart =  () => ({
+	type: types.DECLINE_FRIEND_START
+});
+
+export const declineFriendError =  (error) => ({
+	type: types.DECLINE_FRIEND_ERROR,
+	payload: { error }
+});
+
+export const declineFriend = (friendRequest , token ) => dispatch => {
+	dispatch(declineFriendStart());
+	
+	$post(`${SERVER_URL}/guest/friends/decline`, friendRequest, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(declineFriendError());
+			
+			const { data } = res;
+			return dispatch(declineFriendSuccess({
+				acceptFriendData : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(declineFriendError(err));
 		});
 	
 };

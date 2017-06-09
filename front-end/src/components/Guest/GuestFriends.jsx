@@ -1,6 +1,3 @@
-/**
- * Created by Filip Savic on 05-Jun-17.
- */
 
 // Guest profile page
 
@@ -10,7 +7,7 @@ import Loading from '../common/Loading/Loading';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col } from 'react-bootstrap';
-import { buttonRowStyle, buttonStyle, emptyThStyle } from './css/css'
+import { buttonRowStyle, buttonStyle, emptyThStyle, tdStyle } from './css/css'
 import './css/guest.css';
 
 class Guest extends Component {
@@ -22,12 +19,22 @@ class Guest extends Component {
 		
 		this.getPotentialFriends = this.getPotentialFriends.bind(this);
 		this.getCurrentFriends = this.getCurrentFriends.bind(this);
+		this.addFriend = this.addFriend.bind(this);
+		this.makePotentialFriendsTable = this.makePotentialFriendsTable.bind(this);
+	}
+	
+	addFriend(newFriend) {
+		// e.preventDefault();
+		console.log("addFriend");
+		console.log(newFriend);
 		
+		this.props.removePotentialFriend(newFriend);
+		this.props.addFriend(newFriend, this.props.user.token);
 	}
 	
 	getCurrentFriends(e) {
 		e.preventDefault();
-		console.log("getPotentialFriends");
+		console.log("getCurrentFriends");
 		this.props.getCurrentFriends(this.props.user.token);
 	}
 	
@@ -38,6 +45,14 @@ class Guest extends Component {
 		console.log(this.props.user);
 		
 		this.props.getPotentialFriends(e.target.value, this.props.user.token);
+	}
+	
+	makePotentialFriendsTable (potentialFriend, index ) {
+		return <tr key={ index } id={ index } >
+			<td>{potentialFriend.firstName}</td>
+			<td>{potentialFriend.lastName}</td>
+			<td id="td-button"><button onClick={() =>  this.addFriend(potentialFriend) }> Add friend </button></td>
+		</tr>
 	}
 	
 	
@@ -58,10 +73,10 @@ class Guest extends Component {
 									currentFriends !== undefined && currentFriends.length > 0 ?
 										<tbody><tr><th>Name</th><th>Last name</th><th>Visits</th></tr>
 										{ currentFriends.map(function (currentFriend, index) {
-											return <tr key={ index }>
-												<td>{`${currentFriends[index].firstName}`}</td>
-												<td>{`${currentFriends[index].lastName}`}</td>
-												<td>{`667`}</td>
+											return <tr key={index}>
+												<td style={tdStyle}>{currentFriend.firstName}</td>
+												<td style={tdStyle}>{currentFriend.lastName}</td>
+												<td style={tdStyle}>{`667`}</td>
 											</tr>
 										}) }
 										</tbody>
@@ -84,14 +99,8 @@ class Guest extends Component {
 										<table id="potential-friends-table">
 											{
 												potentialFriends !== undefined && potentialFriends.length > 0 ?
-													<tbody> <tr><th>Name</th><th>Last name</th><th>Visits</th></tr>
-													{ potentialFriends.map(function (potentialFriend, index) {
-														return <tr key={ index }>
-															<td>{`${potentialFriends[index].firstName}`}</td>
-															<td>{`${potentialFriends[index].lastName}`}</td>
-															<td>{`676`}</td>
-														</tr>
-													}) }
+													<tbody><tr><th>Name</th><th>Last name</th><th>Add</th></tr>
+													{ potentialFriends.map(this.makePotentialFriendsTable) }
 													</tbody>
 													: <tbody><tr><th style={emptyThStyle}> Potential friends </th></tr></tbody>
 											}

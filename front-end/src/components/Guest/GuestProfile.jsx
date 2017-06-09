@@ -1,6 +1,3 @@
-/**
- * Created by Filip Savic on 05-Jun-17.
- */
 
 // Guest profile page
 
@@ -10,8 +7,8 @@ import Loading from '../common/Loading/Loading';
 import Profile from '../common/Profile/ProfileContainer';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col } from 'react-bootstrap';
-import { buttonRowStyle, buttonStyle, emptyThStyle } from './css/css';
+import { Col, Button } from 'react-bootstrap';
+import { buttonRowStyle, buttonStyle, emptyThStyle , tdStyle } from './css/css';
 import './css/guest.css';
 
 class GuestProfile extends Component {
@@ -23,20 +20,13 @@ class GuestProfile extends Component {
 		
 		this.getVisitedRestaurants = this.getVisitedRestaurants.bind(this);
 		this.getRestaurantsByName = this.getRestaurantsByName.bind(this);
-		// this.visitedRestaurants = this.visitedRestaurants.bind(this);
+		this.makeFriendRequestTable = this.makeFriendRequestTable.bind(this);
+		this.getFriendRequests = this.getFriendRequests.bind(this);
+		this.acceptFriend = this.acceptFriend.bind(this);
+		this.declineFriend = this.declineFriend.bind(this);
+		this.removeFriendRequest = this.removeFriendRequest.bind(this);
 		
 	}
-	
-	
-	// visitedRestaurants() {
-	// 	return this.props.restaurants.map(function (restaurant, index) {
-	// 		return <tr key={ index }>
-	// 			<td>{`${this.props.restaurants[index].name}`}</td>
-	// 			<td>{`${this.props.restaurants[index].city}`}</td>
-	// 			<td>{`667`}</td>
-	// 		</tr>
-	// 	});
-	// }
 	
 	getRestaurantsByName(e) {
 		e.preventDefault();
@@ -55,15 +45,79 @@ class GuestProfile extends Component {
 		this.props.getVisitedRestaurants(this.props.user.token);
 	}
 	
+	removeFriendRequest(friendRequest) {
+		console.log("removeFriendRequest");
+		this.props.removeFriendRequest(friendRequest);
+	}
+	
+	acceptFriend(friendRequest) {
+		console.log("acceptFriend");
+		console.log(friendRequest);
+		this.props.removeFriendRequest(friendRequest);
+		this.props.acceptFriend(friendRequest, this.props.user.token);
+	}
+	
+	declineFriend(friendRequest) {
+		console.log("declineFriend");
+		console.log(friendRequest);
+		this.props.removeFriendRequest(friendRequest);
+		this.props.declineFriend(friendRequest, this.props.user.token);
+	}
+	
+	makeFriendRequestTable (friendRequest, index ) {
+		return <tr key={ index } id={ index } >
+			<td>{friendRequest.firstName}</td>
+			<td>{friendRequest.lastName}</td>
+			<td><Button bsStyle="success" style={{width: 100 + '%'}} onClick={() => this.acceptFriend(friendRequest)}>
+				Accept </Button></td>
+			<td><Button bsStyle="danger" style={{width: 100 + '%'}} onClick={() => this.declineFriend(friendRequest)}>
+				Decline </Button></td>
+		</tr>
+	}
+	
+	getFriendRequests() {
+		console.log("getFriendRequests");
+		this.props.getFriendRequests(this.props.user.token);
+	}
+	
+	componentDidMount() {
+		this.getFriendRequests();
+	}
+	
+	
 	render() {
-		const { restaurants , restaurantsByName , gettingVisitedRests, gettingRestsByName } = this.props.guest;
+		const { restaurants , gettingVisitedRests, friendRequests, gettingFriendRequests } = this.props.guest;
 		return (
 			<div>
 				<Col xs={12} sm={12} md={6} lg={6}>
 					<div className='panel panel-default'>
 						<div className='panel-body'>
+							<Profile/>
 							<div className="panel panel-info">
-								<Profile/>
+							{
+								gettingFriendRequests ? <Loading/> :
+									<table id="friend-requests-table">
+										<div style={{fontSize: 20 + 'px'}}>
+											<caption style={{minWidth: 140 + 'px'}}>Friend requests</caption>
+										</div>
+										{
+											friendRequests !== undefined && friendRequests.length > 0 ?
+												<tbody id="friend-requests-tbody">
+												<tr>
+													<th>Name</th>
+													<th>Last name</th>
+													<th colSpan={2}>Response</th>
+												</tr>
+												{ friendRequests.map(this.makeFriendRequestTable) }
+												</tbody>
+												: <tbody>
+											<tr>
+												<th style={emptyThStyle}> No friend requests</th>
+											</tr>
+											</tbody>
+										}
+									</table>
+								}
 								<div className="panel-footer">
 									<div className="row">
 										<div className="row" style={buttonRowStyle}>
@@ -76,12 +130,13 @@ class GuestProfile extends Component {
 										<table id="visited-restaurants-table">
 											{
 												restaurants !== undefined && restaurants.length > 0 ?
-													<tbody><tr><th>Name</th><th>City</th><th>Distance</th></tr>
+													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Distance</th></tr>
 													{ restaurants.map(function (restaurant, index) {
 														return <tr key={ index }>
-														<td>{`${restaurants[index].name}`}</td>
-														<td>{`${restaurants[index].city}`}</td>
-														<td>{`667`}</td>
+														<td style={tdStyle}>{`${restaurant.name}`}</td>
+														<td style={tdStyle}>{`${restaurant.city}`}</td>
+														<td style={tdStyle}>{`${restaurant.description}`}</td>
+														<td style={tdStyle}>{`667`}</td>
 														</tr>
 													}) }
 													</tbody>
@@ -89,36 +144,6 @@ class GuestProfile extends Component {
 											}
 										</table>
 										<br/>
-										<div style={{marginLeft: 10 + 'px'}}>
-											<div className='form-group'>
-												Filter by name:
-												<input id="input-restaurants-by-name" type="text" onChange={this.getRestaurantsByName}/>
-											</div>
-										</div>
-										{
-											gettingRestsByName ?
-												<Loading/> :
-												<table id="restaurants-table">
-													{
-														restaurantsByName !== undefined && restaurantsByName.length > 0 ?
-															<tbody>
-															<tr>
-																<th>Name</th>
-																<th>City</th>
-																<th>Distance</th>
-															</tr>
-															{ restaurantsByName.map(function (restaurant, index) {
-																return <tr key={ index }>
-																	<td>{`${restaurantsByName[index].name}`}</td>
-																	<td>{`${restaurantsByName[index].city}`}</td>
-																	<td>{`667`}</td>
-																</tr>
-															}) }
-															</tbody>
-															: <tbody><tr><th style={emptyThStyle} > All visited restaurants </th></tr></tbody>
-													}
-												</table>
-										}
 									</div>
 								</div>
 							</div>

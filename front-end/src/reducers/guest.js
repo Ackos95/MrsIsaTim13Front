@@ -1,5 +1,6 @@
 import * as types from '../constants';
 import { Record } from 'immutable';
+import filter from 'lodash/filter'
 
 const Guest = new Record({
   dirty: false,
@@ -10,7 +11,11 @@ const Guest = new Record({
 	gettingPotentialFriends : false,
 	potentialFriends : [],
 	gettingCurrentFriends : false,
-	currentFriends : []
+	currentFriends : [],
+	addingFriend : false,
+	gettingFriendRequests : false,
+	friendRequests : [],
+	acceptDeclineState : false
 });
 
 const initialState = new Guest();
@@ -65,8 +70,62 @@ const guestReducer = (state = initialState, action) => {
 		case types.GET_CURRENT_FRIENDS_ERROR:
 			return state.set('gettingCurrentFriends', false);
 	
-		/** NEXT REDUCING */
 	
+		/** ADD FRIEND */
+		case types.ADD_FRIEND_START:
+			return state.set('addingFriend', true);
+	
+		case types.ADD_FRIEND_SUCCESS:
+			return state.set('addingFriend', false);
+	
+		case types.ADD_FRIEND_ERROR:
+			return state.set('addingFriend', false);
+	
+		/** GET FRIEND REQUESTS*/
+		case types.GET_FRIEND_REQUESTS_START:
+			return state.set('gettingFriendRequests', true);
+	
+		case types.GET_FRIEND_REQUESTS_SUCCESS:
+			return state.set('friendRequests', action.payload.friendRequests)
+									.set('gettingFriendRequests', false);
+	
+		case types.GET_FRIEND_REQUESTS_ERROR:
+			return state.set('gettingFriendRequests', false);
+	
+		/** ACCEPT FRIEND */
+		case types.ACCEPT_FRIEND_START:
+			return state.set('acceptDeclineState', true);
+	
+		case types.ACCEPT_FRIEND_SUCCESS:
+			return state.set('acceptDeclineState', false);
+	
+		case types.ACCEPT_FRIEND_ERROR:
+			return state.set('acceptDeclineState', false);
+	
+		/** DECLINE FRIEND */
+		case types.DECLINE_FRIEND_START:
+			return state.set('acceptDeclineState', true);
+	
+		case types.DECLINE_FRIEND_SUCCESS:
+			return state.set('acceptDeclineState', false);
+	
+		case types.DECLINE_FRIEND_ERROR:
+			return state.set('acceptDeclineState', false);
+		
+		/** REMOVE FRIEND REQUEST */
+		case types.REMOVE_FRIEND_REQUEST: {
+			return state.set('friendRequests',
+				filter(state.friendRequests, (req) => req.id !== action.payload.id ) );
+		}
+	
+		/** REMOVE POTENTIAL FRIEND */
+		case types.REMOVE_POTENTIAL_FRIEND: {
+			return state.set('potentialFriends',
+				filter(state.potentialFriends, (friend) => friend.id !== action.payload.id ) );
+		}
+	
+		/** NEXT REDUCING */
+		
 		default:
       return state;
   }
