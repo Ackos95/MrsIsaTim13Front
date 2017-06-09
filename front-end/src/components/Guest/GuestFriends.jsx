@@ -10,7 +10,7 @@ import Loading from '../common/Loading/Loading';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col } from 'react-bootstrap';
-import { buttonRowStyle, buttonStyle} from './css/css'
+import { buttonRowStyle, buttonStyle, emptyThStyle } from './css/css'
 import './css/guest.css';
 
 class Guest extends Component {
@@ -49,12 +49,10 @@ class Guest extends Component {
 					<div className='panel panel-default'>
 						<div className='panel-body'>
 							<div className="row" style={buttonRowStyle}>
-								{
-									gettingCurrentFriends ? <Loading /> :
-										<button className="btn btn-primary" type="button" onClick={this.getCurrentFriends}
-														style={buttonStyle}> Moji prijatelji </button>
-								}
+								<button className="btn btn-primary" type="button" onClick={this.getCurrentFriends}
+												style={buttonStyle}> My friends </button>
 							</div>
+							{ gettingCurrentFriends ? <Loading /> :
 							<table id="visited-restaurants-table">
 								{
 									currentFriends !== undefined && currentFriends.length > 0 ?
@@ -67,15 +65,17 @@ class Guest extends Component {
 											</tr>
 										}) }
 										</tbody>
-										: <tbody><tr><th> Current friends </th></tr></tbody>
+										: <tbody><tr><th style={emptyThStyle}> Current friends </th></tr></tbody>
 								}
 							</table>
+							}
 							<br/>
 							<div className="panel panel-info">
 								<div style={{marginLeft: 10 + 'px'}}>
 									<div className='form-group'>
 										Search guests by name:
-										<input id="input-potential-friends" type="text" onChange={this.getPotentialFriends}/>
+										<input id="input-potential-friends" type="text" onChange={this.getPotentialFriends}
+												style={{marginTop: 5 + 'px', marginLeft: 5 + 'px'}}/>
 									</div>
 								</div>
 								{
@@ -93,7 +93,7 @@ class Guest extends Component {
 														</tr>
 													}) }
 													</tbody>
-													: <tbody><tr><th> Potential friends </th></tr></tbody>
+													: <tbody><tr><th style={emptyThStyle}> Potential friends </th></tr></tbody>
 											}
 										</table>
 								}

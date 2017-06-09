@@ -7,6 +7,7 @@ import { Col, Nav, Row,  Tab, NavItem} from 'react-bootstrap';
 import './css/guest.css';
 import GuestProfile from "./GuestProfileContainer";
 import GuestFriends from "./GuestFriendsContainer";
+import GuestRestaurants from "./GuestRestaurantsContainer";
 
 class Guest extends Component {
 
@@ -36,7 +37,7 @@ class Guest extends Component {
 									<GuestFriends/>
 								</Tab.Pane>
 								<Tab.Pane eventKey="second">
-									Restorani komponenta
+									<GuestRestaurants/>
 								</Tab.Pane>
 								<Tab.Pane eventKey="third">
 									<GuestProfile/>

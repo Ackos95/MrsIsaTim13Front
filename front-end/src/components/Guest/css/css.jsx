@@ -13,4 +13,8 @@ export const buttonStyle = {
 	marginBottom: 10 + 'px', marginLeft: 10 + 'px'
 }
 
+export const emptyThStyle = {
+	padding: 5 + 'px', marginBottom: 5 + 'px'
+};
+
 /*visibility: 'hidden',*/

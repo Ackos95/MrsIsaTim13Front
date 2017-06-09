@@ -11,7 +11,7 @@ import Profile from '../common/Profile/ProfileContainer';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col } from 'react-bootstrap';
-import { buttonRowStyle, buttonStyle} from './css/css';
+import { buttonRowStyle, buttonStyle, emptyThStyle } from './css/css';
 import './css/guest.css';
 
 class GuestProfile extends Component {
@@ -85,7 +85,7 @@ class GuestProfile extends Component {
 														</tr>
 													}) }
 													</tbody>
-													: <tbody><tr><th>All visited restaurants</th></tr></tbody>
+													: <tbody><tr><th style={emptyThStyle} > All visited restaurants </th></tr></tbody>
 											}
 										</table>
 										<br/>
@@ -115,11 +115,7 @@ class GuestProfile extends Component {
 																</tr>
 															}) }
 															</tbody>
-															: <tbody>
-														<tr>
-															<th>All visited restaurants</th>
-														</tr>
-														</tbody>
+															: <tbody><tr><th style={emptyThStyle} > All visited restaurants </th></tr></tbody>
 													}
 												</table>
 										}

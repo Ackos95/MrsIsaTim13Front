@@ -144,3 +144,38 @@ export const getCurrentFriends = ( token ) => dispatch => {
 		});
 	
 };
+
+
+// get all restaurants
+
+export const getAllRestaurantsSuccess =  (allRestaurants) => ({
+	type: types.GET_ALL_RESTAURANTS_SUCCESS,
+	payload: allRestaurants
+});
+
+export const getAllRestaurantsStart =  () => ({
+	type: types.GET_ALL_RESTAURANTS_START
+});
+
+export const getAllRestaurantsError =  (error) => ({
+	type: types.GET_ALL_RESTAURANTS_ERROR,
+	payload: { error }
+});
+
+export const getAllRestaurants = ( token ) => dispatch => {
+	dispatch(getAllRestaurantsStart());
+	
+	$get(`${SERVER_URL}/guest/friends`, null , addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400) dispatch(getAllRestaurantsError());
+			
+			const { data } = res;
+			return dispatch(getAllRestaurantsSuccess({
+				allRestaurants : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(getAllRestaurantsError(err));
+		});
+	
+};

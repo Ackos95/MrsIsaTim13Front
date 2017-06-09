@@ -8,7 +8,7 @@ class Profile extends Component {
         <div className="panel panel-info">
           <div className="panel-heading">
             <h3 className="panel-title">
-              {`${user.firstName} ${user.lastName}`}
+							{ user.userName != null ? user.firstName + ' ' + user.lastName: 'No user is logged in' }
             </h3>
           </div>
     			<div className="panel-body">
@@ -20,16 +20,16 @@ class Profile extends Component {
                   </tr>
                   <tr>
                     <td>Username</td>
-                    <td>{`${user.userName}`}</td>
+                    <td>{ user.userName != null ? user.firstName : 'Some username' }</td>
                   </tr>
                   <tr>
                     <td>First name</td>
-                    <td>{`${user.firstName}`} ? Planet Earth, Solar system #3</td>
+                    <td> { user.firstName != null ? user.firstName : 'Planet Earth, Solar system #3' }</td>
                   </tr>
                   <tr>
                     <td>Email</td>
-                    <td><a href={`${user.email}`}>{`${user.email}`}</a></td>
-                  </tr>
+                    <td><a href={`${user.email}`}>{ user.email != null ? user.email : 'user@example.com' }</a></td>
+	                  </tr>
                   </tbody>
                 </table>
               </div>
