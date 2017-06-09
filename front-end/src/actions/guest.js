@@ -325,3 +325,4 @@ export const declineFriend = (friendRequest , token ) => dispatch => {
 		});
 	
 };
+

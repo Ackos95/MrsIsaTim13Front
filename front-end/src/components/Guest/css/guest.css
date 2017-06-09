@@ -22,3 +22,8 @@ tr:nth-child(even) {
 input {
     margin-left: 10px;
 }
+
+#restaurants-table, #restaurants-table>tbody>tr, #restaurants-table>tbody>tr>td {
+    border: 0px;
+    padding: 5px;
+}

@@ -15,7 +15,9 @@ const Guest = new Record({
 	addingFriend : false,
 	gettingFriendRequests : false,
 	friendRequests : [],
-	acceptDeclineState : false
+	acceptDeclineState : false,
+	restaurantOnReservation : {},
+	reservationStarted : false
 });
 
 const initialState = new Guest();
