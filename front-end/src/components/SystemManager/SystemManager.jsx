@@ -29,12 +29,20 @@ class SystemManager extends Component {
   }
 
   addRestaurant(values) {
+    console.log("TOKEN:::" + this.props.token);
+
     values['token'] = this.props.token;
-    this.props.addRestaurant(values);
+
+    console.log('values');
+    console.log(values);
+
+    this.props.addRestaurant({ values });
   }
+
   addSysManager() {
 
   }
+
   addResManager() {
 
   }
@@ -91,14 +99,14 @@ class SystemManager extends Component {
           </Accordion>
           {
             createdManager.id !== null ?
-              <Badge>Napravljen menadžer: {`${createdManager.userName}`}</Badge>
+              <Badge>Created manager: {`${createdManager.userName}`}</Badge>
               :
               null
           }
           {
             createdRestaurant.id !== null ?
               <Badge>
-                Rezultujući Restoran:
+                Resulting Restaurant:
                 {`${createdRestaurant.name} ~ ${createdRestaurant.description}`}
               </Badge>
               :

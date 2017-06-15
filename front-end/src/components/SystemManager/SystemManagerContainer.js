@@ -7,7 +7,7 @@ import SystemManager from './SystemManager';
 
 const mapStateToProps = state => ({
   token: state.auth.user.token,
-  createdManager: state.sys_manager.createdManager, // new sys. / res. manager
+  createdManager: state.sys_manager.createdManager, // new sys./res. manager
   createdRestaurant: state.sys_manager.createdRestaurant,
   inProgress: state.sys_manager.inProgress,
 });

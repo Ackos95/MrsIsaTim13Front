@@ -79,25 +79,30 @@ export const addSysManager = ({ user }) => dispatch => {
 // ADD RESTAURANT
 
 export const addRestaurantStart = () => ({
-  type: types.ADD_SYS_MANAGER_STARTED
+  type: types.ADD_RESTAURANT_STARTED
 });
 
 export const addRestaurantError = () => ({
-  type: types.ADD_SYS_MANAGER_ERROR
+  type: types.ADD_RESTAURANT_ERROR
 });
 
 export const addRestaurantSuccess = ( createdRestaurant ) => ({
-  type: types.ADD_SYS_MANAGER_SUCCESS,
+  type: types.ADD_RESTAURANT_SUCCESS,
   payload: { createdRestaurant }
 });
 
-export const addRestaurant = ({ restaurant }) => dispatch => {
+export const addRestaurant = ({ values }) => dispatch => {
   dispatch(addRestaurantStart());
+
+  console.log(values);
+  console.log('values');
 
   $post(`${SERVER_URL}/restaurant/add`,
     {
-      restaurant: restaurant
-    }, addAuthHeader(restaurant.token))
+      city: values.city,
+      description: values.description,
+      name: values.name
+    }, addAuthHeader(values.token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(__Error());
 
@@ -105,7 +110,7 @@ export const addRestaurant = ({ restaurant }) => dispatch => {
       return dispatch(addRestaurantSuccess({
         id: data.id,
         city: data.city,
-        type: data.type,
+        description: data.description,
         name: data.name
       }))
     })

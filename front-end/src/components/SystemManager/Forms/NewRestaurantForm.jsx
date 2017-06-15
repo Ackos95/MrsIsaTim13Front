@@ -2,7 +2,7 @@ import React from 'react'
 //noinspection JSUnresolvedVariable
 import { Text } from 'react-form';
 
-import { Row, Col } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 const NewRestaurantForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
@@ -15,10 +15,10 @@ const NewRestaurantForm = ({ submitForm, resetForm }) => (
       />
     </Col>
     <Col sm={12} className='form-group'>
-      <label htmlFor='type'>type</label>
+      <label htmlFor='type'>Description</label>
       <Text
-        field='type'
-        placeholder='type'
+        field='description'
+        placeholder='description'
         className='form-control'
       />
     </Col>
