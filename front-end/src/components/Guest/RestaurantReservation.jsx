@@ -1,7 +1,3 @@
-/**
- * Created by Filip Savic on 08-Jun-17.
- */
-
 // Guest profile page
 
 import React, { Component } from 'react';
@@ -45,14 +41,18 @@ class RestaurantReservation extends Component {
 		console.log("Konacno: " + day + "." + month + "." + year + ". " + hours + ":" + minutes);
 		
 		let lunchHours = document.getElementById("input-hour").value;
-		this.setState({reservationStep : this.state.reservationStep + 1, lasting: lunchHours,
-			dateTime: day + "." + month + "." + year + ". " + hours + ":" + minutes});
+		console.log("lunchHours " + lunchHours);
+		let dateTimeToState = day + "." + month + "." + year + ". " + hours + ":" + minutes;
+		this.setState({reservationStep : this.state.reservationStep + 1, lunchHours: lunchHours,
+			dateTime: dateTimeToState });
 		
 		console.log(this.state);
 	}
 	
 	selectTable() {
-		console.log("select table");
+		console.log("selectTable");
+		console.log("this.state");
+		console.log(this.state);
 	}
 	
 	render() {
@@ -63,7 +63,7 @@ class RestaurantReservation extends Component {
 							<div>
 							{
 								this.state.reservationStep === 1 ?
-									<table id="restaurants-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px'}} >
+									<table id="restaurants-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px', border: '1px solid black'}} >
 										<tbody><tr><td>Ime</td><td>{restaurant.name}</td></tr>
 										<tr><td>Datum i vrijeme</td>
 											<td><input id='input-date-time' type='datetime-local' min='2017-06-30T09:00:00' /></td>
@@ -81,7 +81,7 @@ class RestaurantReservation extends Component {
 											<td>{this.state.dateTime}</td>
 										</tr>
 										<tr><td>Trajanje</td>
-											<td>'{this.state.lunchHours}' sat(a)</td>
+											<td>{this.state.lunchHours} sat(a)</td>
 										</tr>
 										</tbody>
 									</table>
@@ -90,16 +90,20 @@ class RestaurantReservation extends Component {
 							</div>
 							<div>
 							{	this.state.reservationStep === 2 ?
-								<Button onClick={this.selectTable}>Korak 3</Button> :
-								<h2>nije 2</h2> }
+								<div>
+									<Button onClick={this.selectTable}>Popravite unijete podatke</Button>
+									<Button onClick={() => this.setState({reservationStep : this.state.reservationStep + 1}) }>Dalje</Button>
+								</div> :
+								<h2>Odabir stola</h2> }
 							</div>
 							<div>
-							{	this.state.reservationStep === 3 ? <Button onClick={this.increaseState}>Korak 4</Button> :
+							{	this.state.reservationStep === 3 ?
+								<Button onClick={() => this.setState({reservationStep : this.state.reservationStep + 1})}>Korak 4</Button> :
 								<h2>nije 3</h2> }
 							</div>
 						<div className='panel-body'>
 							{ this.state.reservationStep === 4 ? <Button onClick={() => this.setState({reservationStep: 1})}>
-								Kraj</Button> : <h3>nije 4</h3>}
+								Kraj - step na 1</Button> : <Loading/>}
 						</div>
 					</div>
 		);
@@ -107,25 +111,3 @@ class RestaurantReservation extends Component {
 }
 
 export default RestaurantReservation;
-
-			/*
-			 <table id="restaurants-table">
-			 {
-			 restaurantsByName !== undefined && restaurantsByName.length > 0 ?
-			 <tbody>
-			 <tr>
-			 <th>Name</th>
-			 <th>City</th>
-			 <th>Description</th>
-			 <th>Distance</th>
-			 </tr>
-			 { restaurantsByName.map(this.restaurantsByNameTable) }
-			 </tbody>
-			 : <tbody>
-			 <tr>
-			 <th style={emptyThStyle}>All restaurants</th>
-			 </tr>
-			 </tbody>
-			 }
-			 </table>
-			 */

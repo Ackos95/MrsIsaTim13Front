@@ -1,7 +1,3 @@
-/**
- * Created by Filip Savic on 08-Jun-17.
- */
-
 // Guest profile page
 
 import React, { Component } from 'react';
@@ -37,12 +33,12 @@ class GuestRestaurants extends Component {
 	}
 	
 	restaurantsByNameTable (restaurant, index) {
-		return <tr id={ index }>
+		return <tr key={index} id={ index }>
 			<td style={tdStyle}>{`${restaurant.name}`}</td>
 			<td style={tdStyle}>{`${restaurant.city}`}</td>
 			<td style={tdStyle}>{`${restaurant.description}`}</td>
 			<td style={tdStyle}>{`667`}</td>
-			<Button onClick={ () => this.reserveRestaurant(restaurant)} style={{width: 100 + '%'}}> Reserve </Button>
+			<td><Button onClick={ () => this.reserveRestaurant(restaurant)} style={{width: 100 + '%'}}> Rezerviši </Button></td>
 		</tr>
 	}
 	
@@ -55,7 +51,7 @@ class GuestRestaurants extends Component {
 					<div className='panel panel-default'>
 						{
 							this.state.restaurantOnReservation !== null ?
-								<RestaurantReservation restaurant = {this.state.restaurantOnReservation} />
+								<RestaurantReservation restaurant={this.state.restaurantOnReservation} />
 								:
 								<div className='panel-body'>
 									<div style={{marginLeft: 10 + 'px'}}>
@@ -71,7 +67,7 @@ class GuestRestaurants extends Component {
 											<table id="restaurants-table">
 												{
 													restaurantsByName !== undefined && restaurantsByName.length > 0 ?
-														<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Distance</th></tr>
+														<tbody><tr><th>Ime</th><th>Grad</th><th>Opis</th><th>Udaljenost</th><th/></tr>
 														{ restaurantsByName.map(this.restaurantsByNameTable) }
 														</tbody>
 														: <tbody>

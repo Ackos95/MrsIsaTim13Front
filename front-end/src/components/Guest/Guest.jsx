@@ -14,20 +14,25 @@ class Guest extends Component {
   constructor(props) {
     super(props);
 	
-		this.state = { key : 1 };
+		this.state = { key : "third" };
+		this.handleSelect = this.handleSelect.bind(this);
+	}
+	
+	handleSelect(key) {
+		this.setState({key : key});
 	}
 	
   render() {
     return (
     	<div>
-				<Tab.Container id="tabs-with-dropdown" defaultActiveKey="third">
+				<Tab.Container id="tabs-with-dropdown" onSelect={this.handleSelect} activeKey={this.state.key}>
 					<Row className="clearfix">
 						<Col sm={12}>
 							<Nav bsStyle="tabs">
 								<NavItem eventKey="first"> Prijatelji </NavItem>
 								<NavItem eventKey="second"> Restorani </NavItem>
 								<NavItem eventKey="third"> Moj profil </NavItem>
-								<Nav pullRight> <NavItem eventKey={1} href="#">Log out</NavItem>
+								<Nav pullRight> <NavItem href="#">Log out</NavItem>
 								</Nav>
 							</Nav>
 						</Col>

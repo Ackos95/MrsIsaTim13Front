@@ -97,9 +97,7 @@ class GuestProfile extends Component {
 							{
 								gettingFriendRequests ? <Loading/> :
 									<table id="friend-requests-table">
-										<div style={{fontSize: 20 + 'px'}}>
-											<caption style={{minWidth: 140 + 'px'}}>Friend requests</caption>
-										</div>
+											<caption style={{minWidth: 140 + 'px', fontSize: 20 + 'px'}}>Friend requests</caption>
 										{
 											friendRequests !== undefined && friendRequests.length > 0 ?
 												<tbody id="friend-requests-tbody">
