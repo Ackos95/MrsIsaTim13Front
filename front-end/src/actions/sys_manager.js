@@ -32,7 +32,8 @@ export const addResManager = ({ user }) => dispatch => {
       email: user.email,
       userName: user.userName,
       password: user.password,
-      createdFor: 'O B A V E Z N O!  O B A V E Z N O!  1 ili 2   O B A V E Z N O !!!'
+      restaurant: user.restaurant,
+      createdFor: 1 // indikator da je za restoran menadžera
     }, addAuthHeader(user.token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(__Error());
@@ -92,7 +93,27 @@ export const addRestaurantSuccess = ( createdRestaurant ) => ({
 
 export const addRestaurant = ({ restaurant }) => dispatch => {
   dispatch(addRestaurantStart());
-  console.log('addRestaurant');
+
+  $post(`${SERVER_URL}/restaurant/add`,
+    {
+      restaurant: restaurant
+    }, addAuthHeader(restaurant.token))
+    .then((res) => {
+      // here will go if (res.status > 400) dispatch(__Error());
+
+      const { data } = res;
+      return dispatch(addRestaurantSuccess({
+        id: data.id,
+        city: data.city,
+        type: data.type,
+        name: data.name
+      }))
+    })
+    .catch((err) => {
+      console.log('err');
+      console.log(err);
+      return dispatch(addRestaurantError());
+    });
 };
 
 

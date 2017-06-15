@@ -6,7 +6,7 @@ import { addSysManager, addResManager, addRestaurant } from '../../actions/sys_m
 import SystemManager from './SystemManager';
 
 const mapStateToProps = state => ({
-  user: state.auth.user,
+  token: state.auth.user.token,
   createdManager: state.sys_manager.createdManager, // new sys. / res. manager
   createdRestaurant: state.sys_manager.createdRestaurant,
   inProgress: state.sys_manager.inProgress,
