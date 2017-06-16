@@ -12,7 +12,9 @@ const Auth = new Record({
     firstName: null,
     lastName: null,
   },
-  inProgress: false
+  inProgress: false,
+	errorMessage: null,
+	confirmedRegistration : false
 });
 
 const initialState = new Auth();
@@ -31,13 +33,45 @@ const authReducer = (state = initialState, action) => {
 
     case types.LOGIN_STARTED:
       return state.set('inProgress', true);
-
-    case types.CHANGE_NAME:
+	
+      
+		case types.REGISTRATION_SUCCESS: {
+			console.log(action.payload);
+			return state.set('errorMessage', action.payload.errorMessage)
+				.set('inProgress', false);
+		}
+		
+		case types.REGISTRATION_ERROR:
+			return state.set('inProgress', false)
+									.set('errorMessage', action.payload.errorMessage);
+	
+		case types.REGISTRATION_STARTED:
+			return state.set('inProgress', true);
+	
+		case types.REGISTRATION_CONFIRMATION_SUCCESS: {
+			console.log("REGISTRATION_CONFIRMATION_SUCCESS REGISTRATION_CONFIRMATION_SUCCESS");
+			console.log(action.payload);
+			return state.set('user', action.payload)
+				.set('inProgress', false)
+				.set('confirmedRegistration', true);
+		}
+	
+		case types.REGISTRATION_CONFIRMATION_ERROR:
+			return state.set('inProgress', false)
+				.set('errorMessage', action.payload.errorMessage)
+				.set('confirmedRegistration', false);
+	
+		case types.REGISTRATION_CONFIRMATION_STARTED:
+			return state.set('inProgress', true)
+									.set('confirmedRegistration', false);
+	
+	
+		case types.CHANGE_NAME:
       return cloneDeep(state.set('user', { ...state.user, name: action.payload.name }));
 
     default:
       return state;
   }
-}
+};
 
 export default authReducer;

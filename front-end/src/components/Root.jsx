@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 
 import App from './App/App';
 import Login from './Login/LoginContainer';
-import Signup from './Signup/Signup';
+import Registration from './Registration/RegistrationContainer';
+import RegistrationConfirmation from './Registration/RegistrationConfirmationContainer';
 import Guest from './Guest/Guest';
 import Manager from './Manager/ManagerContainer';
 import Supplier from './Supplier/SupplierContainer';
@@ -17,7 +18,8 @@ const NotFound = () => (
     Page you are looking for doesn't exist, go to 
     <Link to="/">Root path</Link>
   </div>
-)
+);
+
 
 const Root = ({ store, history }) => (
   <Provider store={store}>
@@ -25,11 +27,12 @@ const Root = ({ store, history }) => (
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route path="/register" component={Registration} />
         <Route path="/guest" component={Guest} />
         <Route path="/manager" component={Manager} />
         <Route path="/supplier" component={Supplier} />
         <Route path="/system-manager" component={SystemManager} />
+				<Route path="/registration/guest" component={RegistrationConfirmation}/>
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
@@ -38,6 +41,6 @@ const Root = ({ store, history }) => (
 
 Root.propTypes = {
   store: PropTypes.object.isRequired,
-}
+};
 
 export default Root;

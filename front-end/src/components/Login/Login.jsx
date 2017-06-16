@@ -15,9 +15,10 @@ const validateLoginForm = (values) => {
     userName: !userName ? 'Username is required' : undefined,
     password: !password ? 'Password is required' : undefined
   }
-}
+};
 
-const Login = ({ user, inProgress, login }) => {
+const Login = ({ state, user, inProgress, login }) => {
+	console.log(state);
   console.log(user);
   if (user.token)
     return <Redirect to="/" />
@@ -37,10 +38,10 @@ const Login = ({ user, inProgress, login }) => {
       </div>
     </div>
   );
-}
+};
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-}
+};
 
 export default Login;
