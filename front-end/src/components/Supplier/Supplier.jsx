@@ -114,8 +114,8 @@ class Supplier extends Component {
                 {NewOfferForm}
               </Form>
               {
-                createdOffer === null ?
-                  <Badge> null je? </Badge>
+                createdOffer === null || createdOffer.price === null ?
+                  null
                   :
                   <Badge>
                     { `Poslata ponuda sa cijenom ${createdOffer.price}  i

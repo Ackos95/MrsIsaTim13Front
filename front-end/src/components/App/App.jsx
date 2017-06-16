@@ -29,6 +29,8 @@ const App = ({ user }) => (
     <Link to="/manager">Manager</Link>
     <br/>
     <Link to="/supplier">Supplier</Link>
+    <br/>
+    <Link to="/system-manager">System Manager</Link>
   </div>
 );
 

@@ -32,7 +32,8 @@ export const addResManager = ({ user }) => dispatch => {
       email: user.email,
       userName: user.userName,
       password: user.password,
-      createdFor: 'O B A V E Z N O!  O B A V E Z N O!  1 ili 2   O B A V E Z N O !!!'
+      restaurant: user.restaurant,
+      createdFor: 1 // indikator da je za restoran menadžera
     }, addAuthHeader(user.token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(__Error());
@@ -78,21 +79,46 @@ export const addSysManager = ({ user }) => dispatch => {
 // ADD RESTAURANT
 
 export const addRestaurantStart = () => ({
-  type: types.ADD_SYS_MANAGER_STARTED
+  type: types.ADD_RESTAURANT_STARTED
 });
 
 export const addRestaurantError = () => ({
-  type: types.ADD_SYS_MANAGER_ERROR
+  type: types.ADD_RESTAURANT_ERROR
 });
 
 export const addRestaurantSuccess = ( createdRestaurant ) => ({
-  type: types.ADD_SYS_MANAGER_SUCCESS,
+  type: types.ADD_RESTAURANT_SUCCESS,
   payload: { createdRestaurant }
 });
 
-export const addRestaurant = ({ restaurant }) => dispatch => {
+export const addRestaurant = ({ values }) => dispatch => {
   dispatch(addRestaurantStart());
-  console.log('addRestaurant');
+
+  console.log(values);
+  console.log('values');
+
+  $post(`${SERVER_URL}/restaurant/add`,
+    {
+      city: values.city,
+      description: values.description,
+      name: values.name
+    }, addAuthHeader(values.token))
+    .then((res) => {
+      // here will go if (res.status > 400) dispatch(__Error());
+
+      const { data } = res;
+      return dispatch(addRestaurantSuccess({
+        id: data.id,
+        city: data.city,
+        description: data.description,
+        name: data.name
+      }))
+    })
+    .catch((err) => {
+      console.log('err');
+      console.log(err);
+      return dispatch(addRestaurantError());
+    });
 };
 
 

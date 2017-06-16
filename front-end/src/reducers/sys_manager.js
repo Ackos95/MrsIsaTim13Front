@@ -3,7 +3,7 @@ import { Record } from 'immutable';
 import * as types from '../constants';
 
 const SystemManager = new Record({
-  created: { // created User - system or restaurant manager
+  createdManager: { // created User - system or restaurant manager
     id: null,
     email: null,
     userName: null,
@@ -27,12 +27,12 @@ const sysManagerReducer = ( state = initialState, action ) => {
   switch (action.type) {
     case types.ADD_SYS_MANAGER_SUCCESS:
       return state
-        .set('created',action.payload.createdManager) // novi men. sistema
+        .set('createdManager',action.payload.createdManager) // novi men. sistema
         .set('inProgress', false);
 
     case types.ADD_RES_MANAGER_SUCCESS:
       return state
-        .set('created',action.payload.createdManager) // novi men. restorana
+        .set('createdManager',action.payload.createdManager) // novi men. restorana
         .set('inProgress', false);
 
     case types.ADD_RESTAURANT_SUCCESS:

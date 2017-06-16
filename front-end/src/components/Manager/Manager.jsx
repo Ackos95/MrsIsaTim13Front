@@ -90,9 +90,12 @@ class Manager extends Component {
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Col xs={12} sm={12} md={6} lg={6}>
-          <Panel>
-            <Profile />
-          </Panel>
+              <div className='panel panel-default'>
+                <div className='panel-body'>
+                  <Profile/>
+                </div>
+              </div>
+
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
           { inProgress ? <Loading /> : null }

@@ -11,7 +11,7 @@ import Guest from './Guest/Guest';
 import Manager from './Manager/ManagerContainer';
 import Supplier from './Supplier/SupplierContainer';
 
-import SystemManager from './SystemManager/SystemManager';
+import SystemManager from './SystemManager/SystemManagerContainer';
 
 const NotFound = () => (
   <div>
