@@ -11,6 +11,9 @@ import RequestOffersTable from './Forms/RequestOffersTable';
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
+//import {Stage, Layer, Rect, Group} from 'konva';
+import {Layer, Rect, Stage, Group, Circle} from 'react-konva';
+
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Panel, PanelGroup, Badge } from 'react-bootstrap';
 import RequestItemsTable from "../common/Supplies/RequestItemsTable";
@@ -26,7 +29,8 @@ class Manager extends Component {
         selectedRequest: {offers: null},  // potražnja odabrana za edit/end
         showRequestList: false, // prikaz stavki za odabranu potražnju
         showOffersList: false,  // prikaz ponuda za odabranu potražnju
-        showRequestForm: false  // forma za novu potražnju
+        showRequestForm: false, // forma za novu potražnju
+        rects: [<MyRect w={50} h={50} x={50} y={42} draggable={true}/>]
       };
 
     this.addEmployee = this.addEmployee.bind(this);
@@ -42,6 +46,25 @@ class Manager extends Component {
 
     // funkcija za ažuriranje potražnje --- ne postoji u specifikaciji!
     this.updateRequest = this.updateRequest.bind(this);
+
+    this.addOne = this.addOne.bind(this);
+  }
+
+  addOne() {
+    console.log('lejer, stejdz, stejdz.getStage()');
+    console.log(this.refs.layer);
+    console.log(this.refs.stejdz);
+    console.log(this.refs.stejdz.getStage());
+    this.refs.layer.add(new Circle({
+      x: 100,
+      y: 100,
+      fill: 'blue',
+      radius: 30,
+      draggable: true
+    }));
+    this.state.rects.push(<MyRect w={50} h={50} x={100} y={142} draggable={true} />);
+    this.setState({rects: this.state.rects.concat([<MyRect w={50} h={50} x={100} y={142} draggable={true} />])});
+    //this.refs.layer.add(<MyRect w={50} h={50} x={100} y={142} draggable={false} />);
   }
 
   // funkcija za ažuriranje potražnje --- ne postoji u specifikaciji!
@@ -168,6 +191,14 @@ class Manager extends Component {
                 <RequestItemsTable request={this.state.selectedRequest} />
               </Form>
             </Panel>
+            <Panel collapsible header='Konva demo'>
+              <button onClick={this.addOne}>dodaj</button>
+              <Stage ref='stejdz' width={700} height={700}>
+                <Layer ref='layer'>
+                  {this.state.rects}
+                </Layer>
+              </Stage>
+            </Panel>
           </PanelGroup>
 
           {
@@ -190,5 +221,23 @@ class Manager extends Component {
     );
   }
 }
+
+class MyRect extends React.Component {
+  render() {
+    return (
+      <Group>
+        <Rect ref="rect"
+              width={this.props.w} height={this.props.w}
+              fill="green"
+              draggable={this.props.draggable}
+              x={this.props.x}
+              y={this.props.y}
+        />
+      </Group>
+    );
+  }
+}
+
+
 
 export default Manager;
