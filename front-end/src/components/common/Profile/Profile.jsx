@@ -1,5 +1,8 @@
 import React , { Component } from 'react';
 
+// import { SERVER_URL } from '../../../config';
+import { Link } from 'react-router-dom';
+
 class Profile extends Component {
 
     render() {
@@ -8,7 +11,18 @@ class Profile extends Component {
         <div className="panel panel-info">
           <div className="panel-heading">
             <h3 className="panel-title">
-							{ user.userName != null ? user.firstName + ' ' + user.lastName: 'No user is logged in' }
+							{
+							  user.userName !== null ? user.firstName + ' ' + user.lastName
+                :
+                <div>
+                  <h3>
+                    No user is logged in
+                    <hr/>
+                    {/*<a href={`${REACT_NESERVER_URL}/login`}>Login</a>*/}
+                    <Link to="/login">Log in</Link>
+                  </h3>
+                </div>
+							}
             </h3>
           </div>
     			<div className="panel-body">

@@ -6,14 +6,14 @@ import NewEmployeeForm from './Forms/NewEmployeeForm';
 import NewSupplierForm from './Forms/NewSupplierForm';
 import SupplyRequestForm from  './Forms/SupplyRequestForm';
 
-import RequestsTable from '../common/Supplies/RequestsTable/RequestsTable';
+import RequestsTable from '../common/Supplies/RequestsTable';
+import RequestOffersTable from './Forms/RequestOffersTable';
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
-import DocumentInput from './Forms/DocumentInput';
-
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Panel, Accordion, Badge } from 'react-bootstrap';
+import { Col, Panel, PanelGroup, Badge } from 'react-bootstrap';
+import RequestItemsTable from "../common/Supplies/RequestItemsTable";
 
 class Manager extends Component {
 
@@ -22,10 +22,11 @@ class Manager extends Component {
 
     this.state =
       {
-        gotRequests: false,
-        showRequestList: false,
-        selectedRequest: null,
-        showRequestForm: false
+        gotRequests: false, // stigle potražnje sa servera
+        selectedRequest: {offers: null},  // potražnja odabrana za edit/end
+        showRequestList: false, // prikaz stavki za odabranu potražnju
+        showOffersList: false,  // prikaz ponuda za odabranu potražnju
+        showRequestForm: false  // forma za novu potražnju
       };
 
     this.addEmployee = this.addEmployee.bind(this);
@@ -34,22 +35,33 @@ class Manager extends Component {
     this.addSupplyRequest = this.addSupplyRequest.bind(this);
 
     this.selected = this.selected.bind(this);
-    this.viewRequest = this.viewRequest.bind(this);
+
+    this.viewRequestItems = this.viewRequestItems.bind(this);
+    this.endSupplyRequest = this.endSupplyRequest.bind(this);
+    this.viewOffers = this.viewOffers.bind(this);
+
+    // funkcija za ažuriranje potražnje --- ne postoji u specifikaciji!
     this.updateRequest = this.updateRequest.bind(this);
   }
 
-  updateRequest() {
+  // funkcija za ažuriranje potražnje --- ne postoji u specifikaciji!
+  updateRequest(values) { }
 
+  viewOffers(index) {
+    console.log('viewOffers od ' + index + ' izgleda>>>');
+    console.log(this.props.requests[index]);
+    this.setState({ showOffersList: true });
+    this.setState({ selectedRequest: this.props.requests[index]});
   }
 
-  viewRequest(idx) {
-    console.log('viewRequest od ' + idx + ' izgleda>>>');
-    console.log(this.props.requests[idx]);
+  viewRequestItems(index) {
+    console.log('viewRequestItems od ' + index + ' izgleda>>>');
+    console.log(this.props.requests[index]);
 
-    this.setState({ selectedRequest: this.props.requests[idx]});
+    this.setState({ selectedRequest: this.props.requests[index]});
     this.setState({ showRequestForm: true }); // SET da bi panel reagovao
 
-    console.log(this.state.showRequestForm);
+    console.log('showRequestForm: ' + this.state.showRequestForm);
   }
 
   selected() { // samo prvi put se izvršava // poslije na REFRESH
@@ -84,79 +96,83 @@ class Manager extends Component {
     this.props.addSupplyRequest({ values });
   }
 
+  endSupplyRequest(chosenOfferIndex) {
+    console.log('\n<<<<< endSupplyRequest >>>>>');
+    console.log(this.state.selectedRequest.id);
+    console.log(this.state.selectedRequest.offers);
+    console.log(this.state.selectedRequest.offers[chosenOfferIndex]);
+    console.log(this.state.selectedRequest.offers[chosenOfferIndex].id);
+    console.log(this.props.user.token);
+
+    this.props.endSupplyRequest(this.state.selectedRequest.id,
+      this.state.selectedRequest.offers[chosenOfferIndex].id,
+      this.props.user.token);
+  }
+
+
 
   render() {
-    const { requests, created, createdRequest, inProgress, addEmployee } = this.props;
+    const { requests, createdUser, createdRequest, inProgress, addEmployee } = this.props;
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Col xs={12} sm={12} md={6} lg={6}>
-              <div className='panel panel-default'>
-                <div className='panel-body'>
-                  <Profile/>
-                </div>
+            <div className='panel panel-default'>
+              <div className='panel-body'>
+                <Profile/>
               </div>
-
+            </div>
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
           { inProgress ? <Loading /> : null }
-          <Accordion>
-            <Panel header="Employee addition" eventKey="1">
+          <PanelGroup>
+            <Panel collapsible header="Employee addition" eventKey="1" bsStyle="success">
               <Form onSubmit={addEmployee}>
                 {NewEmployeeForm}
               </Form>
             </Panel>
-            <Panel header="Supplier addition" eventKey="2">
+            <Panel collapsible header="Supplier addition" eventKey="2" bsStyle="success">
               <Form onSubmit={(values) => (this.addSupplier(values))}>
                 {NewSupplierForm}
               </Form>
             </Panel>
-            <Panel header="Supply request creation" eventKey="3">
+            <Panel collapsible header="Supply request creation" eventKey="3" bsStyle="success">
               <Form onSubmit={(values) => (this.addSupplyRequest(values))}>
                 {SupplyRequestForm}
               </Form>
             </Panel>
-            <Panel collapsible header='Requests overview' onSelect={this.selected}>
-              <RequestsTable requests={requests} viewRequest={this.viewRequest} />
+            <Panel collapsible header='Requests overview' onSelect={this.selected} eventKey="4" bsStyle="primary">
+              <RequestsTable requests={requests} viewRequestItems={this.viewRequestItems} viewOffers={this.viewOffers} />
             </Panel>
-            <Panel collapsible expanded={this.state.showRequestForm}
-                   header='Offer Form'>
+            {/* OFFERS preview form */}
+            <Panel header='Offers preview' collapsible expanded={this.state.showOffersList} eventKey="5" bsStyle="warning">
+              <button onClick={(e) => {
+                e.preventDefault();
+                this.setState({showOffersList: false});
+                this.setState({selectedRequest: {offers: null}});
+                console.log('showRequestForm na false i selectedRequest na null'); }}>
+                Cancel request ending
+              </button>
+              <RequestOffersTable offers={this.state.selectedRequest.offers} chooseOffer={this.endSupplyRequest}/>
+            </Panel>
+            {/* ITEMS preview form */}
+            <Panel header='Items preview' collapsible expanded={this.state.showRequestForm} eventKey="6" bsStyle="warning">
               <button onClick={(e) => {
                 e.preventDefault();
                 this.setState({showRequestForm: false});
-                this.setState({selectedRequest: null});
+                this.setState({selectedRequest: {offers: null}});
                 console.log('showRequestForm na false i selectedRequest na null'); }}>
-                Cancel submission
+                Close
               </button>
               <br/>
               <Form onSubmit={this.updateRequest}>
-                <table id="request-items">{
-                  this.state.selectedRequest !== undefined && this.state.selectedRequest !== null && this.state.selectedRequest.supplyItems.length > 0 ?
-                    <tbody>
-                    <tr>
-                      <th>Name</th>
-                      <th>amount</th>
-                      <th>unit</th>
-                    </tr>
-                    {
-                      this.state.selectedRequest.supplyItems.map((item, index) => {
-                        return <DocumentInput key={index} index={index} item={item}/>
-                      })}
-                    </tbody>
-                    :
-                    <tbody>
-                    <tr>
-                      <th> No selected supply request. Please select one from the panel above</th>
-                    </tr>
-                    </tbody>
-                }
-                </table>
-                {/*{NewOfferForm}*/}
+                <RequestItemsTable request={this.state.selectedRequest} />
               </Form>
             </Panel>
-          </Accordion>
+          </PanelGroup>
+
           {
-            created.id !== null ?
-            <Badge>Napravljen user: {`${created.firstName}`}</Badge>
+            createdUser !== null && createdUser.id !== null ?
+            <Badge>Napravljen user: {`${createdUser.firstName}`}</Badge>
             :
             null
           }
