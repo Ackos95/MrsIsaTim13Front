@@ -4,6 +4,7 @@ import Login from './Login';
 import { login } from '../../actions/auth';
 
 const mapStateToProps = state => ({
+	state: state,
   user: state.auth.user,
   inProgress: state.auth.inProgress,
 });

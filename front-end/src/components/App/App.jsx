@@ -22,6 +22,8 @@ const App = ({ user }) => (
     }
     <Link to="/login">Log in</Link>
     <br/>
+		<Link to="/register">Sign up</Link>
+		<br/>
     <Link to="/guest">Guest</Link>
     <br/>
     <Link to="/manager">Manager</Link>
@@ -34,13 +36,13 @@ const App = ({ user }) => (
 
 App.propTypes = {
   user: PropTypes.object.isRequired,
-}
+};
 
 const mapStateToProps = (state) => ({
   user: state.auth.user
 });
 
 const mapDispatchToProps = (dispatch) => ({
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

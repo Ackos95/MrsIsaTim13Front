@@ -27,3 +27,9 @@ input {
     border: 1px solid black;
     padding: 5px;
 }
+
+#restaurants-reservation-table, #restaurants-reservation-table>tbody>tr,
+#restaurants-reservation-table>tbody>tr>td {
+    border: 0;
+    padding: 7px;
+}

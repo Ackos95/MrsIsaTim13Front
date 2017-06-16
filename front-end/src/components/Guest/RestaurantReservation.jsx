@@ -63,7 +63,7 @@ class RestaurantReservation extends Component {
 							<div>
 							{
 								this.state.reservationStep === 1 ?
-									<table id="restaurants-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px', border: '1px solid black'}} >
+									<table id="restaurants-reservation-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px', border: '1px solid black'}} >
 										<tbody><tr><td>Ime</td><td>{restaurant.name}</td></tr>
 										<tr><td>Datum i vrijeme</td>
 											<td><input id='input-date-time' type='datetime-local' min='2017-06-30T09:00:00' /></td>
@@ -75,7 +75,7 @@ class RestaurantReservation extends Component {
 										</tbody>
 									</table>
 									:
-									<table id="restaurants-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px'}} >
+									<table id="restaurants-reservation-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px'}} >
 										<tbody><tr><td>Ime</td><td>{restaurant.name}</td></tr>
 										<tr><td>Datum i vrijeme</td>
 											<td>{this.state.dateTime}</td>
