@@ -68,9 +68,9 @@ class GuestProfile extends Component {
 		return <tr key={ index } id={ index } >
 			<td>{friendRequest.firstName}</td>
 			<td>{friendRequest.lastName}</td>
-			<td><Button bsStyle="success" style={{width: 100 + '%'}} onClick={() => this.acceptFriend(friendRequest)}>
+			<td><Button bsStyle="success" style={{width: 100 + '%', borderRadius: 0}} onClick={() => this.acceptFriend(friendRequest)}>
 				Accept </Button></td>
-			<td><Button bsStyle="danger" style={{width: 100 + '%'}} onClick={() => this.declineFriend(friendRequest)}>
+			<td><Button bsStyle="danger" style={{width: 100 + '%', borderRadius: 0}} onClick={() => this.declineFriend(friendRequest)}>
 				Decline </Button></td>
 		</tr>
 	}

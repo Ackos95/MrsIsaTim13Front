@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import Loading from '../common/Loading/Loading';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col } from 'react-bootstrap';
+import { Col , Button } from 'react-bootstrap';
 import { buttonRowStyle, buttonStyle, emptyThStyle, tdStyle } from './css/css'
 import './css/guest.css';
 
@@ -20,7 +20,16 @@ class Guest extends Component {
 		this.getPotentialFriends = this.getPotentialFriends.bind(this);
 		this.getCurrentFriends = this.getCurrentFriends.bind(this);
 		this.addFriend = this.addFriend.bind(this);
+		this.makeCurrentFriendsTable = this.makeCurrentFriendsTable.bind(this);
 		this.makePotentialFriendsTable = this.makePotentialFriendsTable.bind(this);
+		this.removeFriend = this.removeFriend.bind(this);
+	}
+	
+	removeFriend(unwantedFriend) {
+		console.log("removeFriend");
+		console.log(unwantedFriend);
+		
+		this.props.removeFriend(unwantedFriend, this.props.user.token);
 	}
 	
 	addFriend(newFriend) {
@@ -47,11 +56,21 @@ class Guest extends Component {
 		this.props.getPotentialFriends(e.target.value, this.props.user.token);
 	}
 	
+	makeCurrentFriendsTable (currentFriend, index) {
+		return <tr key={index}>
+			<td style={tdStyle}>{currentFriend.firstName}</td>
+			<td style={tdStyle}>{currentFriend.lastName}</td>
+			<td style={tdStyle}>{`667`}</td>
+			<td id="td-button"><Button bsStyle="danger" style={{borderRadius: 0, width: 100 + '%'}} onClick={() => this.removeFriend(currentFriend) }>
+				Remove friend </Button></td>
+		</tr>
+	}
+	
 	makePotentialFriendsTable (potentialFriend, index ) {
 		return <tr key={ index } id={ index } >
 			<td>{potentialFriend.firstName}</td>
 			<td>{potentialFriend.lastName}</td>
-			<td id="td-button"><button onClick={() =>  this.addFriend(potentialFriend) }> Add friend </button></td>
+			<td id="td-button"><Button bsStyle="success" style={{borderRadius: 0, width: 100 + '%'}} onClick={() =>  this.addFriend(potentialFriend) }> Add friend </Button></td>
 		</tr>
 	}
 	
@@ -68,17 +87,11 @@ class Guest extends Component {
 												style={buttonStyle}> My friends </button>
 							</div>
 							{ gettingCurrentFriends ? <Loading /> :
-							<table id="visited-restaurants-table">
+							<table id="current-friends-table">
 								{
 									currentFriends !== undefined && currentFriends.length > 0 ?
-										<tbody><tr><th>Name</th><th>Last name</th><th>Visits</th></tr>
-										{ currentFriends.map(function (currentFriend, index) {
-											return <tr key={index}>
-												<td style={tdStyle}>{currentFriend.firstName}</td>
-												<td style={tdStyle}>{currentFriend.lastName}</td>
-												<td style={tdStyle}>{`667`}</td>
-											</tr>
-										}) }
+										<tbody><tr><th>Name</th><th>Last name</th><th>Visits</th><th>Friend removal</th></tr>
+										{ currentFriends.map(this.makeCurrentFriendsTable) }
 										</tbody>
 										: <tbody><tr><th style={emptyThStyle}> Current friends </th></tr></tbody>
 								}

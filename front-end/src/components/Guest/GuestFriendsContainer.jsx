@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPotentialFriends, getCurrentFriends, addFriend, removePotentialFriend } from '../../actions/guest';
+import { getPotentialFriends, getCurrentFriends, addFriend,
+	removePotentialFriend, removeFriend} from '../../actions/guest';
 
 import GuestFriends from './GuestFriends';
 
@@ -13,7 +14,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getPotentialFriends,
 	getCurrentFriends,
 	addFriend,
-	removePotentialFriend
+	removePotentialFriend,
+	removeFriend
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestFriends);

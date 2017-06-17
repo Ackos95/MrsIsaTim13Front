@@ -33,3 +33,7 @@ input {
     border: 0;
     padding: 7px;
 }
+
+#restaurants-table {
+    margin-bottom: 10px;
+}

@@ -2,6 +2,36 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+export const removeFriendFromList = ( unwantedFriend ) => ({
+	type: types.REMOVE_FRIEND,
+	payload: unwantedFriend
+});
+
+export const removeFriend = ( unwantedFriend, token ) => dispatch => {
+	
+	console.log("\nremoveFriend . . . unwantedFriend");
+	console.log(unwantedFriend);
+	
+	dispatch(removeFriendFromList(unwantedFriend));
+	
+	$post(`${SERVER_URL}/guest/friends/deleteFriend`, unwantedFriend, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400)
+				console.log("\n delete friend   > > E R R O R > >   ");
+			
+			const { data } = res;
+			console.log("\n no errors then promise > > delete friend > >");
+			console.log(data);
+			console.log(res);
+			console.log("iznad je console.log(data) i res");
+			
+		})
+		.catch((err) => {
+			console.log("\nerror catch promise > > delete friend >> > >> " + err);
+		});
+	
+	
+};
 
 export const removeFriendRequest = (requestForRemoval) => ({
 	type: types.REMOVE_FRIEND_REQUEST,
