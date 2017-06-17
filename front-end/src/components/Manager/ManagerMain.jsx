@@ -10,7 +10,6 @@ import RequestOffersTable from './Forms/RequestOffersTable';
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
-// BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Panel, PanelGroup, Badge } from 'react-bootstrap';
 
 import RequestItemsTable from "../common/Supplies/RequestItemsTable";

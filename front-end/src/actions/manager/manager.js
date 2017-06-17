@@ -201,4 +201,4 @@ export const endSupplyRequest = ( requestId, chosenId, token ) => dispatch => {
       console.log(err);
       return dispatch(endSupplyRequestError());
     });
-}
+};

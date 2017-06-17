@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import Konva from 'konva';
-import {Rect} from 'react-konva';
 
+import {Rect, Group, Text } from 'react-konva';
+
+// credits: http://frontowo.pl/blog/draw-with-reactkonva
 class Table extends Component {
 
   constructor() {
@@ -32,22 +33,27 @@ class Table extends Component {
     this.setState({ x, y });
   }
 
-  handleClick() {
-    this.setState({
-      color: Konva.Util.getRandomColor()
-    });
-  }
-
   render() {
     return (
-      <Rect
-        key={`rect-${this.props.id}`} ref={this.props.id}
-        width={this.props.width} height={this.props.height}
-        x={this.state.x} y={this.state.y}
-        fill={this.state.color} draggable="true"
-        onDragEnd={()=>this.handleDrag(this.props.id)}
-        onClick={()=>this.handleClick()}
-      />
+      <Group draggable={true}
+             x={this.state.x} y={this.state.y}
+             ref={this.props.id}
+             key={`rect-${this.props.id}`}
+             onDragEnd={()=>this.handleDrag(this.props.id)}
+             onClick={()=>this.props.tableClick({id: this.props.id, x: this.state.x, y: this.state.y})}
+          onMouseEnter={this.props.cursorPointer}
+          onMouseLeave={this.props.cursorDefault}>
+        <Rect
+          width={this.props.width} height={this.props.height}
+          fill={this.state.color}
+          stroke={'black'} strokeWidth={2}
+        />
+        <Text
+          text={`${this.props.chairs}`} fill='red'
+          fontSize={30}
+          padding={25}
+        />
+      </Group>
     );
   }
 }
