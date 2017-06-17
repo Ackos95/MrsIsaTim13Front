@@ -1,8 +1,8 @@
-import * as types from '../constants';
+import * as types from '../../constants/index';
 
-import { SERVER_URL } from '../config';
+import { SERVER_URL } from '../../config/index';
 
-import { $post, $put, getToken, addAuthHeader } from '../utils/http';
+import { $post, $put, getToken, addAuthHeader } from '../../utils/http';
 //
 export const addEmployeeStart = () => ({
   type: types.ADD_EMPLOYEE_STARTED

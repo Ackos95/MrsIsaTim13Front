@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addEmployee, addSupplier, addSupplyRequest, endSupplyRequest } from '../../actions/manager';
+import { addEmployee, addSupplier, addSupplyRequest, endSupplyRequest } from '../../actions/manager/manager';
 import { getRequests } from '../../actions/supplies';
 
-import Manager from './Manager';
+import ManagerMain from './ManagerMain';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
@@ -23,4 +23,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   getRequests,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Manager);
+export default connect(mapStateToProps, mapDispatchToProps)(ManagerMain);
