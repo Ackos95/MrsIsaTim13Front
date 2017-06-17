@@ -3,6 +3,48 @@ import { SERVER_URL } from '../config';
 
 import { $get, $post, getToken, addAuthHeader } from '../utils/http';
 
+
+export const editInfoSuccess = (editedUserInfo) => ({
+	type: types.EDIT_INFO,
+	payload: editedUserInfo
+});
+
+export const editInfo = (userInfo, userToken) => dispatch => {
+	
+	console.log("\n actions auth - edit info actions auth");
+	console.log(userInfo);
+	
+	$post(`${SERVER_URL}/guest/update`, userInfo, addAuthHeader(userToken))
+	.then((res) => {
+		if (res.status > 400)
+			console.log("error status : " + res.status + ", errorStatusText : " +  res.statusText);
+		
+		const { data } = res;
+		console.log("\ndata res editInfo-a"); console.log(data); console.log(res); console.log("data res editInfo-a");
+		
+		if (data!==null && data!==undefined && data!=='') {
+			return dispatch(editInfoSuccess(
+				{
+					id: data.id,
+					email: data.email,
+					userName: data.userName,
+					// token: getToken(data.userName, data.password), /* zakomentarisao jer ne dobijam password*/
+					firstName: data.firstName,
+					lastName: data.lastName
+				}
+			) );
+		}
+		
+	})
+		.catch((err) => {
+			console.log("\nactions auth.js linija 40.");
+			console.log("\nERROR edit info ERROR > " + err);
+			console.log("\nactions auth.js linija 42.");
+			return null;
+			// return dispatch(registrationError(err));
+		})
+};
+
 export const loginSuccess = (user) => ({
   type: types.LOGIN_SUCCESS,
   payload: { user }
@@ -26,7 +68,13 @@ export const login = ({ userName, password }) => dispatch => {
   
   $get(`${SERVER_URL}/users/check-login`, null, addAuthHeader(getToken(userName, password)))
   .then((res) => {
-    // here will go if (res.status > 400) dispatch(loginError());
+  	
+  	console.log();console.log();
+		console.log("login res");console.log("login res");
+		console.log(res);console.log();
+		
+  	
+    if (res.status > 400) dispatch(loginError());
 
     const { data } = res;
     return dispatch(loginSuccess({

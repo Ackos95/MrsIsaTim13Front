@@ -22,6 +22,10 @@ const initialState = new Auth();
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
 
+		case types.EDIT_INFO:
+			return state.set('user', {id: action.payload.id, email: action.payload.email, userName: action.payload.userName,
+				token: state.user.token, firstName: action.payload.firstName, lastName: action.payload.lastName });
+		
     case types.LOGIN_SUCCESS:
       // store token into storage so it doesn't disapear when page is refreshed
       // localStorage.setItem('token', action.payload.user.token);

@@ -29,9 +29,9 @@ class Guest extends Component {
 					<Row className="clearfix">
 						<Col sm={12}>
 							<Nav bsStyle="tabs">
-								<NavItem eventKey="first"> Prijatelji </NavItem>
-								<NavItem eventKey="second"> Restorani </NavItem>
-								<NavItem eventKey="third"> Moj profil </NavItem>
+								<NavItem eventKey="first"> Friends </NavItem>
+								<NavItem eventKey="second"> Restaurants </NavItem>
+								<NavItem eventKey="third"> My profile </NavItem>
 								<Nav pullRight> <NavItem href="#">Log out</NavItem>
 								</Nav>
 							</Nav>

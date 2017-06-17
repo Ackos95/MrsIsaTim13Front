@@ -3,7 +3,6 @@ import { Record } from 'immutable';
 import filter from 'lodash/filter'
 
 const Guest = new Record({
-  dirty: false,
 	gettingVisitedRests : false,
 	gettingRestsByName : false,
 	restaurants : [],
@@ -24,10 +23,7 @@ const initialState = new Guest();
 
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
-
-    case types.CHANGE_NAME:
-      return state.set('dirty', true);
-	
+	 
 		/** VISITED RESTAURANTS */
 		case types.GET_VISITED_RESTAURANTS_START:
 			return state.set('gettingVisitedRests', true);

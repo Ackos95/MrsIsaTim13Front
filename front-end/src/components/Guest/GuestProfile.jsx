@@ -92,7 +92,7 @@ class GuestProfile extends Component {
 				<Col xs={12} sm={12} md={6} lg={6}>
 					<div className='panel panel-default'>
 						<div className='panel-body'>
-							<Profile/>
+							<Profile isEditable={true} />
 							<div className="panel panel-info">
 							{
 								gettingFriendRequests ? <Loading/> :

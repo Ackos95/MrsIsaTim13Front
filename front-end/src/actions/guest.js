@@ -2,6 +2,7 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+
 export const removeFriendRequest = (requestForRemoval) => ({
 	type: types.REMOVE_FRIEND_REQUEST,
 	payload: requestForRemoval

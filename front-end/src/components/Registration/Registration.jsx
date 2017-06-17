@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form } from 'react-form';
 import { PropTypes } from 'prop-types';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 import RegistrationFields from './RegistrationFields';
 import Loading from '../common/Loading/Loading';
