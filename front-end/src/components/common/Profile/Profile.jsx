@@ -1,6 +1,9 @@
 import React , { Component } from 'react';
 import { Button } from 'react-bootstrap';
 
+// import { SERVER_URL } from '../../../config';
+import { Link } from 'react-router-dom';
+
 class Profile extends Component {
 	
 	constructor(props) {
@@ -22,14 +25,6 @@ class Profile extends Component {
 	saveInfo() {
 		let oldUser = this.props.user;
 		let newUserName = document.getElementById("newUserName");
-		
-		console.log(this.props.state);
-		console.log("newUserName.value");
-		console.log(newUserName.value);
-		console.log("newUserName");
-		console.log(newUserName);
-		console.log();
-		
 		let newFirstName = document.getElementById("newFirstName");
 		let newLastName = document.getElementById("newLastName");
 		let newEmail = document.getElementById("newEmail");
@@ -56,7 +51,18 @@ class Profile extends Component {
 			<div className="panel panel-info">
 				<div className="panel-heading">
 					<h3 className="panel-title">
-						{ user.userName != null ? user.firstName + ' ' + user.lastName: 'No user is logged in' }
+						{
+							user.userName !== null ? user.firstName + ' ' + user.lastName
+								:
+								<div>
+									<h3>
+										No user is logged in
+										<hr/>
+										{/*<a href={`${REACT_NESERVER_URL}/login`}>Login</a>*/}
+										<Link to="/login">Log in</Link>
+									</h3>
+								</div>
+						}
 					</h3>
 				</div>
 				<div className="panel-body">
@@ -110,7 +116,6 @@ class Profile extends Component {
 				</div>
 			</div>
 			);
-
     };
 }
 

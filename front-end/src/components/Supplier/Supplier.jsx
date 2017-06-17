@@ -7,9 +7,10 @@ import { Form } from 'react-form';
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
-import RequestsTable from '../common/Supplies/RequestsTable/RequestsTable';
+import RequestsTable from '../common/Supplies/RequestsTable';
 
 import NewOfferForm from './Forms/NewOfferForm';
+import RequestItemsTable from "../common/Supplies/RequestItemsTable";
 
 class Supplier extends Component {
   constructor(props) {
@@ -38,7 +39,7 @@ class Supplier extends Component {
   }
 
   viewRequest(idx) {
-    console.log('viewRequest od ' + idx + ' izgleda>>>');
+    console.log('viewRequestItems od ' + idx + ' izgleda>>>');
     console.log(this.props.requests[idx]);
 
     this.setState({ selectedRequest: this.props.requests[idx]});
@@ -72,7 +73,7 @@ class Supplier extends Component {
           <div>
             <Panel collapsible header='Requests overview' onSelect={this.selected} expanded={this.state.showRequestList}>
               {/*{<Button onClick={this.selected} style={{width: '100%'}}>Requests overview</Button>}*/}
-              <RequestsTable requests={requests} viewRequest={this.viewRequest} />
+              <RequestsTable requests={requests} viewRequestItems={this.viewRequest} isRestaurantManager={false} />
               <hr/>
             </Panel>
             <Panel collapsible expanded={this.state.showOfferForm}
@@ -86,31 +87,7 @@ class Supplier extends Component {
               </button>
               <br/>
               <Form onSubmit={this.sendOffer}>
-                <table id="request-items">{
-                  this.state.selectedRequest !== undefined && this.state.selectedRequest !== null && this.state.selectedRequest.supplyItems.length > 0 ?
-                    <tbody>
-                    <tr>
-                      <th>Name</th>
-                      <th>amount</th>
-                      <th>unit</th>
-                    </tr>
-                    {
-                      this.state.selectedRequest.supplyItems.map((item, index) => {
-                        return <tr key={ index }>
-                          <td>{`${item.itemName}`}</td>
-                          <td>{`${item.amount}`}</td>
-                          <td>{`${item.unit}`}</td>
-                        </tr>
-                      })}
-                    </tbody>
-                    :
-                    <tbody>
-                      <tr>
-                        <th> No selected supply request. Please select one from the panel above</th>
-                      </tr>
-                    </tbody>
-                }
-                </table>
+                <RequestItemsTable request={this.state.selectedRequest} />
                 {NewOfferForm}
               </Form>
               {

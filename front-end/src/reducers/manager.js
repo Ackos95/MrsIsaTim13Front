@@ -3,7 +3,7 @@ import { Record } from 'immutable';
 import * as types from '../constants';
 
 const RestaurantManager = new Record({
-  created: { // created User - employee or supplier
+  createdUser: { // created User - employee or supplier
     id: null,
     email: null,
     userName: null,
@@ -14,6 +14,14 @@ const RestaurantManager = new Record({
     shoeSize: null
   },
   createdRequest: { // created supply request
+    id: null,
+    publishingDate: null,
+    endingDate: null,
+    ended: null,
+    restaurant: { id: null },
+    offers: []
+  },
+  endedRequest: {
     id: null,
     publishingDate: null,
     endingDate: null,
@@ -38,18 +46,29 @@ const managerReducer = ( state = initialState, action ) => {
         .set('created',action.payload.created) // novi dobavljač
         .set('inProgress', false);
 
+    case types.END_SUP_REQ_SUCCESS:
+      return state
+        .set('endedRequest', action.payload.endedRequest)
+        .set('inProgress', false);
+
     case types.ADD_SUPPLY_REQUEST_SUCCESS:
       return state
         .set('createdRequest',action.payload.createdRequest) // nova potražnja
         .set('inProgress', false);
 
+
     case types.ADD_EMPLOYEE_ERROR:
     case types.ADD_SUPPLIER_ERROR:
-    case types.ADD_SUPPLY_REQUEST_ERROR:
+    case types.GET_REQUESTS_ERROR:
+    case types.END_SUP_REQ_ERROR:        // END
+    case types.ADD_SUPPLY_REQUEST_ERROR: // ADD
+    case types.GET_REQUESTS_SUCCESS: // poseban slučaj za menadžera - pošto uzima request-ove iz supplieS reducera
       return state.set('inProgress', false);
 
     case types.ADD_EMPLOYEE_STARTED:
     case types.ADD_SUPPLIER_STARTED:
+    case types.GET_REQUESTS_STARTED:
+    case types.END_SUP_REQ_STARTED:
     case types.ADD_SUPPLY_REQUEST_STARTED:
       return state.set('inProgress', true);
 

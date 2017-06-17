@@ -8,7 +8,7 @@ import Login from './Login/LoginContainer';
 import Registration from './Registration/RegistrationContainer';
 import RegistrationConfirmation from './Registration/RegistrationConfirmationContainer';
 import Guest from './Guest/Guest';
-import Manager from './Manager/ManagerContainer';
+import Manager from './Manager/Manager'; // tabovi za menadzera
 import Supplier from './Supplier/SupplierContainer';
 
 import SystemManager from './SystemManager/SystemManagerContainer';

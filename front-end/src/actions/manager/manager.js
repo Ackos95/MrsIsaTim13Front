@@ -1,8 +1,8 @@
-import * as types from '../constants';
+import * as types from '../../constants/index';
 
-import { SERVER_URL } from '../config';
+import { SERVER_URL } from '../../config/index';
 
-import { $post, getToken, addAuthHeader } from '../utils/http';
+import { $post, $put, getToken, addAuthHeader } from '../../utils/http';
 //
 export const addEmployeeStart = () => ({
   type: types.ADD_EMPLOYEE_STARTED
@@ -164,3 +164,41 @@ export const addSupplyRequest = ({ values }) => dispatch => {
       return dispatch(addSupplyRequestError());
     });
 };
+
+// END SUPPLY REQUEST - endSupplyRequest
+
+export const endSupplyRequestStart = () => ({
+  type: types.END_SUP_REQ_STARTED
+});
+
+export const endSupplyRequestError = () => ({
+  type: types.END_SUP_REQ_ERROR
+});
+
+export const endSupplyRequestSuccess = ( endedRequest ) => ({
+  type: types.END_SUP_REQ_SUCCESS,
+  payload: { endedRequest }
+});
+
+export const endSupplyRequest = ( requestId, chosenId, token ) => dispatch => {
+  dispatch(endSupplyRequestStart());
+  $put(`${SERVER_URL}/manager/end?request=${requestId}&chosen=${chosenId}`,
+    {}, addAuthHeader(token))
+    .then((res) => {
+      // here will go if (res.status > 400) dispatch(__Error());
+
+      const { data } = res;
+      return dispatch(endSupplyRequestSuccess({
+        id: data.id,
+        dateFrom: data.publishingDate,
+        dateTo: data.endingDate,
+        ended: data.ended,
+        restaurant: data.restaurant
+      }))
+    })
+    .catch((err) => {
+      console.log('err');
+      console.log(err);
+      return dispatch(endSupplyRequestError());
+    });
+}
