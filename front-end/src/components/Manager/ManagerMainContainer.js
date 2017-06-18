@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
   createdRequest: state.manager.createdRequest,
   endedRequest: state.manager.endedRequest,
   inProgress: state.manager.inProgress,
+  inProgressReqs: state.supplies.inProgress,
   requests: state.supplies.requests,
 });
 
@@ -20,7 +21,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   addSupplier,
   addSupplyRequest,
   endSupplyRequest,
-  getRequests,
+  getRequests, // from  ** actions/supplies **
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManagerMain);

@@ -111,7 +111,7 @@ class ManagerMain extends Component {
 
 
   render() {
-    const { requests, createdUser, createdRequest, inProgress, addEmployee } = this.props;
+    const { requests, createdUser, createdRequest, inProgress, inProgressReqs, addEmployee } = this.props;
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Col xs={12} sm={12} md={6} lg={6}>
@@ -122,7 +122,7 @@ class ManagerMain extends Component {
           </div>
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
-          { inProgress ? <Loading /> : null }
+          { inProgress || inProgressReqs ? <Loading /> : null }
           <PanelGroup>
             <Panel collapsible header="Employee addition" eventKey="1" bsStyle="success">
               <Form onSubmit={addEmployee}>

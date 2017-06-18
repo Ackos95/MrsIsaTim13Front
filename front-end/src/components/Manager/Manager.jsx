@@ -5,17 +5,19 @@ import {Tab, Tabs} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import ManagerMain from './ManagerMainContainer';
-import TableConfiguration from './RestaurantManagement/TableConfigurationContainer';
+import TableConfig from './RestaurantManagement/TableConfigContainer';
 
 class Manager extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = { activeTab: 1 };
     // Bind the handleSelect function already here (not in the render function)
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   handleSelect(selectedTab) {
+    // if (selectedTab === 2)
+    //   getTables();
     this.setState({
       activeTab: selectedTab
     });
@@ -29,7 +31,7 @@ class Manager extends React.Component {
           <ManagerMain/>
         </Tab>
         <Tab eventKey={2} title="Table configuration">
-          <TableConfiguration/>
+          <TableConfig/>
         </Tab>
         <Tab eventKey={3} title="Employees management">
           <div>
@@ -37,7 +39,7 @@ class Manager extends React.Component {
             <Link to="http://www.jqwidgets.com/react/react-scheduler/react-scheduler-timelineviews.htm">prvi - jednostavniji</Link>
             <br/>
             <Link to='https://github.com/intljusticemission/react-big-calendar'>
-              drugi - mocniji?
+              drugi - vise funkcionalnosti?
             </Link>
           </div>
         </Tab>
