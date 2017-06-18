@@ -2,6 +2,34 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+export const getTableConfigurationSuccess = ( configuration ) => ({
+	type: types.TABLE_CONFIGURATION_SUCCESS,
+	payload: configuration
+});
+
+export const getTableConfiguration = ( restaurantOnReservation, token ) => dispatch => {
+	
+	console.log("\ngetTableConfiguration   S T A R T S");
+	console.log(restaurantOnReservation);
+	
+	$post(`${SERVER_URL}/restaurant/configuration`, restaurantOnReservation, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400)
+				console.log("\ngetTableConfiguration status > 400 . . . E R R O R\n");
+			
+			const { data } = res;
+			console.log("\nres pa data"); console.log(res); console.log(data); console.log("res pa data");
+			return dispatch(getTableConfigurationSuccess({
+				configuration : data
+			}));
+		})
+		.catch((err) => {
+			console.log("\ngetTableConfiguration promise caught E R R O R\n");
+			console.log(err); 																console.log();
+		});
+	
+};
+
 export const removeFriendFromList = ( unwantedFriend ) => ({
 	type: types.REMOVE_FRIEND,
 	payload: unwantedFriend
@@ -29,8 +57,6 @@ export const removeFriend = ( unwantedFriend, token ) => dispatch => {
 		.catch((err) => {
 			console.log("\nerror catch promise > > delete friend >> > >> " + err);
 		});
-	
-	
 };
 
 export const removeFriendRequest = (requestForRemoval) => ({

@@ -16,18 +16,27 @@ const Guest = new Record({
 	friendRequests : [],
 	acceptDeclineState : false,
 	restaurantOnReservation : {},
-	reservationStarted : false
+	reservationStarted : false,
+	restaurantConfiguration : undefined
 });
 
 const initialState = new Guest();
 
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
-	 
-		case types.REMOVE_FRIEND:
+	
+	
+		/** TABLE CONFIG SUCCESS */
+		case types.TABLE_CONFIGURATION_SUCCESS:
+			return state.set("restaurantConfiguration", action.payload);
+	
+	
+		/** REMOVE FRIEND */
+  	case types.REMOVE_FRIEND:
 			return state.set("currentFriends",
 				filter(state.currentFriends, (unwantedFriend) => unwantedFriend.id !== action.payload.id ) );
-  	
+			
+			
 		/** VISITED RESTAURANTS */
 		case types.GET_VISITED_RESTAURANTS_START:
 			return state.set('gettingVisitedRests', true);
