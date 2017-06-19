@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 import Loading from '../common/Loading/Loading';
-import RestaurantReservation from './RestaurantReservation';
+import RestaurantReservation from './RestaurantReservationContainer';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Button } from 'react-bootstrap';

@@ -18,6 +18,18 @@ class RestaurantReservation extends Component {
 		
 		this.choseDateAndTime = this.choseDateAndTime.bind(this);
 		this.selectTable = this.selectTable.bind(this);
+		this.nextStep = this.nextStep.bind(this);
+		this.previousStep = this.previousStep.bind(this);
+		
+		this.makeRestaurantConfigurationTable = this.makeRestaurantConfigurationTable.bind(this);
+	}
+	
+	nextStep() {
+		this.setState({reservationStep : this.state.reservationStep + 1});
+	}
+	
+	previousStep() {
+		this.setState({reservationStep : this.state.reservationStep - 1});
 	}
 	
 	getRestaurantsByName(e) {
@@ -50,14 +62,28 @@ class RestaurantReservation extends Component {
 	}
 	
 	selectTable() {
-		console.log("selectTable");
-		console.log("this.state");
+		console.log("\nselectTable funkcija");
+		
+		this.setState({reservationStep : this.state.reservationStep + 1});
+		
+		console.log("this.state, a prije smo povecali reservation step za 1");
 		console.log(this.state);
+		
+		this.props.getTableConfiguration(this.state.restaurantOnReservation, this.props.user.token);
+		
+	}
+	
+	makeRestaurantConfigurationTable (table, index ) {
+		return <tr key={ index } id={ index } >
+			<td id="td-button"><Button bsStyle="success" style={{borderRadius: 0, width: 100 + '%'}}
+																 onClick={() => console.log(table) }> {table.reon} </Button></td>
+		</tr>
 	}
 	
 	render() {
-		// const { gettingRestsByName, restaurantsByName } = this.props.guest;
 		const restaurant = this.state.restaurantOnReservation;
+		
+		const restaurantConfiguration = this.props.guest.restaurantConfiguration;
 		return (
 					<div className='panel panel-default'>
 							<div>
@@ -91,15 +117,40 @@ class RestaurantReservation extends Component {
 							<div>
 							{	this.state.reservationStep === 2 ?
 								<div>
-									<Button onClick={this.selectTable}>Popravite unijete podatke</Button>
-									<Button onClick={() => this.setState({reservationStep : this.state.reservationStep + 1}) }>Dalje</Button>
+									<Button onClick={ this.previousStep }>Popravite unijete podatke</Button>
+									<Button onClick={ this.selectTable }>Dalje</Button>
 								</div> :
-								<h2>Odabir stola</h2> }
+								<h2> Odabir stola</h2>
+							}
 							</div>
 							<div>
 							{	this.state.reservationStep === 3 ?
-								<Button onClick={() => this.setState({reservationStep : this.state.reservationStep + 1})}>Korak 4</Button> :
-								<h2>nije 3</h2> }
+								<div>
+									{ restaurantConfiguration !== null && restaurantConfiguration !== undefined
+										?
+										<div> { console.log(restaurantConfiguration) }
+											{ restaurantConfiguration.configuration.tables !== null &&
+												restaurantConfiguration.configuration.tables !== undefined ?
+												<table id="table-configuration">
+													<tbody>
+													<tr>
+														<th>A a a</th>
+													</tr>
+													{ restaurantConfiguration.configuration.tables.map(this.makeRestaurantConfigurationTable) }
+													</tbody>
+												</table> :
+												<h3> restaurantConfiguration.tables == null && restaurantConfiguration.tables == undefined</h3>
+											}
+											<Button onClick={ this.nextStep }>Korak 4</Button>
+										</div>
+										:
+										<div>
+											<h4>konfiguracija NULL ili UNDEFINED</h4>
+										</div>
+									}
+								</div>
+								: <h2>nije 3</h2>
+							}
 							</div>
 						<div className='panel-body'>
 							{ this.state.reservationStep === 4 ? <Button onClick={() => this.setState({reservationStep: 1})}>
