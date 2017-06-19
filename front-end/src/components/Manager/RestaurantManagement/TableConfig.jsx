@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 
 import { Layer, Stage, Rect } from 'react-konva';
 
@@ -12,13 +12,10 @@ class TableConfig extends Component {
   constructor() {
     super();
 
-    this.state = {
-      chairCount: 0
-    }
-
     this.changeTableColor = this.changeTableColor.bind(this);
     this.chairCountChange = this.chairCountChange.bind(this);
     this.addTable = this.addTable.bind(this);
+    this.deleteTable = this.deleteTable.bind(this);
   }
 
   /**
@@ -28,32 +25,46 @@ class TableConfig extends Component {
     this.props.addTable();
   }
 
+  deleteTable() {
+    this.props.deleteTable();
+  }
+
+  sendTableConfig() {
+    this.props.sendTableConfig();
+  }
+
   chairCountChange(e) {
-    this.setState({chairCount: e.target.value});
     this.props.updateChairCount(Number(e.target.value));
   }
 
   changeTableColor(event) {
     this.props.updateColorIndex(event.target.selectedIndex);
-    // console.log(event.target.selectedIndex);
-    // console.log('selected BILO: ' + this.state.selectedOption + ' a postaje: ' + event.target.value);
-    // this.setState({ selectedOption: event.target.value });
-    // this.setState({tableColor: this.getColorFromOption(event.target.selectedIndex)});
   }
 
   render() {
     return (
       <Row>
         <Col xs={6} md={3} style={{border: '1px solid black'}}>
-          <button onClick={this.addTable}>Add table</button>
-          <br/>
+          <Row>
+            {/*https://stackoverflow.com/questions/21733847/react-jsx-selecting-selected-on-selected-select-option*/}
+            <Col xs={6} md={6} style={{paddingLeft: '10%'}}>
+              <Button bsStyle='success' onClick={this.addTable}>Add table</Button>
+            </Col>
+            <Col xs={6} md={6}>
+              <Button bsStyle='warning' onClick={this.deleteTable}>Delete selected table</Button>
+            </Col>
+            <Col xs={12} md={12} style={{margin: '10px'}}>
+              <Button bsStyle="primary" onClick={this.sendTableConfig} bsSize="large" block> asda</Button>
+            </Col>
+          </Row>
+          <hr/>
           {/*izbor tipa stola*/}
           <Row>
             {/*https://stackoverflow.com/questions/21733847/react-jsx-selecting-selected-on-selected-select-option*/}
-            <Col xs={6} md={6}>
-              Choose new table's type
+            <Col xs={7} md={7} style={{paddingLeft: '10%'}}>
+              Choose new table's reon
             </Col>
-            <Col xs={6} md={6}>
+            <Col xs={5} md={5}>
               <select onChange={this.changeTableColor}>
                 {
                   reons.map((reon, index) => (
@@ -67,31 +78,31 @@ class TableConfig extends Component {
           {/*broj stolica*/}
           <Row>
             {/*https://stackoverflow.com/questions/21733847/react-jsx-selecting-selected-on-selected-select-option*/}
-            <Col xs={7} md={7}>
+            <Col xs={7} md={7} style={{paddingLeft: '10%'}}>
               Chair count:
             </Col>
             <Col xs={5} md={5}>
               <input
                 min={1} max={10}
                 type='number'
-                value={this.state.chairCount}
+                value={this.props.chairCount}
                 onChange={this.chairCountChange} />
             </Col>
           </Row>
-          <h4>Indeks boja</h4>
-          <Row>
+          <Row style={{textAlign: 'center'}}>
+            <h4>Color index</h4>
             {/*kolona sa nazivima reona*/}
-            <Col xs={6} md={6}>
+            <Col xs={7} md={7} style={{paddingLeft: '10%'}}>
               {
                 reons.map((reon) => (
-                  <div style={{margin: '28px 10px'}} key={`reon-${reon}`}>
+                  <div style={{margin: '28px 0'}} key={`reon-${reon}`}>
                     {reon}<br/>
                   </div>
                 ))
               }
             </Col>
             {/*kolona sa bojama*/}
-            <Col xs={6} md={6}>
+            <Col xs={5} md={5} style={{paddingRight: '10%'}}>
               <Stage width={100} height={320}>
                 <Layer>
                   {

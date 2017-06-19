@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 
 import {Rect, Group, Text } from 'react-konva';
 
-import { reonColors } from '../../../config';
-
 // credits: http://frontowo.pl/blog/draw-with-reactkonva
 class Table extends Component {
 
@@ -29,30 +27,31 @@ class Table extends Component {
   handleDragEnd(id) {
 
     // get new position of dragged element
+    // https://konvajs.github.io/docs/events/Binding_Events.html
     const x = this.refs[id].attrs.x;
     const y = this.refs[id].attrs.y;
-
     this.props.dragEnded(id, x, y);
   }
 
   render() {
-    console.log('STA JE ID SAD?! ' + this.props.id);
+    const textFill = this.props.color === 'red' || this.props.color === 'black' ? 'white' : 'black';
     return (
       <Group draggable={true}
              x={this.props.x} y={this.props.y}
              ref={this.props.id}
-             key={`rect-${this.props.id}`}
+             // key={`rect-${this.props.id}`}
              onDragEnd={()=>this.handleDragEnd(this.props.id)}
-             onClick={()=>this.props.tableClick({id: this.props.id, x: this.state.x, y: this.state.y})}
+             onClick={()=>this.props.tableClick({id: this.props.id, chairCount: this.props.chairCount})}
           onMouseEnter={this.props.cursorPointer}
           onMouseLeave={this.props.cursorDefault}>
         <Rect
+          ref={`R-${this.props.id}`}
+          fill={this.props.color}
           width={this.props.width} height={this.props.height}
-          fill={reonColors[this.props.color]}
-          stroke={'black'} strokeWidth={2}
+          stroke='black' strokeWidth={2}
         />
         <Text
-          text={`${this.props.chairCount}`} fill='red'
+          text={`${this.props.chairCount}`} fill={textFill}
           fontSize={30}
           padding={25}
         />

@@ -100,6 +100,8 @@ export const UPDATE_ONE_TABLE = 'UPDATE_ONE_TABLE';
 export const ADD_TABLE = 'ADD_TABLE';
 export const DELETE_TABLE = 'DELETE_TABLE';
 
+export const SELECT_TABLE = 'SELECT_TABLE';
+
 // send config to server
 export const SEND_TABLE_CONFIG_STARTED = 'SEND_TABLE_CONFIG_STARTED';
 export const SEND_TABLE_CONFIG_SUCCESS = 'SEND_TABLE_CONFIG_SUCCESS';
