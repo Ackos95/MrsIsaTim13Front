@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { getTables, updateOneTable, selectTable } from '../../../actions/tables';
+import { updateDone, sendTableConfig, getTables, updateTable, selectTable } from '../../../actions/tables';
 
 import Tables from './Tables';
 
@@ -11,13 +11,16 @@ const mapStateToProps = state => ({
   colorIndex: state.restaurant.colorIndex,
   chairCount: state.restaurant.chairCount,
   selectedTableId: state.restaurant.selectedTableId,
-  inProgress: state.restaurant.inProgress
+  inProgress: state.restaurant.inProgress,
+  successfulUpdate: state.restaurant.successfulUpdate
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   getTables,
-  updateOneTable,
+  updateTable,
   selectTable,
+  sendTableConfig,
+  updateDone
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tables);

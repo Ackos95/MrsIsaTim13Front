@@ -13,9 +13,17 @@ class Tables extends Component {
     this.cursorDefault = this.cursorDefault.bind(this);
     this.cursorPointer = this.cursorPointer.bind(this);
     this.dragEnded = this.dragEnded.bind(this);
+    this.sendTableConfigFromTables = this.sendTableConfigFromTables.bind(this);
   }
   dragEnded(id, x, y) {
-    this.props.updateOneTable(id, x, y);
+    let table = this.props.tables[this.props.tables.findIndex(t=> t.id === id)];
+    console.log('nasli sto>>>');
+    console.log(table);
+    table.x = x;
+    table.y = y;
+    console.log('update local sto. sada je>>>');
+    console.log(table);
+    this.props.updateTable(table, this.props.user.token);
   }
 
   componentDidMount() {
@@ -23,21 +31,13 @@ class Tables extends Component {
     this.props.getTables(this.props.user.token);
   }
 
-  // addTable(tableColor, chairs) {
-  //   console.log('stolovi do sada:');
-  //   console.log(this.props.tables);
-  //
-  //   let newTable = {
-  //     width: TABLE_SIZE, height: TABLE_SIZE,
-  //     x: Math.floor(Math.random() * (CANVAS_WIDTH - 10 + 1)) + 10,
-  //     y: Math.floor(Math.random() * (CANVAS_HEIGHT - 10 + 1)) + 10,
-  //     color: tableColor, chairs: chairs
-  //   };
-  //
-  //   let tablesFromState = [...this.props.tables];
-  //   tablesFromState.push(newTable);
-  // }
-
+  sendTableConfigFromTables() {
+    this.props.sendTableConfig(this.props.tables, this.props.user.token);
+    setTimeout(() => {
+      // Completed of async action, set loading state back
+      this.props.updateDone();
+    }, 3000);
+  }
   /* promjena kursora */
   cursorDefault() {
     this.refs.stage.getStage().container().style.cursor = 'default';

@@ -6,6 +6,13 @@ import { Layer, Stage, Rect } from 'react-konva';
 import { reons, colors } from '../../../config';
 import Tables from './TablesContainer';
 
+import Loading from '../../common/Loading/Loading';
+
+class Notify extends Component {
+  render() {
+    return (<span style={{background: 'green'}}>Done!</span>);
+  }
+}
 
 // credits: http://frontowo.pl/blog/draw-with-reactkonva
 class TableConfig extends Component {
@@ -18,23 +25,29 @@ class TableConfig extends Component {
     this.deleteTable = this.deleteTable.bind(this);
   }
 
-  /**
-   * Dodaje sto u niz, a podatke kupi iz propsa.
-   */
   addTable() {
-    this.props.addTable();
+    console.log('addTable iz TableConfig.jsx: ');
+    console.log(reons[this.props.colorIndex], this.props.chairCount, this.props.user.token);
+    // export const addTable = (reon, chairCount, token).....
+    this.props.addTable(reons[this.props.colorIndex], this.props.chairCount, this.props.user.token);
   }
 
   deleteTable() {
-    this.props.deleteTable();
-  }
+    if (this.props.selectedTableId !== -1) {
+      this.props.deleteTable(this.props.selectedTableId, this.props.user.token);
 
-  sendTableConfig() {
-    this.props.sendTableConfig();
+      setTimeout(() => {
+        // Completed of async action, set loading state back
+        this.props.updateDone();
+      }, 3000);
+    }
   }
 
   chairCountChange(e) {
     this.props.updateChairCount(Number(e.target.value));
+    if (this.props.selectedTableId !== -1) {
+      console.log('nesto kao update broja stolica za odabrani sto');
+    }
   }
 
   changeTableColor(event) {
@@ -54,7 +67,8 @@ class TableConfig extends Component {
               <Button bsStyle='warning' onClick={this.deleteTable}>Delete selected table</Button>
             </Col>
             <Col xs={12} md={12} style={{margin: '10px'}}>
-              <Button bsStyle="primary" onClick={this.sendTableConfig} bsSize="large" block> asda</Button>
+              { this.props.inProgress ? <Loading/> : null }
+              { this.props.successfulUpdate ? <Notify /> : null }
             </Col>
           </Row>
           <hr/>
