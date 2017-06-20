@@ -8,7 +8,7 @@ const Restaurant = new Record({
   colorIndex: 0, // indeks boje stola
   chairCount: 5, // broj stolica za novi sto
   inProgress: false, // get/update u toku
-  successfulUpdate: false
+  confirmationInProgress: false // da li je update zavrsen
 });
 
 const initialState = new Restaurant();
@@ -25,8 +25,8 @@ const restaurantReducer = ( state = initialState, action ) => {
         .set('tables', action.payload.tables)
         .set('inProgress', false);
 
-    case types.SUCCESSFUL_UPDATE_DONE:
-      return state.set('successfulUpdate', false);
+    case types.CONFIRMATION_IN_PROGRESS: // updateDone ga poziva, pa treba da zavrsi prikaz poruke
+      return state.set('confirmationInProgress', false);
 
     case types.ADD_TABLE_SUCCESS:
     {
@@ -35,7 +35,7 @@ const restaurantReducer = ( state = initialState, action ) => {
       return state
         .set('tables', [...state.tables, action.payload.newTable])
         .set('inProgress', false)
-        .set('successfulUpdate', true);
+        .set('confirmationInProgress', true); // da li traje prikaz poruke klijentu? DA!
     }
 
     case types.DELETE_TABLE_SUCCESS:
@@ -43,7 +43,7 @@ const restaurantReducer = ( state = initialState, action ) => {
         .set('selectedTableId', -1) // reset odabranog stola
         .set('tables', state.tables.filter(t => t.id !== action.payload.deletedId))
         .set('inProgress', false)
-        .set('successfulUpdate', true);
+        .set('confirmationInProgress', true);
 
     case types.GET_TABLES_ERROR:
     case types.DELETE_TABLE_ERROR:

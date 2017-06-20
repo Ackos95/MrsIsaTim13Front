@@ -106,7 +106,11 @@ export const UPDATE_TABLE_ERROR = 'UPDATE_TABLE_ERROR';
 
 export const SELECT_TABLE = 'SELECT_TABLE';
 
-export const SUCCESSFUL_UPDATE_DONE = 'SUCCESSFUL_UPDATE_DONE';
+/**
+ * Da li je prikaz odgovora (potvrde = konfirmacije) sa servera u toku
+ * @type {string}
+ */
+export const CONFIRMATION_IN_PROGRESS = 'CONFIRMATION_IN_PROGRESS';
 
 // send config to server
 export const SEND_TABLE_CONFIG_STARTED = 'SEND_TABLE_CONFIG_STARTED';

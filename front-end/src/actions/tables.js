@@ -151,7 +151,7 @@ export const sendTableConfig = ( tables, token ) => dispatch => {
     });
 };
 export const updateDone = () => ({
-  type: types.SUCCESSFUL_UPDATE_DONE
+  type: types.CONFIRMATION_IN_PROGRESS
 });
 
 /** TABLE ADDITION & DELETION **/

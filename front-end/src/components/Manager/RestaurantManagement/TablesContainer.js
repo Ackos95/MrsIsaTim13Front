@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
   chairCount: state.restaurant.chairCount,
   selectedTableId: state.restaurant.selectedTableId,
   inProgress: state.restaurant.inProgress,
-  successfulUpdate: state.restaurant.successfulUpdate
+  confirmationInProgress: state.restaurant.confirmationInProgress
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({

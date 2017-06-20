@@ -68,7 +68,7 @@ class TableConfig extends Component {
             </Col>
             <Col xs={12} md={12} style={{margin: '10px'}}>
               { this.props.inProgress ? <Loading/> : null }
-              { this.props.successfulUpdate ? <Notify /> : null }
+              { this.props.confirmationInProgress ? <Notify /> : null }
             </Col>
           </Row>
           <hr/>
