@@ -2,10 +2,30 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+export const inviteForLunchSuccess = ( invitedFriend ) => ({
+	type: types.INVITED_LUNCH_FRIEND_SUCCESS,
+	payload: invitedFriend
+});
 
-export const inviteForLunch = ( inviteForLunch , token ) => dispatch => {
-
-}
+export const inviteForLunch = ( restaurantId, inviteForLunch , token ) => dispatch => {
+	
+	$post(`${SERVER_URL}/guest/friends/inviteForLunch/` + restaurantId, inviteForLunch, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400)
+				console.log("\n invite For Lunch  > > E R R O R > >   ");
+			
+			const { data } = res;
+			console.log("\n no errors then promise > > invite For Lunch > >");
+			console.log(data); 						 console.log(res);
+			console.log("iznad je console.log(data) i res");
+			
+			return dispatch(inviteForLunchSuccess(data));
+			
+		})
+		.catch((err) => {
+			console.log("\nerror catch promise > > delete friend >> > >> " + err);
+		});
+};
 
 export const getLunchFriendsSuccess = ( lunchFriends ) => ({
 	type: types.GET_LUNCH_FRIENDS_SUCCESS,

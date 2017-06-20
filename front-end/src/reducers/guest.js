@@ -19,7 +19,8 @@ const Guest = new Record({
 	reservationStarted : false,
 	restaurantConfiguration : undefined,
 	gettingLunchFriends : false,
-	lunchFriends : []
+	lunchFriends : [],
+	invitedLunchFriends : []
 });
 
 const initialState = new Guest();
@@ -27,16 +28,25 @@ const initialState = new Guest();
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
 	
-  	
-  	/** LUNCH FRIENDS */
+  	/** INVITED LUNCH FRIENDS */
+		case types.INVITED_LUNCH_FRIEND_SUCCESS: {
+			let newInvitedLunchFriends = state.invitedLunchFriends;
+			newInvitedLunchFriends.push(action.payload);
+			return state.set('invitedLunchFriends',newInvitedLunchFriends)
+				.set('lunchFriends', filter(state.lunchFriends, (lunchFriend) => lunchFriend.id !== action.payload.id ) );
+		}
+			
+  	/** LUNCH FRIENDS search by name */
 		case types.GET_LUNCH_FRIENDS_START:
 			return state.set('gettingLunchFriends', true);
 	
 		case types.GET_LUNCH_FRIENDS_SUCCESS: {
-			console.log("\n GET_LUNCH_FRIENDS_SUCCESS GET_LUNCH_FRIENDS_SUCCESS");
-			console.log(action.payload);
+			let newLunchFriends = action.payload.lunchFriends;
+			for (var i = 0; i < state.invitedLunchFriends.length; i++) {
+				newLunchFriends = filter(newLunchFriends, (lunchFriend) => lunchFriend.id !== state.invitedLunchFriends[i].id );
+			}
 			return state.set('gettingLunchFriends', false)
-				.set('lunchFriends', action.payload);
+				.set('lunchFriends', newLunchFriends);
 		}
 		
 		case types.GET_LUNCH_FRIENDS_ERROR:

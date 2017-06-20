@@ -33,7 +33,7 @@ class RestaurantReservation extends Component {
 		console.log("invite lunchFriend");
 		console.log(lunchFriend);
 		
-		this.props.inviteForLunch( lunchFriend , this.props.user.token);
+		this.props.inviteForLunch( this.state.restaurantOnReservation.id, lunchFriend , this.props.user.token);
 	}
 	
 	makeLunchFriendsTable (lunchFriend, index ) {
@@ -114,7 +114,7 @@ class RestaurantReservation extends Component {
 		const restaurant = this.state.restaurantOnReservation;
 		
 		const gettingLunchFriends = this.props.guest.gettingLunchFriends;
-		const lunchFriends = this.props.guest.lunchFriends.lunchFriends;
+		const lunchFriends = this.props.guest.lunchFriends;
 		const restaurantConfiguration = this.props.guest.restaurantConfiguration;
 		return (
 					<div className='panel panel-default'>
