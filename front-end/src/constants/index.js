@@ -104,8 +104,18 @@ export const UPDATE_CHAIR_COUNT = 'UPDATE_CHAIR_COUNT';
 // update one table - on drag end
 export const UPDATE_ONE_TABLE = 'UPDATE_ONE_TABLE';
 
-export const ADD_TABLE = 'ADD_TABLE';
-export const DELETE_TABLE = 'DELETE_TABLE';
+export const UPDATE_TABLE_STARTED = 'UPDATE_TABLE_STARTED';
+export const UPDATE_TABLE_SUCCESS = 'UPDATE_TABLE_SUCCESS';
+export const UPDATE_TABLE_ERROR = 'UPDATE_TABLE_ERROR';
+
+
+export const SELECT_TABLE = 'SELECT_TABLE';
+
+/**
+ * Da li je prikaz odgovora (potvrde = konfirmacije) sa servera u toku
+ * @type {string}
+ */
+export const CONFIRMATION_IN_PROGRESS = 'CONFIRMATION_IN_PROGRESS';
 
 // send config to server
 export const SEND_TABLE_CONFIG_STARTED = 'SEND_TABLE_CONFIG_STARTED';
@@ -115,6 +125,15 @@ export const SEND_TABLE_CONFIG_ERROR = 'SEND_TABLE_CONFIG_ERROR';
 export const GET_TABLES_STARTED = 'GET_TABLES_STARTED';
 export const GET_TABLES_SUCCESS = 'GET_TABLES_SUCCESS';
 export const GET_TABLES_ERROR = 'GET_TABLES_ERROR';
+
+export const DELETE_TABLE_STARTED = 'DELETE_TABLE_STARTED';
+export const DELETE_TABLE_SUCCESS = 'DELETE_TABLE_SUCCESS';
+export const DELETE_TABLE_ERROR = 'DELETE_TABLE_ERROR';
+
+export const ADD_TABLE_STARTED = 'ADD_TABLE_STARTED';
+export const ADD_TABLE_SUCCESS = 'ADD_TABLE_SUCCESS';
+export const ADD_TABLE_ERROR = 'ADD_TABLE_ERROR';
+
 
 
 // supplier.js
