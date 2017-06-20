@@ -2,17 +2,56 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+
+export const inviteForLunch = ( inviteForLunch , token ) => dispatch => {
+
+}
+
+export const getLunchFriendsSuccess = ( lunchFriends ) => ({
+	type: types.GET_LUNCH_FRIENDS_SUCCESS,
+	payload: lunchFriends
+});
+
+export const getLunchFriendsStart = () => ({
+	type: types.GET_LUNCH_FRIENDS_START
+});
+
+export const getLunchFriendsError = ( error ) => ({
+	type: types.GET_LUNCH_FRIENDS_ERROR,
+	payload: { error }
+});
+
+export const getLunchFriends = ( lunchFriendsName, token ) => dispatch => {
+	dispatch(getLunchFriendsStart());
+	
+	$get(`${SERVER_URL}/guest/lunch-friends/q=` + lunchFriendsName, null , addAuthHeader(token))
+		.then((res) => {
+			
+			const { data } = res;
+			return dispatch(getLunchFriendsSuccess({
+				lunchFriends : data
+			}));
+		})
+		.catch((err) => {
+			return dispatch(getLunchFriendsError(err));
+		});
+	
+};
+
 export const getTableConfigurationSuccess = ( configuration ) => ({
 	type: types.TABLE_CONFIGURATION_SUCCESS,
 	payload: configuration
 });
 
-export const getTableConfiguration = ( restaurantOnReservation, token ) => dispatch => {
+export const getTableConfiguration = ( restaurantOnReservation, reservationDate, reservationHours, token ) => dispatch => {
 	
 	console.log("\ngetTableConfiguration   S T A R T S");
 	console.log(restaurantOnReservation);
+	console.log(reservationDate);
+	console.log(reservationHours);
 	
-	$post(`${SERVER_URL}/restaurant/configuration`, restaurantOnReservation, addAuthHeader(token))
+	
+	$post(`${SERVER_URL}/restaurant/configuration`, {restaurant_id: restaurantOnReservation.id, date: reservationDate, hours: reservationHours}, addAuthHeader(token))
 		.then((res) => {
 			if (res.status > 400)
 				console.log("\ngetTableConfiguration status > 400 . . . E R R O R\n");

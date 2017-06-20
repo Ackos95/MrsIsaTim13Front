@@ -17,13 +17,31 @@ const Guest = new Record({
 	acceptDeclineState : false,
 	restaurantOnReservation : {},
 	reservationStarted : false,
-	restaurantConfiguration : undefined
+	restaurantConfiguration : undefined,
+	gettingLunchFriends : false,
+	lunchFriends : []
 });
 
 const initialState = new Guest();
 
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
+	
+  	
+  	/** LUNCH FRIENDS */
+		case types.GET_LUNCH_FRIENDS_START:
+			return state.set('gettingLunchFriends', true);
+	
+		case types.GET_LUNCH_FRIENDS_SUCCESS: {
+			console.log("\n GET_LUNCH_FRIENDS_SUCCESS GET_LUNCH_FRIENDS_SUCCESS");
+			console.log(action.payload);
+			return state.set('gettingLunchFriends', false)
+				.set('lunchFriends', action.payload);
+		}
+		
+		case types.GET_LUNCH_FRIENDS_ERROR:
+			return state.set('gettingLunchFriends', false);
+	
 	
 	
 		/** TABLE CONFIG SUCCESS */
