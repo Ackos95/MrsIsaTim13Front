@@ -1,14 +1,19 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import LunchInvitation from './LunchInvitation';
-import { registrationConfirmation } from '../../actions/auth';
+import { getLunchInvitationInfo, acceptLunchInvitation, declineLunchInvitation, sendMealOrder } from '../../actions/guest';
 
 const mapStateToProps = (state, ownProps) => ({
-	gettingRestaurantMeals: state.auth.confirmedRegistration
+	user: state.auth.user,
+	gettingRestaurantMeals: state.auth.confirmedRegistration,
+	guest: state.guest
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-	registrationConfirmation,
+	getLunchInvitationInfo,
+	acceptLunchInvitation,
+	declineLunchInvitation,
+	sendMealOrder
 }, dispatch);
 
 

@@ -33,7 +33,8 @@ class RestaurantReservation extends Component {
 		console.log("invite lunchFriend");
 		console.log(lunchFriend);
 		
-		this.props.inviteForLunch( this.state.restaurantOnReservation.id, lunchFriend , this.props.user.token);
+		this.props.inviteForLunch( this.state.restaurantOnReservation.id, this.state.nonParsedDateTime,
+			this.state.lunchHours, lunchFriend, this.props.user.token);
 	}
 	
 	makeLunchFriendsTable (lunchFriend, index ) {
