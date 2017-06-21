@@ -37,6 +37,13 @@ class RestaurantReservation extends Component {
 			this.state.lunchHours, lunchFriend, this.props.user.token);
 	}
 	
+	makeInvitedLunchFriendsTable ( invitedFriend, index) {
+		return <tr key={ index } id={ index } >
+			<td>{invitedFriend.firstName}</td>
+			<td>{invitedFriend.lastName}</td>
+		</tr>
+	}
+	
 	makeLunchFriendsTable (lunchFriend, index ) {
 		return <tr key={ index } id={ index } >
 			<td>{lunchFriend.firstName}</td>
@@ -106,8 +113,16 @@ class RestaurantReservation extends Component {
 	
 	makeRestaurantConfigurationTable (table, index ) {
 		return <tr key={ index } id={ index } >
-			<td id="td-button"><Button bsStyle="success" style={{borderRadius: 0, width: 100 + '%'}}
-																 onClick={() => console.log(table) }> {table.reon} </Button></td>
+			<td id="td-button">
+				{table.occupied ?
+					<Button bsStyle="danger" style={{borderRadius: 0, width: 100 + '%'}}
+									onClick={() => console.log(table) }> {table.occupied} </Button>
+					:
+					<Button bsStyle="success" style={{borderRadius: 0, width: 100 + '%'}}
+									onClick={() => console.log(table) }> {table.occupied} </Button>
+				}
+			</td>
+			
 		</tr>
 	}
 	
@@ -124,39 +139,40 @@ class RestaurantReservation extends Component {
 							this.state.reservationStep === 1 ?
 								<table id="restaurants-reservation-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px', border: '1px solid black'}} >
 									<tbody><tr><td>Ime</td><td>{restaurant.name}</td></tr>
-									<tr><td>Datum i vrijeme</td>
+									<tr><td>Date and time</td>
 										<td><input id='input-date-time' type='datetime-local' min='2017-06-30T09:00:00' /></td>
 									</tr>
-									<tr><td>Trajanje</td>
-										<td><input id='input-hour' type='number' min='1' max='10' step='0.5' defaultValue={1}/> sata</td>
+									<tr><td>Lasting</td>
+										<td><input id='input-hour' type='number' min='1' max='10' step='0.5' defaultValue={1}/> hour(s)</td>
 									</tr>
-									<tr><td/><td><Button style={{width: 100 + '%'}} onClick={this.choseDateAndTime}>Dalje</Button></td></tr>
+									<tr><td/><td><Button style={{width: 100 + '%', marginTop: 10 + 'px'}}
+																			 onClick={this.choseDateAndTime}>Continue</Button></td></tr>
 									</tbody>
 								</table>
 								:
 								<table id="restaurants-reservation-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px'}} >
-									<tbody><tr><td>Ime</td><td>{restaurant.name}</td></tr>
-									<tr><td>Datum i vrijeme</td>
+									<tbody><tr><td>Name</td><td>{restaurant.name}</td></tr>
+									<tr><td>Date and time</td>
 										<td>{this.state.dateTime}</td>
 									</tr>
-									<tr><td>Trajanje</td>
-										<td>{this.state.lunchHours} sat(a)</td>
+									<tr><td>Lasting</td>
+										<td>{this.state.lunchHours} hour(s)</td>
 									</tr>
 									</tbody>
 								</table>
 							
 						}
 						</div>
-						<div>
-						{	this.state.reservationStep === 2 ?
-							<div>
-								<Button onClick={ this.previousStep }>Popravite unijete podatke</Button>
-								<Button onClick={ this.selectTable }> Dalje </Button>
-							</div> :
-							<h2> Odabir stola</h2>
-						}
+						<div style={{marginLeft: 10 + 'px'}} >
+							{	this.state.reservationStep === 2 ?
+								<div>
+									<Button style={{marginTop: 10 + 'px'}} onClick={ this.previousStep }>Go back - Change entered data</Button>
+									<Button style={{marginTop: 10 + 'px'}} onClick={ this.selectTable }> It's OK - Continue </Button>
+								</div> :
+								<h3> Table choosing </h3>
+							}
 						</div>
-						<div>
+						<div style={{marginLeft: 10 + 'px'}} >
 						{	this.state.reservationStep === 3 ?
 							<div>
 								{ restaurantConfiguration !== null && restaurantConfiguration !== undefined
@@ -167,31 +183,31 @@ class RestaurantReservation extends Component {
 											<table id="table-configuration">
 												<tbody>
 												<tr>
-													<th>A a a</th>
+													<th>Tables</th>
 												</tr>
 												{ restaurantConfiguration.configuration.tables.map(this.makeRestaurantConfigurationTable) }
 												</tbody>
 											</table> : // restaurantConfiguration.configuration.tables !== null
 											<h3> restaurantConfiguration.tables == null && restaurantConfiguration.tables == undefined</h3>
 										}
-										<Button onClick={ this.nextStep } > Dalje </Button>
+										<Button style={{marginTop: 10 + 'px'}} onClick={ this.nextStep } > Continue </Button>
 									</div>
 									: // restaurantConfiguration !== null && restaurantConfiguration !== undefined
 									<div>
-										<h4>konfiguracija NULL ili UNDEFINED</h4>
+										<h4> konfiguracija NULL ili UNDEFINED, a korak je 3 </h4>
 									</div>
 								}
 							</div> // reservationStep === 3 ?
-							: <h2>nije 3</h2>
+							: null
 						}
 						</div>
-						<div>
+						<div style={{marginLeft: 10 + 'px'}} >
 							{ this.state.reservationStep === 4 ?
 								<div>
-									<h3>Pozovete prijatelje na ručak</h3>
+									<h3> Invite friends </h3>
 										<div style={{marginLeft: 10 + 'px'}}>
 											<div className='form-group'>
-												Search guests by name:
+												Search your friends by name:
 												<input id="input-lunch-friends" type="text" onChange={this.findLunchFriends}
 															 style={{marginTop: 5 + 'px', marginLeft: 5 + 'px'}}/>
 											</div>
@@ -209,9 +225,22 @@ class RestaurantReservation extends Component {
 													}
 												</table>
 										}
-									<Button onClick={this.nextStep}> Dalje </Button>
+									<Button style={{marginTop: 10 + 'px'}} onClick={this.nextStep}> Continue </Button>
 								</div>
-								: <h2>nije 4</h2>
+								: null
+							}
+						</div>
+						<div style={{marginLeft: 10 + 'px'}} >
+							{ this.state.reservationStep >= 5 ?
+							<div>
+								<h3> Invited friends </h3>
+								<table id="potential-friends-table">
+									<tbody><tr><th>Name</th><th>Last name</th></tr>
+										{ this.props.guest.invitedLunchFriends.map(this.makeInvitedLunchFriendsTable) }
+									</tbody>
+								</table>
+							</div>
+							: null
 							}
 						</div>
 						<div className='panel-body'>
