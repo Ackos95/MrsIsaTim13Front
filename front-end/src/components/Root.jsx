@@ -11,6 +11,8 @@ import RegistrationConfirmation from './Registration/RegistrationConfirmationCon
 import Guest from './Guest/Guest';
 import Manager from './Manager/Manager'; // tabovi za menadzera
 import BarmanProfile from './Employees/Barman/BarmanProfileContainer';
+import WaiterProfile from './Employees/Waiter/WaiterProfileContainer';
+import CookProfile from './Employees/Cook/CookProfileContainer';
 import Supplier from './Supplier/SupplierContainer';
 import Logout from './Logout/LogoutContainer';
 
@@ -36,6 +38,8 @@ const Root = ({ store, history }) => (
         <Route path="/supplier" component={Supplier} />
         <Route path="/system-manager" component={SystemManager} />
         <Route path="/barman" component={BarmanProfile} />
+        <Route path="/waiter" component={WaiterProfile} />
+        <Route path="/cook" component={CookProfile} />
 				<Route path="/lunch-invitation/guest" component={LunchInvitation}/>
 				<Route path="/registration/guest" component={RegistrationConfirmation}/>
         <Route path="/logout" component={Logout} />

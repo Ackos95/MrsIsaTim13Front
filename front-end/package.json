@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "create-react-class": "^15.5.2",
     "axios": "^0.16.1",
+    "create-react-class": "^15.5.2",
     "immutable": "^3.8.1",
     "konva": "^1.6.3",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "prop-types": "^15.5.10",
     "react-bootstrap": "^0.31.0",
     "react-form": "^1.2.7",

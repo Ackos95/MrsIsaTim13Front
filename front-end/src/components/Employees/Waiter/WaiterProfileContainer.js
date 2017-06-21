@@ -1,15 +1,15 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
-import BarmanProfile from './BarmanProfile';
+import WaiterProfile from './WaiterProfile';
 import { loadSchedule } from '../../../actions/employees';
 
 const mapStateToProps = state => ({
   user: state.auth.user,
-  barmanSchedules: state.employees.barmanSchedules,
+  waiterSchedules: state.employees.waiterSchedules,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadSchedule,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(BarmanProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(WaiterProfile);
