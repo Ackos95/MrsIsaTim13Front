@@ -2,10 +2,9 @@ import React from 'react';
 
 import {Tab, Tabs} from 'react-bootstrap';
 
-import { Link } from 'react-router-dom';
-
 import ManagerMain from './ManagerMainContainer';
 import TableConfig from './RestaurantManagement/TableConfigContainer';
+import Schedule from './EmployeesManagement/ScheduleContainer';
 
 class Manager extends React.Component {
   constructor(props) {
@@ -34,14 +33,7 @@ class Manager extends React.Component {
           <TableConfig/>
         </Tab>
         <Tab eventKey={3} title="Employees management">
-          <div>
-            <p>Raspored - komponenta!</p>
-            <Link to="http://www.jqwidgets.com/react/react-scheduler/react-scheduler-timelineviews.htm">prvi - jednostavniji</Link>
-            <br/>
-            <Link to='https://github.com/intljusticemission/react-big-calendar'>
-              drugi - vise funkcionalnosti?
-            </Link>
-          </div>
+          <Schedule />
         </Tab>
         <Tab eventKey={42} title="Tab 42">Tab 42 - the Answer</Tab>
       </Tabs>

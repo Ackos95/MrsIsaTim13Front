@@ -20,13 +20,13 @@ const restaurantReducer = ( state = initialState, action ) => {
     case types.DELETE_TABLE_STARTED:
       return state.set('inProgress', true);
 
+    case types.CONFIRMATION_IN_PROGRESS: // updateDone ga poziva, pa treba da zavrsi prikaz poruke
+      return state.set('confirmationInProgress', false);
+
     case types.GET_TABLES_SUCCESS:
       return state
         .set('tables', action.payload.tables)
         .set('inProgress', false);
-
-    case types.CONFIRMATION_IN_PROGRESS: // updateDone ga poziva, pa treba da zavrsi prikaz poruke
-      return state.set('confirmationInProgress', false);
 
     case types.ADD_TABLE_SUCCESS:
     {
@@ -44,10 +44,6 @@ const restaurantReducer = ( state = initialState, action ) => {
         .set('tables', state.tables.filter(t => t.id !== action.payload.deletedId))
         .set('inProgress', false)
         .set('confirmationInProgress', true);
-
-    case types.GET_TABLES_ERROR:
-    case types.DELETE_TABLE_ERROR:
-      return state.set('inProgress', false);
 
     case types.SELECT_TABLE:
     {
@@ -73,6 +69,10 @@ const restaurantReducer = ( state = initialState, action ) => {
         }
         return state.set('chairCount', action.payload.chairCount);
       }
+
+    case types.GET_TABLES_ERROR:
+    case types.DELETE_TABLE_ERROR:
+      return state.set('inProgress', false);
 
     default:
       return state;

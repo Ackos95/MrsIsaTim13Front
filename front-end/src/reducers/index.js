@@ -7,6 +7,7 @@ import guest from './guest';
 import supplier from './supplier';
 import supplies from './supplies';
 import restaurant from './restaurant';
+import schedule from './schedule';
 
 // import visibilityFilter from './visibilityFilter'
 
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   supplier,
   supplies, // note the 's'
   restaurant,
+  schedule,
 	guest
 });
 
