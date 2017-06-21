@@ -4,13 +4,15 @@ import cloneDeep from 'lodash/cloneDeep';
 import * as types from '../constants';
 
 const Auth = new Record({
-  user: {
+  user: JSON.parse(localStorage.getItem('user')) || {
     id: null,
     email: null,
     userName: null,
     token: null,
     firstName: null,
     lastName: null,
+    roles: [],  // { id: <long>, name: <string> },
+    restaurant: null
   },
   inProgress: false,
 	errorMessage: null,
@@ -28,7 +30,7 @@ const authReducer = (state = initialState, action) => {
 		
     case types.LOGIN_SUCCESS:
       // store token into storage so it doesn't disapear when page is refreshed
-      // localStorage.setItem('token', action.payload.user.token);
+      localStorage.setItem('user', JSON.stringify(action.payload.user));
 
       return state.set('user', action.payload.user).set('inProgress', false);
 
@@ -38,6 +40,18 @@ const authReducer = (state = initialState, action) => {
     case types.LOGIN_STARTED:
       return state.set('inProgress', true);
 	
+    case types.LOGOUT:
+      localStorage.removeItem('user');
+      return state.set('user', {
+        id: null,
+        email: null,
+        userName: null,
+        token: null,
+        firstName: null,
+        lastName: null,
+        roles: [],  // { id: <long>, name: <string> },
+        restaurant: null
+      });
       
 		case types.REGISTRATION_SUCCESS: {
 			console.log(action.payload);

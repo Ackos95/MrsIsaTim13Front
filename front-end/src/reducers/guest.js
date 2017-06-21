@@ -17,13 +17,81 @@ const Guest = new Record({
 	acceptDeclineState : false,
 	restaurantOnReservation : {},
 	reservationStarted : false,
-	restaurantConfiguration : undefined
+	restaurantConfiguration : undefined,
+	gettingLunchFriends : false,
+	lunchFriends : [],
+	invitedLunchFriends : [],
+	lunchInvitation : null,
+	invitationRestaurant : null
 });
 
 const initialState = new Guest();
 
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
+		
+  	
+  	/** lunch invitation */
+		case types.GET_LUNCH_INVITATION_SUCCESS: {
+			console.log("\n GET_LUNCH_INVITATION_SUCCESS  GET_LUNCH_INVITATION_SUCCESS");
+			console.log(action.payload.reservationDate);
+
+			/** http://www.webdevelopersnotes.com/formatting-time-using-javascript */
+			
+			let m_names = ["Januar", "Februar", "Mart",
+				"April", "Maj", "Jun", "Jul", "Avgust", "Septembar",
+				"Oktobar", "Novembar", "Decembar"];
+			
+			let d = new Date(action.payload.reservationDate);
+			let curr_date = d.getDate();
+			let curr_month = d.getMonth();
+			let curr_year = d.getFullYear();
+			let curr_hour = d.getHours();
+			let curr_min = d.getMinutes();
+			
+			curr_hour = curr_hour + "";
+			curr_min = curr_min + "";
+			
+			if (curr_hour.length === 1)
+				curr_hour = "0" + curr_hour;
+			if (curr_min.length === 1)
+				curr_min = "0" + curr_min;
+			
+			let printDate = curr_date + "-" + m_names[curr_month] + "-" + curr_year;
+			let printHour = curr_hour + ":" + curr_min;
+			
+			let lunchInvitation = {id: action.payload.id, lunchGuest: action.payload.lunchGuest,
+				lunchHost: action.payload.lunchHost , lunchDate: printDate, lunchHour: printHour,
+				reservationHours: action.payload.reservationHours, restaurant: action.payload.restaurant,
+				realDate: action.payload.reservationDate
+			};
+			return state.set('lunchInvitation', lunchInvitation);
+		}
+		
+  	/** INVITED LUNCH FRIENDS */
+		case types.INVITED_LUNCH_FRIEND_SUCCESS: {
+			let newInvitedLunchFriends = state.invitedLunchFriends;
+			newInvitedLunchFriends.push(action.payload);
+			return state.set('invitedLunchFriends',newInvitedLunchFriends)
+				.set('lunchFriends', filter(state.lunchFriends, (lunchFriend) => lunchFriend.id !== action.payload.id ) );
+		}
+			
+  	/** LUNCH FRIENDS search by name */
+		case types.GET_LUNCH_FRIENDS_START:
+			return state.set('gettingLunchFriends', true);
+	
+		case types.GET_LUNCH_FRIENDS_SUCCESS: {
+			let newLunchFriends = action.payload.lunchFriends;
+			for (var i = 0; i < state.invitedLunchFriends.length; i++) {
+				newLunchFriends = filter(newLunchFriends, (lunchFriend) => lunchFriend.id !== state.invitedLunchFriends[i].id );
+			}
+			return state.set('gettingLunchFriends', false)
+				.set('lunchFriends', newLunchFriends);
+		}
+		
+		case types.GET_LUNCH_FRIENDS_ERROR:
+			return state.set('gettingLunchFriends', false);
+	
 	
 	
 		/** TABLE CONFIG SUCCESS */

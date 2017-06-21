@@ -6,10 +6,15 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import App from './App/App';
 import Login from './Login/LoginContainer';
 import Registration from './Registration/RegistrationContainer';
+import LunchInvitation from './Guest/LunchInvitationContainer';
 import RegistrationConfirmation from './Registration/RegistrationConfirmationContainer';
 import Guest from './Guest/Guest';
 import Manager from './Manager/Manager'; // tabovi za menadzera
+import BarmanProfile from './Employees/Barman/BarmanProfileContainer';
+import WaiterProfile from './Employees/Waiter/WaiterProfileContainer';
+import CookProfile from './Employees/Cook/CookProfileContainer';
 import Supplier from './Supplier/SupplierContainer';
+import Logout from './Logout/LogoutContainer';
 
 import SystemManager from './SystemManager/SystemManagerContainer';
 
@@ -32,7 +37,12 @@ const Root = ({ store, history }) => (
         <Route path="/manager" component={Manager} />
         <Route path="/supplier" component={Supplier} />
         <Route path="/system-manager" component={SystemManager} />
+        <Route path="/barman" component={BarmanProfile} />
+        <Route path="/waiter" component={WaiterProfile} />
+        <Route path="/cook" component={CookProfile} />
+				<Route path="/lunch-invitation/guest" component={LunchInvitation}/>
 				<Route path="/registration/guest" component={RegistrationConfirmation}/>
+        <Route path="/logout" component={Logout} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
