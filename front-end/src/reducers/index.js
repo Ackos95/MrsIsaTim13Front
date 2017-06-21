@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import auth from './auth'
 import main from './main';
 import manager from './manager';
+import employees from './employees';
 import sys_manager from './sys_manager';
 import guest from './guest';
 import supplier from './supplier';
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   auth,
   main,
   manager,
+  employees,
   sys_manager,
   supplier,
   supplies, // note the 's'

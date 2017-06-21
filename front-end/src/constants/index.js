@@ -5,6 +5,8 @@ export const LOGIN_STARTED = 'LOGIN_STARTED';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 
+export const LOGOUT = 'LOGOUT';
+
 export const REGISTRATION_STARTED = 'REGISTRATION_STARTED';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
 export const REGISTRATION_ERROR = 'REGISTRATION_ERROR';
@@ -149,6 +151,11 @@ export const ADD_OFFER_STARTED = 'ADD_OFFER_STARTED';
 export const ADD_OFFER_SUCCESS = 'ADD_OFFER_SUCCESS';
 export const ADD_OFFER_ERROR = 'ADD_OFFER_ERROR';
 
+
+// employees.js
+export const FETCH_SCHEDULE_STARTED = 'FETCH_SCHEDULE_STARTED';
+export const FETCH_SCHEDULE_SUCCESS = 'FETCH_SCHEDULE_SUCCESS';
+export const FETCH_SCHEDULE_ERROR = 'FETCH_SCHEDULE_ERROR';
 
 
 // TIP: koristite actiontypes Live Template! za lakše dodavanje

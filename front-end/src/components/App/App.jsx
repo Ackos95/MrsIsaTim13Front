@@ -31,6 +31,10 @@ const App = ({ user }) => (
     <Link to="/supplier">Supplier</Link>
     <br/>
     <Link to="/system-manager">System Manager</Link>
+    <br />
+    <Link to="/barman">Barman profile</Link>
+    <br />
+    <Link to="/logout">Logout</Link>
   </div>
 );
 
