@@ -6,10 +6,11 @@ const Schedule = new Record({
   termins: [], // postojeći termini
   inProgress: false, // get/update u toku
   confirmationInProgress: false, // da li je update zavrsen,
-  selectedEventId: -1, // ID u bazi od trenutno selektovanog termina iz rasporeda
+  selectedItemId: -1, // ID u bazi od trenutno selektovanog termina iz rasporeda
   employees: [],
-  schedule: null,
-  selectedTerminId: -1,
+  schedule: {
+    scheduleItems: []
+  },
 });
 
 const initialState = new Schedule();
@@ -39,6 +40,9 @@ const scheduleReducer = ( state = initialState, action ) => {
     case types.LOAD_SCHEDULE_ERROR:
       return state.set('inProgress', false);
 
+    case types.SELECT_SCHEDULE_ITEM:
+      return state
+        .set('selectedItemId', action.payload.selectedItemId);
 
     default:
       return state;

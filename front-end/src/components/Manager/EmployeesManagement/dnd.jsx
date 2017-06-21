@@ -13,8 +13,8 @@ class Dnd extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      events: events
-    }
+      events: events // nepotrebno!
+    };
 
     this.moveEvent = this.moveEvent.bind(this)
   }
@@ -39,7 +39,7 @@ class Dnd extends React.Component {
     return (
       <DragAndDropCalendar
         selectable={true}
-        events={this.state.events}
+        events={this.props.events} // this.state.events
         onEventDrop={this.moveEvent}
         defaultView='month'
         defaultDate={new Date(2017, 6, 12)}

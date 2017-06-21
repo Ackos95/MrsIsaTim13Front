@@ -53,6 +53,7 @@ class Schedule extends React.Component {
   selectEvent(event) {
     console.log('<<<< event >>>');
     console.log(event);
+    this.props.selectScheduleItem(event.id);
   }
 
   handleSelect(args) {
@@ -62,6 +63,8 @@ class Schedule extends React.Component {
   }
 
   render() {
+    console.log('this.props.schedule');
+    console.log(this.props.schedule);
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Row>
@@ -77,7 +80,7 @@ class Schedule extends React.Component {
                 <Button bsStyle='success' onClick={this.addTermin}>Add Termin</Button>
               </Col>
               <Col xs={6} md={3}>
-                <Button bsStyle='warning' disabled={this.props.selectedEventId === -1} onClick={this.deleteTermin}>Delete selected termin</Button>
+                <Button bsStyle='warning' disabled={this.props.selectedItemId === -1} onClick={this.deleteTermin}>Delete selected termin</Button>
               </Col>
               <Col xs={12} md={12} style={{margin: '10px'}}>
                 { this.props.inProgress ? <Loading/> : <b>Ready!</b> }
@@ -87,11 +90,15 @@ class Schedule extends React.Component {
                 {/*<select>*/}
                   {
                     this.props.schedule !== null ?
-                      <b>Schedule Loaded</b> : <b>Click on "Load schedule" button</b>
+                      <div>Schedule Loaded</div>
+                      :
+                      <div>Click on "Load schedule" button</div>
                   }
                   {
                     this.props.employees.length > 0 ?
-                      <b>Loaded {`${this.props.employees.length}`} employees</b> : <b>No employees loaded!</b>
+                      <div>Loaded {`${this.props.employees.length}`} employees</div>
+                      :
+                      <div>No employees loaded!</div>
                   }
                 { this.props.inProgress ? <Loading/> : <b>Do something!</b> }
                 {/*{ this.props.confirmationInProgress ? <Notify /> : null }*/}
@@ -102,7 +109,7 @@ class Schedule extends React.Component {
         </Row>
         <Row>
           <Col xs={12} md={11} lg={11} style={{height: '600px', float: 'none', margin: '0 auto'}}>
-            <DragDropCalendar  selectEvent={this.selectEvent} />
+            <DragDropCalendar  selectEvent={this.selectEvent} events={this.props.schedule.scheduleItems} />
           </Col>
         </Row>
       </Panel>

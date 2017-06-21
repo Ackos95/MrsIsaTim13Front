@@ -101,4 +101,7 @@ export const loadEmployees = (token) => dispatch => {
     });
 };
 
-
+export const selectScheduleItem = (selectedItemId) => ({
+  type: types.SELECT_SCHEDULE_ITEM,
+  payload: { selectedItemId } // payload.selectedItemId
+});
