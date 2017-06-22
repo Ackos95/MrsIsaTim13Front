@@ -4,11 +4,12 @@ import { Route, Link, Switch } from 'react-router-dom';
 
 import Schedule from '../common/Schedule';
 
-class BarmanProfile extends Component {
+
+class WaiterProfile extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    barmanSchedules: PropTypes.object,
+    waiterSchedules: PropTypes.object,
     loadSchedule: PropTypes.func.isRequired,
   }
 
@@ -19,18 +20,19 @@ class BarmanProfile extends Component {
   }
 
   render() {
-    const { barmanSchedules } = this.props;
+    const { waiterSchedules } = this.props;
 
     return (
       <div>
-        <h1> Barman Profile page </h1>
-        <Link to="/barman/schedules">Schedules</Link>
-        <Link to="/barman/orders">Orders</Link>
-        <Link to="/barman/profile">Profile</Link>
+        <h1> Waiter Profile page </h1>
+
+        <Link to="/waiter/schedules">Schedules</Link>
+        <Link to="/waiter/orders">Orders</Link>
+        <Link to="/waiter/profile">Profile</Link>
         
         <div className="employee__main-content">
           <Switch>
-            <Route path="/barman/schedules" render={() => <Schedule schedules={barmanSchedules} />} />
+            <Route path="/waiter/schedules" render={() => <Schedule schedules={waiterSchedules} />} />
           </Switch>
         </div>
       </div>
@@ -38,4 +40,4 @@ class BarmanProfile extends Component {
   }
 }
 
-export default BarmanProfile;
+export default WaiterProfile;
