@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Col, Button } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import { Text, Form } from 'react-form';
 
 
@@ -59,7 +59,7 @@ class ScheduleItemForm  extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.employees !== null && nextProps.employees !== undefined
       && nextProps.employees.length > 0)
-      if (this.state.selectedEmployee !== null)
+      if (this.state.selectedEmployee === null)
         this.setState({selectedEmployee: nextProps.employees[0]});
     console.log('nextProps');
     console.log(nextProps);
@@ -69,7 +69,7 @@ class ScheduleItemForm  extends React.Component {
   render() {
     return (
       <Form >
-        <Col style={{marginBottom: '30px'}}>
+        <Row style={{marginBottom: '30px'}}>
 
           <Col sm={5} md={6} lg={3}>
             From:
@@ -83,7 +83,7 @@ class ScheduleItemForm  extends React.Component {
           </Col>
           {/*DOLE JE GRESKA*/}
           <Col sm={5} md={6} lg={3}>
-            Employee:
+            Employee:<br/>
             <select onChange={this.employeeChanged}>
               {
                 this.props.employees.map((employee, index) => (
@@ -109,10 +109,16 @@ class ScheduleItemForm  extends React.Component {
               :
               null
           }
-          <Col sm={12} md={12} lg={12} style={{marginTop: '30px', width: '100%'}}>
-            <Button bsStyle='success' onClick={this.sendTreminValues}>Add Termin</Button>
+          <br/>
+        </Row>
+        <Row>
+          <Col sm={10} md={6} lg={6}>
+            <Button bsStyle='success' disabled={this.state.selectedEmployee === null}
+                    onClick={this.sendTreminValues} block>
+              Add Termin
+            </Button>
           </Col>
-        </Col>
+        </Row>
       </Form>);
   }
 }

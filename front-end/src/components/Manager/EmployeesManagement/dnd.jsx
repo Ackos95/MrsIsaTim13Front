@@ -14,7 +14,7 @@ class Dnd extends React.Component {
     super(props);
 
     this.state = {
-      events: events // nepotrebno!
+      events: events.concat(this.props.events) // nepotrebno!
     };
 
     this.moveEvent = this.moveEvent.bind(this)
@@ -40,7 +40,7 @@ class Dnd extends React.Component {
     return (
       <DragAndDropCalendar
         selectable={true}
-        events={this.props.events.concat(events)} // concat is just temporary!
+        events={this.props.events} // .concat(events) concat is just temporary!
         onEventDrop={this.moveEvent}
         defaultView='month'
         defaultDate={new Date(2017, 6, 12)}
