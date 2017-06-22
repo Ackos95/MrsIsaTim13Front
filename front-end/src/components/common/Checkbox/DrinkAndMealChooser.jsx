@@ -184,14 +184,14 @@ class DrinkAndMealChooser extends Component {
 					<div>
 						{ this.state.invitationStep === 2 ?
 							<div>
-								<h3 style={{textAlign: 'center'}} > Poručite neko piće </h3>
+								<h3 style={{textAlign: 'center'}} > Order a drink </h3>
 								<h4 style={{textAlign: 'center'}} >
-									Ako ne želite piće, ne morate ništa odabrati. Samo kliknite na Sačuvaj.
+									If you don't want a drink, you don't have to choose anything. Just click on Save.
 								</h4>
 								<form onSubmit={this.handleDrinkFormSubmit}>
 									{this.createDrinkCheckboxes()}
 									<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-										<button className="btn btn-default" type="submit"> Sačuvaj </button>
+										<button className="btn btn-default" type="submit"> Save </button>
 									</div>
 								</form>
 							</div>
@@ -202,7 +202,7 @@ class DrinkAndMealChooser extends Component {
 					<div>
 					{ this.state.invitationStep >= 3 ?
 						<div>
-							<h3 style={{textAlign: 'center'}} > Poručeno piće </h3>
+							<h3 style={{textAlign: 'center'}} > Ordered drink(s) </h3>
 							{this.createBoughtDrinksTable()}
 						</div>
 						: null
@@ -211,14 +211,14 @@ class DrinkAndMealChooser extends Component {
 					<div>
 						{ this.state.invitationStep === 3 ?
 							<div>
-								<h3 style={{textAlign: 'center'}} > Poručite neku hranu </h3>
+								<h3 style={{textAlign: 'center'}} > Order some food </h3>
 								<h4 style={{textAlign: 'center'}} >
-									Ako ne želite hranu, ne morate ništa odabrati. Samo kliknite na Sačuvaj.
+									If you don't want any food, you don't have to choose anything. Just click on Save.
 								</h4>
 								<form onSubmit={this.handleMealFormSubmit}>
 									{this.createMealCheckboxes()}
 									<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-										<button className="btn btn-default" type="submit"> Sačuvaj </button>
+										<button className="btn btn-default" type="submit"> Save </button>
 									</div>
 								</form>
 							</div>
@@ -228,7 +228,7 @@ class DrinkAndMealChooser extends Component {
 					<div>
 						{ this.state.invitationStep >= 4 ?
 							<div>
-								<h3 style={{textAlign: 'center'}} > Poručena hrana </h3>
+								<h3 style={{textAlign: 'center'}} > Ordered food </h3>
 								{this.createBoughtMealsTable()}
 							</div>
 							: null
@@ -238,13 +238,21 @@ class DrinkAndMealChooser extends Component {
 					{ this.state.invitationStep === 4 ?
 						<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
 							<button className="btn btn-success btn-lg"
-											onClick={() => this.endInvitationResponse()} > Završi </button>
+											onClick={() => this.endInvitationResponse()} > Make food order </button>
 						</div>
 						: null
 					}
 				</div>
 			:
-				<h2> Kongređlejšns </h2>
+				<div>
+				<h2 style={{textAlign: 'center'}} > You have successfully selected your meal </h2>
+					<div>
+						<h3 style={{textAlign: 'center'}} > Ordered drink(s) </h3>
+						{this.createBoughtDrinksTable()}
+						<h3 style={{textAlign: 'center'}} > Ordered food </h3>
+						{this.createBoughtMealsTable()}
+					</div>
+				</div>
 			}
 		</div>
 		)

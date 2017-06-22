@@ -22,7 +22,8 @@ const Guest = new Record({
 	lunchFriends : [],
 	invitedLunchFriends : [],
 	lunchInvitation : null,
-	invitationRestaurant : null
+	invitationRestaurant : null,
+	lunchOrderSuccess : null
 });
 
 const initialState = new Guest();
@@ -30,7 +31,12 @@ const initialState = new Guest();
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
 		
-  	
+		case types.SEND_MEAL_ORDER_SUCCESS: {
+			console.log(" SEND_MEAL_ORDER_SUCCESS   >  SEND_MEAL_ORDER_SUCCESS ");
+			console.log(action.payload);
+			return state.set('lunchOrderSuccess', action.payload);
+		}
+		
   	/** lunch invitation */
 		case types.GET_LUNCH_INVITATION_SUCCESS: {
 			console.log("\n GET_LUNCH_INVITATION_SUCCESS  GET_LUNCH_INVITATION_SUCCESS");

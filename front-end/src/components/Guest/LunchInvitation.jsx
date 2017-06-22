@@ -74,19 +74,19 @@ class LunchInvitation extends Component {
 					<div className='panel panel-default'>
 						<div className='panel-body'>
 							{ this.state.invitationStep === -1 ?
-								<h1 style={{textAlign: 'center'}} > Odbili ste poziv na zajednički obrok
-									sa {lunchInvitation.lunchHost.firstName} {lunchInvitation.lunchHost.lastName}.</h1>
+								<h1 style={{textAlign: 'center'}} > You have refused to go on a meal
+									with {lunchInvitation.lunchHost.firstName} {lunchInvitation.lunchHost.lastName}.</h1>
 								:
 								<div>
-									<h2 style={{textAlign: 'center'}} > Dobrodošli na stranicu za potvrdu poziva za obrok </h2>
+									<h2 style={{textAlign: 'center'}} > Welcome to meal invitation page </h2>
 									{ lunchInvitation !== null && lunchInvitation !== undefined ?
 										<div>
-											<h3 style={{textAlign: 'center'}} > Pozvani ste u restoran {lunchInvitation.restaurant.name}.</h3>
-											<h3 style={{textAlign: 'center'}} > Pozvao Vas je naš dragi gost, {lunchInvitation.lunchHost.firstName} {lunchInvitation.lunchHost.lastName}.</h3>
-											<h3 style={{textAlign: 'center'}} > Pozvani ste { lunchInvitation.lunchDate } u { lunchInvitation.lunchHour } </h3>
-											<h3 style={{textAlign: 'center'}} > na obrok u trajanju od {lunchInvitation.reservationHours} sata.</h3>
+											<h3 style={{textAlign: 'center'}} > You have been invited in {lunchInvitation.restaurant.name}.</h3>
+											<h3 style={{textAlign: 'center'}} > You are invited by our dear guest, {lunchInvitation.lunchHost.firstName} {lunchInvitation.lunchHost.lastName}.</h3>
+											<h3 style={{textAlign: 'center'}} > Meal date is { lunchInvitation.lunchDate } at { lunchInvitation.lunchHour } </h3>
+											<h3 style={{textAlign: 'center'}} > and will last no longer than {lunchInvitation.reservationHours} hour(s).</h3>
 										</div>
-										: <h3 style={{textAlign: 'center'}} > Došlo je do greške prilikom učitavanja zahtjeva. </h3>
+										: <h2 style={{textAlign: 'center'}} > Request reading mistake. </h2>
 									}
 									<div className="row" style={buttonRowStyle}>
 										<button style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} className="btn btn-primary btn-xs"
@@ -97,16 +97,16 @@ class LunchInvitation extends Component {
 											<tbody>
 											<tr style={{border: 0}}><td colSpan={2} style={{textAlign: 'center', border: 0}}>
 												<Button bsSize="large" bsStyle="success" style={{marginRight: 5 + 'px'}}
-																onClick={this.acceptInvitation} > Dolazim </Button>
+																onClick={this.acceptInvitation} > Accept invitation </Button>
 												<Button bsSize="large" bsStyle="danger" style={{marginLeft: 5 + 'px'}}
-																onClick={this.declineInvitation} > Ne dolazim </Button></td>
+																onClick={this.declineInvitation} > Decline invitation </Button></td>
 											</tr>
 											</tbody>
 										</table>
 										: null
 									}
 									{ this.state.invitationStep === 0 ?
-										<h2 style={{textAlign: 'center'}} > Odbili ste poziv. </h2>
+										<h2 style={{textAlign: 'center'}} > You have declined the invitation. </h2>
 										: null
 									}
 								</div>
