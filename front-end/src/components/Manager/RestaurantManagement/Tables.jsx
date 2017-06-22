@@ -67,10 +67,20 @@ class Tables extends Component {
                 if (table.reon !== this.props.reonFilter)
                   return null;
               }
-
-
-              // CLICKED ako je id_stola == id_selektovanog
-              const colorKey = this.props.selectedTableId === table.id ? 'CLICKED' : table.reon;
+	
+							let colorKey;
+							let clicked = false;
+              if (this.props.editing) {
+								// CLICKED ako je id_stola == id_selektovanog
+								colorKey = this.props.selectedTableId === table.id ? 'CLICKED' : table.reon;
+							}
+							else {
+								for (let i = 0; i < this.props.selectedTablesId.length; i++) {
+									if (this.props.selectedTablesId[i] === table.id)
+										clicked = true;
+								}
+								colorKey = clicked ? 'CLICKED' : table.reon;
+							}
               return (
                 <Table
                   occupied={table.occupied}

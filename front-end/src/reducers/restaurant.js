@@ -5,6 +5,7 @@ import * as types from '../constants';
 const Restaurant = new Record({
   tables: [], // postojeći stolovi
   selectedTableId: -1, // ID u bazi od kliknutog stola
+	selectedTablesId: [], // lista ID-jeva svih selektovanih stolova
   colorIndex: 0, // indeks boje stola
   chairCount: 5, // broj stolica za novi sto
   inProgress: false, // get/update u toku
@@ -58,9 +59,15 @@ const restaurantReducer = ( state = initialState, action ) => {
 
     case types.SELECT_TABLE:
     {
+    	let newSelectedTablesId;
+    	if (state.selectedTablesId.includes(action.payload.id))
+				newSelectedTablesId = state.selectedTablesId.filter(id => id !== action.payload.id);
+    	else
+				newSelectedTablesId = [...state.selectedTablesId, action.payload.id];
       return state
         .set('selectedTableId', action.payload.id)
-        .set('chairCount', action.payload.chairCount);
+        .set('chairCount', action.payload.chairCount)
+				.set('selectedTablesId', newSelectedTablesId);
     }
 
     case types.UPDATE_COLOR_INDEX:
