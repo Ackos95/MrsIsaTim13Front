@@ -31,3 +31,31 @@ export const loadSchedule = (restaurantId, userId, userToken) => dispatch => {
     })
     .catch((err) => dispatch(loadScheduleError(err)));
 }
+
+
+export const loadOrdersStarted = () => ({
+  type: types.LOAD_ORDERS_STARTED
+});
+
+export const loadOrdersError = (error) => ({
+  type: types.LOAD_ORDERS_ERROR,
+  error
+});
+
+export const loadOrdersSuccess = (orders) => ({
+  type: types.LOAD_ORDERS_SUCCESS,
+  payload: orders
+});
+
+export const loadOrders = userToken => dispatch => {
+  dispatch(loadOrdersStarted());
+
+  $get(`${SERVER_URL}/restaurant/orders`, undefined, addAuthHeader(userToken))
+    .then((res) => {
+      if (res.status >= 400)
+        return dispatch(loadOrdersError(null))
+
+      dispatch(loadOrdersSuccess(res.data));
+    })
+    .catch((err) => dispatch(loadOrdersError(err)));
+}

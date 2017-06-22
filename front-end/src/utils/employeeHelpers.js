@@ -12,3 +12,5 @@ export const getBarmanSchedules = (scheduleItems) => filter(scheduleItems, (item
 export const getWaiterSchedules = (scheduleItems) => filter(scheduleItems, (item) => find(item.employee.roles, (role) => role.name === WAITER_ROLE));
 
 export const getCookSchedules = (scheduleItems) => filter(scheduleItems, (item) => find(item.employee.roles, (role) => role.name === COOK_ROLE));
+
+export const getActiveOrders = (orders) => filter(orders, (order) => moment(order.timeStamp).isAfter(moment().day(moment().day() - 1)));

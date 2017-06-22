@@ -157,5 +157,9 @@ export const FETCH_SCHEDULE_STARTED = 'FETCH_SCHEDULE_STARTED';
 export const FETCH_SCHEDULE_SUCCESS = 'FETCH_SCHEDULE_SUCCESS';
 export const FETCH_SCHEDULE_ERROR = 'FETCH_SCHEDULE_ERROR';
 
+export const LOAD_ORDERS_STARTED = 'LOAD_ORDERS_STARTED';
+export const LOAD_ORDERS_ERROR = 'LOAD_ORDERS_ERROR';
+export const LOAD_ORDERS_SUCCESS = 'LOAD_ORDERS_SUCCESS';
+
 
 // TIP: koristite actiontypes Live Template! za lakše dodavanje
