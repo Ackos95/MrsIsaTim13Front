@@ -77,47 +77,41 @@ class Schedule extends React.Component {
 
   render() {
     return (
-      <Panel className='container' style={{marginTop: '21px'}}>
+      <Panel className='container'>
         <Row>
           <Col xs={12} md={12}>
             <Row>
-              <Col xs={6} md={3} style={{paddingLeft: '10%'}}>
+              <Col xs={4} md={2}>
                 <Button bsStyle='primary' onClick={this.loadEmployees}>Load employees</Button>
-              </Col>
-              <Col xs={6} md={3} style={{paddingLeft: '10%'}}>
+                <br/>
                 <Button bsStyle='primary' onClick={this.loadSchedule}>Load schedule</Button>
               </Col>
-              <Col xs={6} md={3}>
-                <Button bsStyle='warning' disabled={this.props.selectedItem === null} onClick={this.deleteTermin}>
-                  Delete selected termin
-                </Button>
+              <Col xs={4} md={2}>
+                { this.props.inProgress ? <Loading/> : <b>Ready!</b> }
+                {/*{ this.props.confirmationInProgress ? <Notify /> : null }*/}
+              </Col>
+              <Col xs={4} md={2}>
+                {
+                  this.props.employees.length > 0 ?
+                    <div>Loaded {`${this.props.employees.length}`} employees</div>
+                    :
+                    <div>No employees loaded!</div>
+                }
+                {
+                  this.props.schedule.id !== null && this.props.schedule.id !== undefined ?
+                    <div>Schedule Loaded</div>
+                    :
+                    <div>Click on "Load schedule" button!</div>
+                }
               </Col>
             </Row>
             <Row>
               <ScheduleItemForm addScheduleItem={this.addScheduleItem} employees={this.props.employees}/>
-            </Row>
-            <Row>
-              <Col xs={12} md={12} style={{margin: '10px'}}>
-                { this.props.inProgress ? <Loading/> : <b>Ready!</b> }
-                {/*{ this.props.confirmationInProgress ? <Notify /> : null }*/}
-              </Col>
-              <Col xs={12} md={12} style={{margin: '10px'}}>
-                {/*<select>*/}
-                  {
-                    this.props.schedule !== null ?
-                      <div>Schedule Loaded</div>
-                      :
-                      <div>Click on "Load schedule" button</div>
-                  }
-                  {
-                    this.props.employees.length > 0 ?
-                      <div>Loaded {`${this.props.employees.length}`} employees</div>
-                      :
-                      <div>No employees loaded!</div>
-                  }
-                { this.props.inProgress ? <Loading/> : <b>Do something!</b> }
-                {/*{ this.props.confirmationInProgress ? <Notify /> : null }*/}
-                {/*</select>*/}
+              <Col xs={6} md={3} xsOffset={4} mdOffset={8}>
+                <Button bsStyle='warning' disabled={this.props.selectedItem === null}
+                        onClick={this.deleteTermin} className='pull-right'>
+                  Delete selected termin
+                </Button>
               </Col>
             </Row>
           </Col>
