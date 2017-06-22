@@ -16,6 +16,17 @@ const initialState = new Restaurant();
 const restaurantReducer = ( state = initialState, action ) => {
   switch (action.type) {
 
+		/** TABLE CONFIG SUCCESS */
+		case types.TABLE_CONFIGURATION_SUCCESS:
+		{
+			console.log("\n reducers restaurant.js  > TABLE_CONFIGURATION_SUCCESS ");
+			console.log("action payload.configuration");
+			console.log(action.payload.configuration);
+			console.log(action.payload.configuration.tables);
+			return state.set("tables", action.payload.configuration.tables);
+		}
+			
+  	
     case types.GET_TABLES_STARTED:
     case types.DELETE_TABLE_STARTED:
       return state.set('inProgress', true);

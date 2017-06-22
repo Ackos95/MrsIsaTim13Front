@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 
 import Loading from '../common/Loading/Loading';
+import Tables from '../Manager/RestaurantManagement/TablesContainer';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Button } from 'react-bootstrap';
@@ -206,21 +207,22 @@ class RestaurantReservation extends Component {
 							<div>
 								{ restaurantConfiguration !== null && restaurantConfiguration !== undefined
 									?
-									<div> { console.log(restaurantConfiguration) }
-										{ restaurantConfiguration.configuration.tables !== null &&
-											restaurantConfiguration.configuration.tables !== undefined ?
-											<table id="table-configuration">
-												<tbody>
-												<tr>
-													<th>Tables</th>
-												</tr>
-												{ restaurantConfiguration.configuration.tables.map(this.makeRestaurantConfigurationTable) }
-												</tbody>
-											</table> : // restaurantConfiguration.configuration.tables !== null
-											<h3> restaurantConfiguration.tables == null && restaurantConfiguration.tables == undefined</h3>
-										}
-										<Button style={{marginTop: 10 + 'px'}} onClick={ this.nextStep } > Continue </Button>
-									</div>
+									<Tables/>
+									// <div> { console.log(restaurantConfiguration) }
+									// 	{ restaurantConfiguration.configuration.tables !== null &&
+									// 		restaurantConfiguration.configuration.tables !== undefined ?
+									// 		<table id="table-configuration">
+									// 			<tbody>
+									// 			<tr>
+									// 				<th>Tables</th>
+									// 			</tr>
+									// 			{ restaurantConfiguration.configuration.tables.map(this.makeRestaurantConfigurationTable) }
+									// 			</tbody>
+									// 		</table> : // restaurantConfiguration.configuration.tables !== null
+									// 		<h3> restaurantConfiguration.tables == null && restaurantConfiguration.tables == undefined</h3>
+									// 	}
+									// 	<Button style={{marginTop: 10 + 'px'}} onClick={ this.nextStep } > Continue </Button>
+									// </div>
 									: // restaurantConfiguration !== null && restaurantConfiguration !== undefined
 									<div>
 										<h4> konfiguracija NULL ili UNDEFINED, a korak je 3 </h4>
