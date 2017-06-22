@@ -5,7 +5,9 @@ import {
   getBarmanSchedules,
   getWaiterSchedules,
   getCookSchedules,
-  getActiveOrders
+  getActiveOrders,
+  updateDrinkOrders,
+  updateMealOrders,
 } from '../utils/employeeHelpers';
 
 const Employees = new Record({
@@ -28,6 +30,12 @@ const employeesReducer = (state = initialState, action) => {
 
     case types.LOAD_ORDERS_SUCCESS:
       return state.set('orders', getActiveOrders(action.payload));
+
+    case types.SET_MEAL_ACCEPTED_SUCCESS:
+    case types.SET_MEAL_DONE_SUCCESS:
+      return state.set('orders', updateMealOrders(state.orders, action.payload))
+    case types.SET_DRINK_DONE_SUCCESS:
+      return state.set('orders', updateDrinkOrders(state.orders, action.payload))
 
     default:
       return state;

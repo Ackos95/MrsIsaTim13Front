@@ -49,8 +49,8 @@ const guestReducer = (state = initialState, action) => {
 			let curr_hour = d.getHours();
 			let curr_min = d.getMinutes();
 			
-			curr_hour = curr_hour + "";
-			curr_min = curr_min + "";
+			curr_hour += "";
+			curr_min += "";
 			
 			if (curr_hour.length === 1)
 				curr_hour = "0" + curr_hour;
@@ -82,6 +82,15 @@ const guestReducer = (state = initialState, action) => {
 	
 		case types.GET_LUNCH_FRIENDS_SUCCESS: {
 			let newLunchFriends = action.payload.lunchFriends;
+			// Ko je ovo pisao? Da li si siguran da ce ovo raditi, overridujes svaki put newLunchFriends, prakticno je identicno kao
+			// newLunchFriends = filter(newLunchFriends, (lunchFriend) => lunchFriend.id !== state.invitedLunchFriends[state.invitedLunchFriends.length - 1].id)
+			// Predlog resenja (Testiraj samo pisao sam ga u 05:11, bez testiranja naravno :D):
+			/*
+				const { invitedLunchFriends } = state;
+				const newLunchFriends = filter(action.payload.lunchFriends, (friend) => invitedLunchFriends.find(invitedFriend) => invitedFriend.id !== friend.id)
+
+				return state.set(...)
+			*/
 			for (var i = 0; i < state.invitedLunchFriends.length; i++) {
 				newLunchFriends = filter(newLunchFriends, (lunchFriend) => lunchFriend.id !== state.invitedLunchFriends[i].id );
 			}

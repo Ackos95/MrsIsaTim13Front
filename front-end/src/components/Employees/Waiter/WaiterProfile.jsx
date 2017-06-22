@@ -3,14 +3,14 @@ import { PropTypes } from 'prop-types';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import Schedule from '../common/Schedule';
-import Orders from '../common/Orders/Orders';
+import Orders from '../common/Orders/OrdersContainer';
 
 
 class WaiterProfile extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    waiterSchedules: PropTypes.object,
+    waiterSchedules: PropTypes.arrayOf(PropTypes.object).isRequired,
     orders: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadSchedule: PropTypes.func.isRequired,
     loadOrders: PropTypes.func.isRequired,

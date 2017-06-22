@@ -240,7 +240,7 @@ export const deleteTable = (id, token) => dispatch => {
       console.log("deleted data ~ id stola?");
       console.log(data);
 
-      if (data === -1 || data == -1) // sta pisem.. <3 JS <3
+      if (parseInt(data, 10) === -1) // sta pisem.. <3 JS <3  # Warnning fix (Acko :D)
         return dispatch(deleteTableError());
 
       return dispatch(deleteTableSuccess({

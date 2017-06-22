@@ -4,6 +4,8 @@ import CookProfile from './CookProfile';
 import { 
   loadSchedule,
   loadOrders,
+  setMealDone,
+  setMealAccepted,
 } from '../../../actions/employees';
 
 const mapStateToProps = state => ({
@@ -15,6 +17,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadSchedule,
   loadOrders,
+  setMealDone,
+  setMealAccepted,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(CookProfile);

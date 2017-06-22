@@ -4,6 +4,7 @@ import BarmanProfile from './BarmanProfile';
 import { 
   loadSchedule,
   loadOrders,
+  setDrinkDone
 } from '../../../actions/employees';
 
 const mapStateToProps = state => ({
@@ -15,6 +16,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadSchedule,
   loadOrders,
+  setDrinkDone,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(BarmanProfile);

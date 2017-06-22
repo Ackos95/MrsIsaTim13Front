@@ -9,6 +9,7 @@ import Order from './Order';
 class Orders extends Component {
 
   static propTypes = {
+    userToken: PropTypes.string.isRequired,
     orders: PropTypes.arrayOf(PropTypes.object).isRequired,
     options: PropTypes.object.isRequired,
   };
@@ -20,10 +21,10 @@ class Orders extends Component {
   }
 
   renderOrders() {
-    const { orders, options } = this.props;
+    const { orders, options, userToken } = this.props;
 
     return map(orders, (order) => (
-      <Order key={`ORDER_${order.id}`} order={order} options={options} />
+      <Order key={`ORDER_${order.id}`} order={order} options={options} userToken={userToken} />
     )); 
   }
 

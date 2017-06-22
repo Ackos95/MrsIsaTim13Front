@@ -3,17 +3,19 @@ import { PropTypes } from 'prop-types';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import Schedule from '../common/Schedule';
-import Orders from '../common/Orders/Orders';
+import Orders from '../common/Orders/OrdersContainer';
 
 
 class CookProfile extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    cookSchedules: PropTypes.object,
+    cookSchedules: PropTypes.arrayOf(PropTypes.object).isRequired,
     orders: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadSchedule: PropTypes.func.isRequired,
     loadOrders: PropTypes.func.isRequired,
+    setMealDone: PropTypes.func.isRequired,
+    setMealAccepted: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -24,7 +26,7 @@ class CookProfile extends Component {
   }
 
   render() {
-    const { cookSchedules, orders } = this.props;
+    const { cookSchedules, orders, setMealAccepted, setMealDone } = this.props;
 
     return (
       <div>
@@ -36,7 +38,7 @@ class CookProfile extends Component {
         <div className="employee__main-content">
           <Switch>
             <Route path="/cook/schedules" render={() => <Schedule schedules={cookSchedules} />} />
-            <Route path="/cook/orders" render={() => <Orders orders={orders} options={{ showMeals: true }} />} />
+            <Route path="/cook/orders" render={() => <Orders orders={orders} options={{ showMeals: true, setMealDone, setMealAccepted }} />} />
           </Switch>
         </div>
       </div>
