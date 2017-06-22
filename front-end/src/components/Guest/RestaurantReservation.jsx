@@ -29,7 +29,7 @@ class RestaurantReservation extends Component {
 										dateTime: null, lunchHours: null, nonParsedDateTime: null, noTokenUser: noTokenUser};
 		
 		this.choseDateAndTime = this.choseDateAndTime.bind(this);
-		this.selectTable = this.selectTable.bind(this);
+		this.getTableConfiguration = this.getTableConfiguration.bind(this);
 		this.nextStep = this.nextStep.bind(this);
 		this.previousStep = this.previousStep.bind(this);
 		
@@ -37,13 +37,34 @@ class RestaurantReservation extends Component {
 		
 		this.makeLunchFriendsTable = this.makeLunchFriendsTable.bind(this);
 		this.inviteLunchFriend = this.inviteLunchFriend.bind(this);
-		this.makeRestaurantConfigurationTable = this.makeRestaurantConfigurationTable.bind(this);
+		
+		this.tryToReserveTable = this.tryToReserveTable.bind(this);
 		
 		this.endReservation = this.endReservation.bind(this);
 	}
 	
+	tryToReserveTable(selectedTablesId) {
+		console.log("\n\ntryToReserveTable\n");
+		
+		console.log("console.log(selectedTablesId);");
+		console.log(selectedTablesId);
+		
+		let selectedTableArray = this.props.guest.restaurantConfiguration.tables;
+		
+		console.log(selectedTableArray);
+		for (let i = 0; i < selectedTablesId; i++)
+			selectedTableArray.filter(table => table.id === selectedTablesId[i]);
+		
+		console.log(selectedTableArray);
+		
+		// tableIdList, reservationDate, reservationHours, token
+		this.props.tryToReserveTable( selectedTablesId, this.state.nonParsedDateTime,
+			this.state.lunchHours, this.props.user.token );
+	}
+	
 	endReservation() {
-		alert("666");
+		this.props.endRestaurantReservation();
+		this.setState({reservationStep : 1});
 	}
 	
 	inviteLunchFriend ( lunchFriend ) {
@@ -126,8 +147,8 @@ class RestaurantReservation extends Component {
 		console.log(this.state);
 	}
 	
-	selectTable() {
-		console.log("\nselectTable funkcija");
+	getTableConfiguration() {
+		console.log("\ngetTableConfiguration funkcija");
 		
 		this.setState({reservationStep : this.state.reservationStep + 1});
 		
@@ -137,21 +158,6 @@ class RestaurantReservation extends Component {
 		this.props.getTableConfiguration(this.state.restaurantOnReservation, this.state.nonParsedDateTime,
 			this.state.lunchHours, this.props.user.token);
 		
-	}
-	
-	makeRestaurantConfigurationTable (table, index ) {
-		return <tr key={ index } id={ index } >
-			<td id="td-button">
-				{table.occupied ?
-					<Button bsStyle="danger" style={{borderRadius: 0, width: 100 + '%'}}
-									onClick={() => console.log(table) }> {table.occupied} </Button>
-					:
-					<Button bsStyle="success" style={{borderRadius: 0, width: 100 + '%'}}
-									onClick={() => console.log(table) }> {table.occupied} </Button>
-				}
-			</td>
-			
-		</tr>
 	}
 	
 	render() {
@@ -166,7 +172,7 @@ class RestaurantReservation extends Component {
 						{
 							this.state.reservationStep === 1 ?
 								<table id="restaurants-reservation-table" style={{fontSize: 20 + 'px', width: "inherit", marginTop: 10 + 'px', border: '1px solid black'}} >
-									<tbody><tr><td>Ime</td><td>{restaurant.name}</td></tr>
+									<tbody><tr><td>Restaurant name</td><td>{restaurant.name}</td></tr>
 									<tr><td>Date and time</td>
 										<td><input id='input-date-time' type='datetime-local' min='2017-06-30T09:00:00' /></td>
 									</tr>
@@ -197,28 +203,44 @@ class RestaurantReservation extends Component {
 									<Button style={{marginTop: 10 + 'px', marginRight: 5 + 'px'}}
 													onClick={ this.previousStep }>Go back - Change entered data</Button>
 									<Button style={{marginTop: 10 + 'px', marginLeft: 5 + 'px'}}
-													onClick={ this.selectTable }> It's OK - Continue </Button>
+													onClick={ this.getTableConfiguration }> It's OK - Continue </Button>
 								</div> :
-								<h3> Table choosing </h3>
+								<h3> Table choice </h3>
 							}
 						</div>
 						<div style={{marginLeft: 10 + 'px'}} >
-						{	this.state.reservationStep === 3 ?
-							<div>
-								{ restaurantConfiguration !== null && restaurantConfiguration !== undefined
+							{
+								this.props.guest.tableReservationError === true
 									?
-									<div>
-										<Tables editing={false} reonFilter={null} />
-										<Button style={{marginTop: 10 + 'px'}} onClick={ this.nextStep } > Continue </Button>
-									</div>
-									: // restaurantConfiguration !== null && restaurantConfiguration !== undefined
-									<div>
-										<h4> Loading config </h4>
-									</div>
-								}
-							</div> // reservationStep === 3 ?
-							: null
-						}
+										<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+											<h2>Someone has reserved one of the table you tried to reserve. <br/> You can: </h2>
+											<Button> Reload table configuration </Button>
+											<Button> Change date, time and lasting of your reservation. </Button>
+										</div>
+									:
+										<div>
+											{	this.state.reservationStep === 3
+												?
+													<div>
+														{ restaurantConfiguration !== null && restaurantConfiguration !== undefined
+															?
+															<div>
+																<Tables editing={false} reonFilter={null} />
+																<Button style={{marginTop: 10 + 'px'}}
+																				onClick={ () => this.tryToReserveTable(this.props.selectedTablesId) } >
+																	Continue </Button>
+															</div>
+															:
+															<div>
+																<h4> Loading config </h4>
+																<Loading/>
+															</div>
+														}
+													</div>
+												: null
+											}
+										</div>
+							}
 						</div>
 						<div style={{marginLeft: 10 + 'px'}} >
 							{ this.state.reservationStep === 4 ?
@@ -303,10 +325,7 @@ class RestaurantReservation extends Component {
 								</Button>
 							</div>
 							:
-							<div className='panel-body' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-								<h3> Waiting for the end... </h3>
-								<Loading/>
-							</div>
+							null
 						}
 					</div>
 		);

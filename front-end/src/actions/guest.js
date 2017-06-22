@@ -2,6 +2,16 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+export const tryToReserveTableError = () => ({
+	type: types.TABLE_RESERVATION_ERROR
+});
+
+/** transakcijom poduprto - može vratiti grešku */
+export const tryToReserveTable = ( selectedTable, reservationDate, reservationHours, token) => dispatch => {
+	console.log()
+	
+};
+
 
 /** sva stanja koja su mijenjana tokom rezervacije vratim na inicijalna */
 export const endRestaurantReservation = () => ({
@@ -150,10 +160,12 @@ export const getTableConfiguration = ( restaurantOnReservation, reservationDate,
 	console.log(reservationDate);
 	console.log(reservationHours);
 	
-	console.log("\nget Table Configuration Token");
-	console.log(token);
+	let tableConfigJSON = {restaurant_id: restaurantOnReservation.id, date: reservationDate, hours: reservationHours};
+	console.log("\nget Table Configuration JSON");
+	console.log(tableConfigJSON);
+	console.log("get Table Configuration JSON\n");
 	
-	$post(`${SERVER_URL}/restaurant/configuration`, {restaurant_id: restaurantOnReservation.id, date: reservationDate, hours: reservationHours},
+	$post(`${SERVER_URL}/restaurant/configuration`, tableConfigJSON ,
 		addAuthHeader(token))
 		.then((res) => {
 			if (res.status > 400)

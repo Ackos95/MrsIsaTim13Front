@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getTableConfiguration, getLunchFriends, inviteForLunch, sendMealOrder, endRestaurantReservation } from '../../actions/guest';
+import { getTableConfiguration, getLunchFriends, inviteForLunch, sendMealOrder,
+	endRestaurantReservation, tryToReserveTable } from '../../actions/guest';
 
 import RestaurantReservation from './RestaurantReservation';
 
 const mapStateToProps = state => ({
 	user: state.auth.user,
-	guest: state.guest
+	guest: state.guest,
+	selectedTablesId : state.restaurant.selectedTablesId
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -14,7 +16,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getLunchFriends,
 	inviteForLunch,
 	sendMealOrder,
-	endRestaurantReservation
+	endRestaurantReservation,
+	tryToReserveTable
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantReservation);
