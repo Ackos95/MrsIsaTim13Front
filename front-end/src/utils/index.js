@@ -36,7 +36,7 @@ export const descriptionFromEmployee = (employee, reon) => {
   const roleName = employee.roles[0].name.split('_')[2].toLowerCase(); // barman, cook, waiter
 
   let reonInfo = '';
-  if (roleName === "barman")
+  if (roleName === "barman" && reon !== null  && reon !== undefined)
     reonInfo = '\nReon: ' + reon.toLowerCase().replace('_', ' ');
 
   return employee.firstName + ' ' + employee.lastName +

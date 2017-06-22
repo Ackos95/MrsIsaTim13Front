@@ -47,11 +47,16 @@ const scheduleReducer = ( state = initialState, action ) => {
 
     case types.DELETE_TERMIN_SUCCESS:
     {
-      let scheduleItems = state.schedule.scheduleItems.filter(t => t.id !== action.payload.deletedItemId);
+      console.log('stigao obrisani id: ' + action.payload.deletedItemId + ' itema: ' + state.schedule.scheduleItems.length);
+
+      const updatedSchedule = state.schedule;
+
+      updatedSchedule.scheduleItems = state.schedule.scheduleItems.filter(t => t.id !== action.payload.deletedItemId);
+      console.log('sada itema: ' + updatedSchedule.scheduleItems.length);
 
       return state
         .set('selectedItem', null) // reset odabranog stola
-        .set('schedule', {...state.schedule, scheduleItems: scheduleItems})
+        .set('schedule', updatedSchedule)
         .set('inProgress', false)
         .set('confirmationInProgress', true);
     }

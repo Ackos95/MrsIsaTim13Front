@@ -55,6 +55,17 @@ class ScheduleItemForm  extends React.Component {
     else
       this.setState({selectedReon: 'INSIDE'});
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.employees !== null && nextProps.employees !== undefined
+      && nextProps.employees.length > 0)
+      if (this.state.selectedEmployee !== null)
+        this.setState({selectedEmployee: nextProps.employees[0]});
+    console.log('nextProps');
+    console.log(nextProps);
+    console.log('ComponentWillRecieveProps', 'warning');
+  }
+
   render() {
     return (
       <Form >

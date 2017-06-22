@@ -43,6 +43,12 @@ class TableConfig extends Component {
     }
   }
 
+  componentDidMount() {
+    // prebačeno iz Tables, jer se ta komponenta koristi kod gosta i konobara
+    console.log('ComponentDidMount', 'TableConfig\n');
+    this.props.getTables(this.props.user.token);
+  }
+
   chairCountChange(e) {
     this.props.updateChairCount(Number(e.target.value));
     if (this.props.selectedTableId !== -1) {

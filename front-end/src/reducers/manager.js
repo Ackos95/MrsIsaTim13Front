@@ -38,12 +38,12 @@ const managerReducer = ( state = initialState, action ) => {
   switch (action.type) {
     case types.ADD_EMPLOYEE_SUCCESS:
       return state
-        .set('created',action.payload.created) // novi zaposleni
+        .set('createdUser', action.payload.created) // novi zaposleni
         .set('inProgress', false);
 
     case types.ADD_SUPPLIER_SUCCESS:
       return state
-        .set('created',action.payload.created) // novi dobavljač
+        .set('createdUser', action.payload.created) // novi dobavljač
         .set('inProgress', false);
 
     case types.END_SUP_REQ_SUCCESS:

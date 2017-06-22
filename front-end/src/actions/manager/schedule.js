@@ -54,7 +54,7 @@ export const deleteTerminStarted = () => ({
 });
 export const deleteTerminSuccess = (deletedItemId) => ({
   type: types.DELETE_TERMIN_SUCCESS,
-  payload: { deletedItemId }
+  payload: deletedItemId // već je payload.deletedItemId
 });
 export const deleteTerminError = (err) => ({
   type: types.DELETE_TERMIN_ERROR,

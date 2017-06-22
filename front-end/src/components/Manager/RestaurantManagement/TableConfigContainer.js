@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { addTable, deleteTable, updateColorIndex, updateChairCount, updateDone } from '../../../actions/tables';
+import { getTables, addTable, deleteTable, updateColorIndex, updateChairCount, updateDone } from '../../../actions/tables';
 
 import TableConfig from './TableConfig';
 
@@ -17,6 +17,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   addTable,
   deleteTable,
+  getTables,
   updateChairCount,
   updateColorIndex,
   updateDone

@@ -26,11 +26,6 @@ class Tables extends Component {
     this.props.updateTable(table, this.props.user.token);
   }
 
-  componentDidMount() {
-    console.log('ComponentDidMount', 'warning');
-    this.props.getTables(this.props.user.token);
-  }
-
   sendTableConfigFromTables() {
     this.props.sendTableConfig(this.props.tables, this.props.user.token);
     setTimeout(() => {
