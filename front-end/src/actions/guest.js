@@ -2,6 +2,12 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+
+/** sva stanja koja su mijenjana tokom rezervacije vratim na inicijalna */
+export const endRestaurantReservation = () => ({
+	type: types.END_RESTAURANT_RESERVATION
+});
+
 export const sendMealOrderSuccess = ( mealOrderSuccess ) => ({
 	type: types.SEND_MEAL_ORDER_SUCCESS,
 	payload: mealOrderSuccess
