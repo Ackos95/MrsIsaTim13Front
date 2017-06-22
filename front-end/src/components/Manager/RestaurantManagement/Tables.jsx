@@ -65,7 +65,7 @@ class Tables extends Component {
               return (
                 <Table
                   dragEnded={this.dragEnded}
-                  tableClick={this.props.selectTable} // reakcija na klik na sto
+                  tableClick={table.occupied ? null : this.props.selectTable} // reakcija na klik na sto
                   width={TABLE_SIZE} height={TABLE_SIZE}
                   chairCount={table.chairCount}
                   x={table.x} y={table.y}
@@ -75,6 +75,7 @@ class Tables extends Component {
                   id={table.id}            // ID je ID iz baze!
                   cursorPointer={this.cursorPointer}
                   cursorDefault={this.cursorDefault}
+                  strokeColor={table.occupied ? 'red' : 'black'}
                   // draggable={table.draggable} // Group.draggable = TRUE, ali šta sa rezervisanim?!??!
                 />)
             })

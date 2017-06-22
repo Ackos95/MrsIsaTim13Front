@@ -11,7 +11,8 @@ const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 class Dnd extends React.Component {
   constructor (props) {
-    super(props)
+    super(props);
+
     this.state = {
       events: events // nepotrebno!
     };
@@ -39,7 +40,7 @@ class Dnd extends React.Component {
     return (
       <DragAndDropCalendar
         selectable={true}
-        events={this.props.events} // this.state.events
+        events={this.props.events.concat(events)} // concat is just temporary!
         onEventDrop={this.moveEvent}
         defaultView='month'
         defaultDate={new Date(2017, 6, 12)}
@@ -53,4 +54,4 @@ class Dnd extends React.Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(Dnd)
+export default DragDropContext(HTML5Backend)(Dnd);

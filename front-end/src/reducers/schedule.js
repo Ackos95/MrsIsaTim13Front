@@ -3,14 +3,14 @@ import { Record } from 'immutable';
 import * as types from '../constants';
 
 const Schedule = new Record({
-  termins: [], // postojeći termini
   inProgress: false, // get/update u toku
   confirmationInProgress: false, // da li je update zavrsen,
-  selectedItemId: -1, // ID u bazi od trenutno selektovanog termina iz rasporeda
+  selectedItem: null, // trenutno selektovani termin iz rasporeda
   employees: [],
   schedule: {
     scheduleItems: []
   },
+  // restaurantId: -1,
 });
 
 const initialState = new Schedule();
@@ -34,6 +34,28 @@ const scheduleReducer = ( state = initialState, action ) => {
         .set('employees', action.payload.employees)
         .set('inProgress', false);
 
+    case types.ADD_TERMIN_SUCCESS:
+    {
+      let schedule = state.schedule;
+      schedule.scheduleItems = [...schedule.scheduleItems, action.payload.createdTermin];
+      console.log('novi schedule');
+      console.log(schedule);
+      return state
+        .set('schedule', schedule)
+        .set('inProgress', false);
+    }
+
+    case types.DELETE_TERMIN_SUCCESS:
+    {
+      let scheduleItems = state.schedule.scheduleItems.filter(t => t.id !== action.payload.deletedItemId);
+
+      return state
+        .set('selectedItem', null) // reset odabranog stola
+        .set('schedule', {...state.schedule, scheduleItems: scheduleItems})
+        .set('inProgress', false)
+        .set('confirmationInProgress', true);
+    }
+
     case types.ADD_TERMIN_ERROR:
     case types.DELETE_TERMIN_ERROR:
     case types.LOAD_EMPLOYEES_ERROR:
@@ -42,7 +64,15 @@ const scheduleReducer = ( state = initialState, action ) => {
 
     case types.SELECT_SCHEDULE_ITEM:
       return state
-        .set('selectedItemId', action.payload.selectedItemId);
+        .set('selectedItem', action.payload.selectedItem);
+
+    // case types.LOGIN_SUCCESS:
+    // {
+    //   console.log('LOGIN SUCCESS U RESTAURANT REDUCERU! restoran:');
+    //   console.log(action.payload.user.restaurant);
+    //   return state
+    //     .set('restaurantId', action.payload.user.restaurant.id);
+    // }
 
     default:
       return state;

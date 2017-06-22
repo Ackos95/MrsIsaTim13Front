@@ -4,6 +4,7 @@ import { Button, Col, Row, Panel } from 'react-bootstrap';
 
 import Loading from '../../common/Loading/Loading';
 
+import ScheduleItemForm from './../Forms/ScheduleItemForm';
 
 /*** CALENDAR SETTINGS ***/
 
@@ -34,6 +35,11 @@ class Schedule extends React.Component {
 
     this.loadEmployees = this.loadEmployees.bind(this);
     this.loadSchedule = this.loadSchedule.bind(this);
+    this.deleteTermin = this.deleteTermin.bind(this);
+  }
+
+  deleteTermin() {
+    this.props.deleteTermin(this.props.selectedItem.id, this.props.user.token);
   }
 
   loadEmployees() {
@@ -42,18 +48,25 @@ class Schedule extends React.Component {
   }
 
   loadSchedule() {
-    console.log('LOAD schedule');
-    this.props.loadSchedule(this.props.user.token);
+    console.log('LOAD schedule ||| restoran: ' + this.props.user.restaurant.id);
+    this.props.loadSchedule(this.props.user.restaurant.id, this.props.user.token);
   }
 
-  addScheduleItem() {
+  addScheduleItem(newTermin) {
+    console.log('|||| addScheduleItem |||| newTermin');
+    console.log(newTermin);
+
+    console.log('schedule');
+    console.log(this.props.schedule);
+
+    this.props.addTermin(newTermin, this.props.user.token, this.props.schedule.id);
 
   }
 
   selectEvent(event) {
     console.log('<<<< event >>>');
     console.log(event);
-    this.props.selectScheduleItem(event.id);
+    this.props.selectScheduleItem(event);
   }
 
   handleSelect(args) {
@@ -63,8 +76,6 @@ class Schedule extends React.Component {
   }
 
   render() {
-    console.log('this.props.schedule');
-    console.log(this.props.schedule);
     return (
       <Panel className='container' style={{marginTop: '21px'}}>
         <Row>
@@ -76,12 +87,16 @@ class Schedule extends React.Component {
               <Col xs={6} md={3} style={{paddingLeft: '10%'}}>
                 <Button bsStyle='primary' onClick={this.loadSchedule}>Load schedule</Button>
               </Col>
-              <Col xs={6} md={3} style={{paddingLeft: '10%'}}>
-                <Button bsStyle='success' onClick={this.addTermin}>Add Termin</Button>
-              </Col>
               <Col xs={6} md={3}>
-                <Button bsStyle='warning' disabled={this.props.selectedItemId === -1} onClick={this.deleteTermin}>Delete selected termin</Button>
+                <Button bsStyle='warning' disabled={this.props.selectedItem === null} onClick={this.deleteTermin}>
+                  Delete selected termin
+                </Button>
               </Col>
+            </Row>
+            <Row>
+              <ScheduleItemForm addScheduleItem={this.addScheduleItem} employees={this.props.employees}/>
+            </Row>
+            <Row>
               <Col xs={12} md={12} style={{margin: '10px'}}>
                 { this.props.inProgress ? <Loading/> : <b>Ready!</b> }
                 {/*{ this.props.confirmationInProgress ? <Notify /> : null }*/}

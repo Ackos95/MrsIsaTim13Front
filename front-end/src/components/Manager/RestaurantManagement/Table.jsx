@@ -14,6 +14,14 @@ class Table extends Component {
       x: 0,
       y: 0
     };
+
+    this.tableClick = this.tableClick.bind(this);
+  }
+  tableClick() {
+    console.log('TABLE_CLICK!');
+    console.log(this.props.tableClick);
+    if (this.props.tableClick !== null)
+      this.props.tableClick({id: this.props.id, chairCount: this.props.chairCount});
   }
 
   componentDidMount() {
@@ -41,14 +49,14 @@ class Table extends Component {
              ref={this.props.id}
              // key={`rect-${this.props.id}`}
              onDragEnd={()=>this.handleDragEnd(this.props.id)}
-             onClick={()=>this.props.tableClick({id: this.props.id, chairCount: this.props.chairCount})}
+             onClick={this.tableClick}
           onMouseEnter={this.props.cursorPointer}
           onMouseLeave={this.props.cursorDefault}>
         <Rect
           ref={`R-${this.props.id}`}
           fill={this.props.color}
           width={this.props.width} height={this.props.height}
-          stroke='black' strokeWidth={2}
+          stroke={this.props.strokeColor} strokeWidth={2}
         />
         <Text
           text={`${this.props.chairCount}`} fill={textFill}

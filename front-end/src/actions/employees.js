@@ -1,7 +1,7 @@
 import * as types from '../constants';
 import { SERVER_URL } from '../config';
 
-import { $get, $post, getToken, addAuthHeader } from '../utils/http';
+import { $get, addAuthHeader } from '../utils/http';
 
 
 export const loadScheduleStarted = () => ({

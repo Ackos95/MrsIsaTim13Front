@@ -1,6 +1,7 @@
 import * as types from '../constants';
 import { Record } from 'immutable';
-import filter from 'lodash/filter'
+import filter from 'lodash/filter';
+import { millisecondsToDate } from './../utils';
 
 const Guest = new Record({
 	gettingVisitedRests : false,
@@ -36,29 +37,10 @@ const guestReducer = (state = initialState, action) => {
 			console.log("\n GET_LUNCH_INVITATION_SUCCESS  GET_LUNCH_INVITATION_SUCCESS");
 			console.log(action.payload.reservationDate);
 
-			/** http://www.webdevelopersnotes.com/formatting-time-using-javascript */
-			
-			let m_names = ["Januar", "Februar", "Mart",
-				"April", "Maj", "Jun", "Jul", "Avgust", "Septembar",
-				"Oktobar", "Novembar", "Decembar"];
-			
-			let d = new Date(action.payload.reservationDate);
-			let curr_date = d.getDate();
-			let curr_month = d.getMonth();
-			let curr_year = d.getFullYear();
-			let curr_hour = d.getHours();
-			let curr_min = d.getMinutes();
-			
-			curr_hour = curr_hour + "";
-			curr_min = curr_min + "";
-			
-			if (curr_hour.length === 1)
-				curr_hour = "0" + curr_hour;
-			if (curr_min.length === 1)
-				curr_min = "0" + curr_min;
-			
-			let printDate = curr_date + "-" + m_names[curr_month] + "-" + curr_year;
-			let printHour = curr_hour + ":" + curr_min;
+			const printDateAndHour = millisecondsToDate(action.payload.reservationDate, 'sr'); // 'en' za engleske nazive mjeseca
+
+			let printDate = printDateAndHour[0];
+			let printHour = printDateAndHour[1];
 			
 			let lunchInvitation = {id: action.payload.id, lunchGuest: action.payload.lunchGuest,
 				lunchHost: action.payload.lunchHost , lunchDate: printDate, lunchHour: printHour,

@@ -35,7 +35,7 @@ export default [
   },
   {
     'title': 'Birthday Party',
-    'start':new Date(2017, 6, 13, 7, 0, 0),
-    'end': new Date(2017, 6, 13, 10, 30, 0)
+    'start':new Date(2017, 7, 3, 7, 0, 0),
+    'end': new Date(2017, 7, 3, 10, 30, 0)
   }
 ];
