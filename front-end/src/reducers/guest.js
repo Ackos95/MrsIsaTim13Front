@@ -23,7 +23,8 @@ const Guest = new Record({
 	lunchFriends : [],
 	invitedLunchFriends : [],
 	lunchInvitation : null,
-	invitationRestaurant : null
+	invitationRestaurant : null,
+	lunchOrderSuccess : null
 });
 
 const initialState = new Guest();
@@ -31,7 +32,18 @@ const initialState = new Guest();
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
 		
-  	
+		case types.END_RESTAURANT_RESERVATION:
+			return state.set('restaurantConfiguration',  undefined)
+									.set('lunchFriends',  [])
+									.set('invitedLunchFriends', [])
+									.set('lunchOrderSuccess',  null);
+
+		case types.SEND_MEAL_ORDER_SUCCESS: {
+			console.log(" SEND_MEAL_ORDER_SUCCESS   >  SEND_MEAL_ORDER_SUCCESS ");
+			console.log(action.payload);
+			return state.set('lunchOrderSuccess', action.payload);
+		}
+
   	/** lunch invitation */
 		case types.GET_LUNCH_INVITATION_SUCCESS: {
 			console.log("\n GET_LUNCH_INVITATION_SUCCESS  GET_LUNCH_INVITATION_SUCCESS");
@@ -41,7 +53,7 @@ const guestReducer = (state = initialState, action) => {
 
 			let printDate = printDateAndHour[0];
 			let printHour = printDateAndHour[1];
-			
+
 			let lunchInvitation = {id: action.payload.id, lunchGuest: action.payload.lunchGuest,
 				lunchHost: action.payload.lunchHost , lunchDate: printDate, lunchHour: printHour,
 				reservationHours: action.payload.reservationHours, restaurant: action.payload.restaurant,
@@ -64,6 +76,15 @@ const guestReducer = (state = initialState, action) => {
 	
 		case types.GET_LUNCH_FRIENDS_SUCCESS: {
 			let newLunchFriends = action.payload.lunchFriends;
+			// Ko je ovo pisao? Da li si siguran da ce ovo raditi, overridujes svaki put newLunchFriends, prakticno je identicno kao
+			// newLunchFriends = filter(newLunchFriends, (lunchFriend) => lunchFriend.id !== state.invitedLunchFriends[state.invitedLunchFriends.length - 1].id)
+			// Predlog resenja (Testiraj samo pisao sam ga u 05:11, bez testiranja naravno :D):
+			/*
+				const { invitedLunchFriends } = state;
+				const newLunchFriends = filter(action.payload.lunchFriends, (friend) => invitedLunchFriends.find(invitedFriend) => invitedFriend.id !== friend.id)
+
+				return state.set(...)
+			*/
 			for (var i = 0; i < state.invitedLunchFriends.length; i++) {
 				newLunchFriends = filter(newLunchFriends, (lunchFriend) => lunchFriend.id !== state.invitedLunchFriends[i].id );
 			}

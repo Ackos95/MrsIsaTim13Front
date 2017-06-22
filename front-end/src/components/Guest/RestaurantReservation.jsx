@@ -8,14 +8,24 @@ import Loading from '../common/Loading/Loading';
 import { Button } from 'react-bootstrap';
 import { emptyThStyle } from './css/css'
 import './css/guest.css';
+import DrinkAndMealChooser from "./../common/Checkbox/DrinkAndMealChooser"
 
 class RestaurantReservation extends Component {
 	
 	constructor(props) {
 		super(props);
 		
+		// treba mi jer JsonMapper na serveru ne može da parsira "token" atribut user-a
+		let currentUser = this.props.user;
+		console.log("\nconsole.log(currentUser);");
+		console.log(currentUser);
+		console.log("console.log(currentUser);\n");
+		
+		let noTokenUser = { id: currentUser.id, email: currentUser.email, firstName: currentUser.firstName,
+		lastName: currentUser.lastName, userName: currentUser.userName, roles: currentUser.roles };
+		
 		this.state = { restaurantOnReservation : props.restaurant, reservationStep : 1,
-										dateTime: null, lunchHours: null, nonParsedDateTime: null};
+										dateTime: null, lunchHours: null, nonParsedDateTime: null, noTokenUser: noTokenUser};
 		
 		this.choseDateAndTime = this.choseDateAndTime.bind(this);
 		this.selectTable = this.selectTable.bind(this);
@@ -27,6 +37,12 @@ class RestaurantReservation extends Component {
 		this.makeLunchFriendsTable = this.makeLunchFriendsTable.bind(this);
 		this.inviteLunchFriend = this.inviteLunchFriend.bind(this);
 		this.makeRestaurantConfigurationTable = this.makeRestaurantConfigurationTable.bind(this);
+		
+		this.endReservation = this.endReservation.bind(this);
+	}
+	
+	endReservation() {
+		alert("666");
 	}
 	
 	inviteLunchFriend ( lunchFriend ) {
@@ -62,6 +78,10 @@ class RestaurantReservation extends Component {
 	
 	nextStep() {
 		this.setState({reservationStep : this.state.reservationStep + 1});
+		console.log();
+		console.log(this.props);
+		console.log(this.state);
+		console.log();
 	}
 	
 	previousStep() {
@@ -89,12 +109,19 @@ class RestaurantReservation extends Component {
 		let minutes = time.split(":")[1];
 		console.log("Konacno: " + day + "." + month + "." + year + ". " + hours + ":" + minutes);
 		
+		// dateTime =dateTime + ":00+0200";
+		let myDate = new Date(dateTime);
+		//let offset = myDate.getTimezoneOffset() * 60 * 1000;
+		// myDate.getTime() MINUS offset jer je offset negativan broj minuta koliko moja veremenska zona kasni za UTC 00:00, dakle (-)120
+		let result = myDate.getTime();
+		
 		let lunchHours = document.getElementById("input-hour").value;
 		console.log("lunchHours " + lunchHours);
 		let dateTimeToState = day + "." + month + "." + year + ". " + hours + ":" + minutes;
 		this.setState({reservationStep : this.state.reservationStep + 1, lunchHours: lunchHours,
-			dateTime: dateTimeToState });
+			dateTime: dateTimeToState, dateTimeInMiliseconds : result });
 		
+		console.log("\n iz RestaurantReservation.jsx - choseDateAndTime - console.log(this.state) ");
 		console.log(this.state);
 	}
 	
@@ -166,8 +193,10 @@ class RestaurantReservation extends Component {
 						<div style={{marginLeft: 10 + 'px'}} >
 							{	this.state.reservationStep === 2 ?
 								<div>
-									<Button style={{marginTop: 10 + 'px'}} onClick={ this.previousStep }>Go back - Change entered data</Button>
-									<Button style={{marginTop: 10 + 'px'}} onClick={ this.selectTable }> It's OK - Continue </Button>
+									<Button style={{marginTop: 10 + 'px', marginRight: 5 + 'px'}}
+													onClick={ this.previousStep }>Go back - Change entered data</Button>
+									<Button style={{marginTop: 10 + 'px', marginLeft: 5 + 'px'}}
+													onClick={ this.selectTable }> It's OK - Continue </Button>
 								</div> :
 								<h3> Table choosing </h3>
 							}
@@ -235,18 +264,60 @@ class RestaurantReservation extends Component {
 							<div>
 								<h3> Invited friends </h3>
 								<table id="potential-friends-table">
-									<tbody><tr><th>Name</th><th>Last name</th></tr>
-										{ this.props.guest.invitedLunchFriends.map(this.makeInvitedLunchFriendsTable) }
-									</tbody>
+									{ this.props.guest.invitedLunchFriends.length > 0 ?
+										<tbody>
+											<tr><th>Name</th><th>Last name</th></tr>
+											{ this.props.guest.invitedLunchFriends.map(this.makeInvitedLunchFriendsTable) }
+										</tbody>
+										:
+										<tbody><tr><th style={emptyThStyle}> No friends are invited </th></tr></tbody>
+										}
 								</table>
 							</div>
 							: null
 							}
 						</div>
-						<div className='panel-body'>
-							{ this.state.reservationStep === 5 ? <Button onClick={() => this.setState({reservationStep: 1})}>
-								Kraj - step na 1</Button> : <Loading/>}
+						<div style={{marginLeft: 10 + 'px'}} >
+							{ this.state.reservationStep === 5 ?
+								<div>
+									<h3> Order your food and drink before you come? </h3>
+									<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+										<Button style={{marginTop: 10 + 'px', marginRight: 5 + 'px'}}
+														onClick={ this.nextStep }> Yes </Button>
+										<Button style={{marginTop: 10 + 'px', marginLeft: 5 + 'px'}}
+														onClick={ () => this.setState({'reservationStep': 7}) } > No </Button>
+									</div>
+								</div>
+							:
+								null
+							}
 						</div>
+						<div style={{marginLeft: 10 + 'px'}} >
+							{ this.state.reservationStep === 6 ?
+								<div>
+									<DrinkAndMealChooser ref="drinkAndMealChooser"
+																				lunchGuest={this.state.noTokenUser}
+																				timeStamp={this.state.dateTimeInMiliseconds}
+																				restaurant={this.state.restaurantOnReservation}
+																				sendMealOrder={this.props.sendMealOrder} />
+								</div>
+								:
+								null
+							}
+						</div>
+						{/* e n d  - - -     kliknuo je YES ii došao do kraja u drinkAndMealChooser-u  ILI  kliknuo NO */}
+						{ this.state.reservationStep === 7 || this.props.guest.lunchOrderSuccess === "OK valjda" ?
+							<div className='panel-body' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+								<Button style={{ marginTop: 10 + 'px'}} onClick={ this.endReservation }>
+									Finish
+								</Button>
+							</div>
+							:
+							<div className='panel-body' style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
+								<h3> Waiting for the end... </h3>
+								<Loading/>
+							</div>
+						}
 					</div>
 		);
 	}

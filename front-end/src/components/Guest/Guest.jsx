@@ -9,6 +9,8 @@ import GuestProfile from "./GuestProfileContainer";
 import GuestFriends from "./GuestFriendsContainer";
 import GuestRestaurants from "./GuestRestaurantsContainer";
 
+import Logout from "./../Logout/LogoutContainer";
+
 class Guest extends Component {
 
   constructor(props) {
@@ -32,7 +34,7 @@ class Guest extends Component {
 								<NavItem eventKey="first"> Friends </NavItem>
 								<NavItem eventKey="second"> Restaurants </NavItem>
 								<NavItem eventKey="third"> My profile </NavItem>
-								<Nav pullRight> <NavItem href="#">Log out</NavItem>
+								<Nav pullRight> <NavItem eventKey="fourth" >Log out</NavItem>
 								</Nav>
 							</Nav>
 						</Col>
@@ -46,6 +48,9 @@ class Guest extends Component {
 								</Tab.Pane>
 								<Tab.Pane eventKey="third">
 									<GuestProfile/>
+								</Tab.Pane>
+								<Tab.Pane eventKey="fourth">
+									 { this.state.key === "fourth" ? <Logout/> : null}
 								</Tab.Pane>
 							</Tab.Content>
 						</Col>

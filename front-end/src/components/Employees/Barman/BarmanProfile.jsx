@@ -3,23 +3,28 @@ import { PropTypes } from 'prop-types';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import Schedule from '../common/Schedule';
+import Orders from '../common/Orders/OrdersContainer';
 
 class BarmanProfile extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    barmanSchedules: PropTypes.object,
+    barmanSchedules: PropTypes.arrayOf(PropTypes.object).isRequired,
+    orders: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadSchedule: PropTypes.func.isRequired,
+    loadOrders: PropTypes.func.isRequired,
+    setDrinkDone: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    const { user: { id, token, restaurant }, loadSchedule } = this.props;
+    const { user: { id, token, restaurant }, loadSchedule, loadOrders } = this.props;
     
     loadSchedule(restaurant.id, id, token);
+    loadOrders(token);
   }
 
   render() {
-    const { barmanSchedules } = this.props;
+    const { barmanSchedules, orders, setDrinkDone } = this.props;
 
     return (
       <div>
@@ -31,6 +36,7 @@ class BarmanProfile extends Component {
         <div className="employee__main-content">
           <Switch>
             <Route path="/barman/schedules" render={() => <Schedule schedules={barmanSchedules} />} />
+            <Route path="/barman/orders" render={() => <Orders orders={orders} options={{ showDrinks: true, setDrinkDone }} />} />
           </Switch>
         </div>
       </div>

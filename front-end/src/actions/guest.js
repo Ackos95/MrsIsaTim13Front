@@ -2,6 +2,17 @@ import * as types from '../constants'
 import { SERVER_URL } from '../config';
 import { $get, $post, addAuthHeader } from '../utils/http';
 
+
+/** sva stanja koja su mijenjana tokom rezervacije vratim na inicijalna */
+export const endRestaurantReservation = () => ({
+	type: types.END_RESTAURANT_RESERVATION
+});
+
+export const sendMealOrderSuccess = ( mealOrderSuccess ) => ({
+	type: types.SEND_MEAL_ORDER_SUCCESS,
+	payload: mealOrderSuccess
+});
+
 export const sendMealOrder = ( mealOrder ) => dispatch => {
 	
 	console.log("\n console.log(mealOrder);");
@@ -13,6 +24,7 @@ export const sendMealOrder = ( mealOrder ) => dispatch => {
 			console.log("\n sendMealOrder data pa res");
 			console.log(data); 									console.log(res);
 			console.log("sendMealOrder data pa res \n");
+			return dispatch(sendMealOrderSuccess(data));
 		})
 		.catch((err) => {
 			console.log("\n sendMealOrder E R R O R");
