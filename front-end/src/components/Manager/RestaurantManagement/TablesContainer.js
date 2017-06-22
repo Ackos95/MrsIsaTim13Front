@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   colorIndex: state.restaurant.colorIndex,
   chairCount: state.restaurant.chairCount,
   selectedTableId: state.restaurant.selectedTableId,
+	selectedTablesId: state.restaurant.selectedTablesId,
   inProgress: state.restaurant.inProgress,
   confirmationInProgress: state.restaurant.confirmationInProgress
 });
