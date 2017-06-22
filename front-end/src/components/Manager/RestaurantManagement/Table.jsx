@@ -43,11 +43,12 @@ class Table extends Component {
 
   render() {
     const textFill = this.props.color === 'red' || this.props.color === 'black' ? 'white' : 'black';
+    const taken = this.props.occupied ? '\ntaken' : '';
     return (
-      <Group draggable={true}
+      // If not occupied, you can drag it. 'Draggable' is passed from <Tables editing={true} /> in TableConfig
+      <Group draggable={!this.props.occupied && this.props.draggable}
              x={this.props.x} y={this.props.y}
              ref={this.props.id}
-             // key={`rect-${this.props.id}`}
              onDragEnd={()=>this.handleDragEnd(this.props.id)}
              onClick={this.tableClick}
           onMouseEnter={this.props.cursorPointer}
@@ -59,9 +60,9 @@ class Table extends Component {
           stroke={this.props.strokeColor} strokeWidth={2}
         />
         <Text
-          text={`${this.props.chairCount}`} fill={textFill}
+          text={`   ${this.props.chairCount} ${taken}`} fill={textFill}
           fontSize={30}
-          padding={25}
+          padding={5}
         />
       </Group>
     );

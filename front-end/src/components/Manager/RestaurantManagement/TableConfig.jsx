@@ -137,7 +137,8 @@ class TableConfig extends Component {
           </Row>
         </Col> {/* kraj kolone za opcije*/}
         <Col xs={12} md={9} style={{border: '1px solid black'}}>
-          <Tables/>
+          <Tables editing={true} reonFilter={null}/>
+          {/* reonFilter={'npr: OUTSIDE'} - koriste ga konobari*/}
         </Col>
       </Row>
     )

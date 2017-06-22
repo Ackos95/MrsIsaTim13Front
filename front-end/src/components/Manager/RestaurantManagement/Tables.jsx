@@ -60,10 +60,21 @@ class Tables extends Component {
           {
             this.props.tables !== null ?
             this.props.tables.map((table, index) => {
+              // da li filtriramo stolove
+              if (this.props.reonFilter !== null && this.props.reonFilter !== undefined)
+              {
+                console.log('FILTER: ' + this.props.reonFilter + ' table.reon: ' + table.reon);
+                if (table.reon !== this.props.reonFilter)
+                  return null;
+              }
+
+
               // CLICKED ako je id_stola == id_selektovanog
               const colorKey = this.props.selectedTableId === table.id ? 'CLICKED' : table.reon;
               return (
                 <Table
+                  occupied={table.occupied}
+                  draggable={this.props.editing}
                   dragEnded={this.dragEnded}
                   tableClick={table.occupied ? null : this.props.selectTable} // reakcija na klik na sto
                   width={TABLE_SIZE} height={TABLE_SIZE}
