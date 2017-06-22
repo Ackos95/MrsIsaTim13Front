@@ -27,6 +27,12 @@ class RestaurantReservation extends Component {
 		this.makeLunchFriendsTable = this.makeLunchFriendsTable.bind(this);
 		this.inviteLunchFriend = this.inviteLunchFriend.bind(this);
 		this.makeRestaurantConfigurationTable = this.makeRestaurantConfigurationTable.bind(this);
+		
+		this.endReservation = this.endReservation.bind(this);
+	}
+	
+	endReservation() {
+		alert("666");
 	}
 	
 	inviteLunchFriend ( lunchFriend ) {
@@ -166,8 +172,10 @@ class RestaurantReservation extends Component {
 						<div style={{marginLeft: 10 + 'px'}} >
 							{	this.state.reservationStep === 2 ?
 								<div>
-									<Button style={{marginTop: 10 + 'px'}} onClick={ this.previousStep }>Go back - Change entered data</Button>
-									<Button style={{marginTop: 10 + 'px'}} onClick={ this.selectTable }> It's OK - Continue </Button>
+									<Button style={{marginTop: 10 + 'px', marginRight: 5 + 'px'}}
+													onClick={ this.previousStep }>Go back - Change entered data</Button>
+									<Button style={{marginTop: 10 + 'px', marginLeft: 5 + 'px'}}
+													onClick={ this.selectTable }> It's OK - Continue </Button>
 								</div> :
 								<h3> Table choosing </h3>
 							}
@@ -243,9 +251,37 @@ class RestaurantReservation extends Component {
 							: null
 							}
 						</div>
+						<div style={{marginLeft: 10 + 'px'}} >
+							{ this.state.reservationStep === 5 ?
+								<div>
+									<h3> Order your food and drink before you come? </h3>
+									<Button style={{marginTop: 10 + 'px', marginRight: 5 + 'px'}}
+													onClick={ this.nextStep }> Yes </Button>
+									<Button style={{marginTop: 10 + 'px', marginLeft: 5 + 'px'}}
+													onClick={ () => this.setState({'reservationStep': 666}) } > No </Button>
+								</div>
+							:
+								null
+							}
+						</div>
+						<div style={{marginLeft: 10 + 'px'}} >
+							{ this.state.reservationStep === 6 ?
+								null
+								:
+								null
+							}
+						</div>
+						
+						{/* e n d */}
 						<div className='panel-body'>
-							{ this.state.reservationStep === 5 ? <Button onClick={() => this.setState({reservationStep: 1})}>
-								Kraj - step na 1</Button> : <Loading/>}
+							{ this.state.reservationStep === 666 ? <Button onClick={ this.endReservation }>
+								Final check before you complete your resrvation to see if you entered everything as you <br/> wanted, which
+								does not have any point since you can't change anything 'cause our application sucks balls </Button> :
+								<div style={{marginLeft: 10 + 'px'}} >
+									<h3> Waiting for the end... </h3>
+									<Loading/>
+								</div>
+								}
 						</div>
 					</div>
 		);

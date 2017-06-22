@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Checkbox from './../common/Checkbox/Checkbox';
 
+import DrinkAndMealChooser from './../common/Checkbox/DrinkAndMealChooser'
 import { Col , Button } from 'react-bootstrap';
 import { buttonRowStyle } from './css/css'
 import './css/guest.css';
@@ -28,8 +28,6 @@ class LunchInvitation extends Component {
 		this.acceptInvitation = this.acceptInvitation.bind(this);
 		this.declineInvitation = this.declineInvitation.bind(this);
 		
-		this.endInvitationResponse = this.endInvitationResponse.bind(this);
-		
 		this.printState = this.printState.bind(this);
 	}
 	
@@ -38,18 +36,6 @@ class LunchInvitation extends Component {
 		console.log(this.props.guest.lunchInvitation);
 		console.log("console.log(this.state);");
 		console.log(this.state);
-	}
-	
-	endInvitationResponse() {
-		console.log("endInvitationResponse");
-		console.log("\nendInvitationResponse");
-		
-		let mealOrder = { guest: this.props.guest.lunchInvitation.lunchGuest, timeStamp: this.props.guest.lunchInvitation.realDate,
-											meals: this.state.finallyBoughtMeals, drinks: this.state.finallyBoughtDrinks };
-		
-		console.log(mealOrder);
-		
-		this.props.sendMealOrder(mealOrder);
 	}
 	
 	declineInvitation() {
@@ -72,140 +58,8 @@ class LunchInvitation extends Component {
 	/** C H E C K B O X E S - - - C H E C K B O X E S - - - C H E C K B O X E S */
 	/** http://react.tips/checkboxes-in-react/ */
 	
-	/** Drinks checkbox - tables - START */
-	
-	handleDrinkFormSubmit = formSubmitEvent => {
-		formSubmitEvent.preventDefault();
-		
-		this.setState({invitationStep: this.state.invitationStep + 1});
-		
-		let finallyBoughtDrinks = [];
-		for (const checkbox of this.boughtDrinks) {
-			finallyBoughtDrinks.push(checkbox);
-			console.log(checkbox, '\n drink.');
-		}
-		
-		console.log("console.log(finallyBoughtDrinks);");
-		console.log(finallyBoughtDrinks);
-		this.setState({finallyBoughtDrinks: finallyBoughtDrinks});
-	};
-	
-	toggleDrinkCheckbox = drink => {
-		if (this.boughtDrinks.has(drink)) {
-			this.boughtDrinks.delete(drink);
-		} else {
-			this.boughtDrinks.add(drink);
-		}
-	};
-	
-	createDrinkCheckbox = drink => (
-		<tr key={drink.id}>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {drink.name} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {drink.description} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} >
-				<Checkbox
-					drink={drink}
-					handleCheckboxChange={this.toggleDrinkCheckbox}
-				/>
-			</td>
-		</tr>
-	);
-	
-	createDrinkCheckboxes = () => (
-		<table style={{margin: 'auto', border: 0 + 'px'}}>
-			<tbody>
-			{this.props.guest.lunchInvitation.restaurant.drinksMenu.map(this.createDrinkCheckbox)}
-			</tbody>
-		</table>
-	);
-	
-	createBoughtDrinksRow = drink => (
-		<tr key={drink.id}>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {drink.name} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {drink.description} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {drink.price} </td>
-		</tr>
-	);
-	
-	createBoughtDrinksTable = () => (
-		<table style={{margin: 'auto', border: 0 + 'px'}}>
-			<tbody>
-			{this.state.finallyBoughtDrinks.map(this.createBoughtDrinksRow)}
-			</tbody>
-		</table>
-	);
-	
-	/** Drinks checkbox - tables - END */
-	
-	/** Meals checkbox - tables - START */
-	
-	handleMealFormSubmit = formSubmitEvent => {
-		formSubmitEvent.preventDefault();
-		
-		this.setState({invitationStep: this.state.invitationStep + 1});
-		
-		let finallyBoughtMeals = [];
-		for (const checkbox of this.boughtMeals) {
-			finallyBoughtMeals.push(checkbox);
-			console.log(checkbox, ' \n meal.');
-		}
-		
-		console.log("console.log(finallyBoughtMeals);");
-		console.log(finallyBoughtMeals);
-		this.setState({finallyBoughtMeals: finallyBoughtMeals});
-	};
-	
-	toggleMealCheckbox = meal => {
-		if (this.boughtMeals.has(meal)) {
-			this.boughtMeals.delete(meal);
-		} else {
-			this.boughtMeals.add(meal);
-		}
-	};
-	
-	createMealCheckbox = meal => (
-		<tr key={meal.id}>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {meal.name} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {meal.description} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} >
-				<Checkbox
-					drink={meal}
-					handleCheckboxChange={this.toggleMealCheckbox}
-				/>
-			</td>
-		</tr>
-	);
-	
-	createMealCheckboxes = () => (
-		<table style={{margin: 'auto', border: 0 + 'px'}}>
-			<tbody>
-			{this.props.guest.lunchInvitation.restaurant.mealsMenu.map(this.createMealCheckbox)}
-			</tbody>
-		</table>
-	);
-	
-	createBoughtMealsRow = meal => (
-		<tr key={meal.id}>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {meal.name} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {meal.description} </td>
-			<td style={{textAlign: 'center', border: 0 + 'px'}} > {meal.price} </td>
-		</tr>
-	);
-	
-	createBoughtMealsTable = () => (
-		<table style={{margin: 'auto', border: 0 + 'px'}}>
-			<tbody>
-			{this.state.finallyBoughtMeals.map(this.createBoughtMealsRow)}
-			</tbody>
-		</table>
-	);
-	
 	/** Meals checkbox - tables - END */
 	
-	componentWillMount = () => {
-		this.boughtDrinks = new Set();
-		this.boughtMeals = new Set();
-	};
 	
 	componentDidMount() {
 		this.getInvitationInfo();
@@ -257,68 +111,14 @@ class LunchInvitation extends Component {
 									}
 								</div>
 							}
-							{/*this.sate.invitationStep === -1*/}
-							<div>
-								{ this.state.invitationStep === 2 ?
-									<div>
-										<h3 style={{textAlign: 'center'}} > Poručite neko piće </h3>
-										<h4 style={{textAlign: 'center'}} >
-											Ako ne želite piće, ne morate ništa odabrati. Samo kliknite na Sačuvaj.
-										</h4>
-										<form onSubmit={this.handleDrinkFormSubmit}>
-											{this.createDrinkCheckboxes()}
-											<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-												<button className="btn btn-default" type="submit"> Sačuvaj </button>
-											</div>
-										</form>
-									</div>
-									:
-									null
-								}
-							</div>
-							<div>
-								{ this.state.invitationStep >= 3 ?
-									<div>
-										<h3 style={{textAlign: 'center'}} > Poručeno piće </h3>
-										{this.createBoughtDrinksTable()}
-									</div>
-									: null
-								}
-							</div>
-							<div>
-								{ this.state.invitationStep === 3 ?
-									<div>
-										<h3 style={{textAlign: 'center'}} > Poručite neku hranu </h3>
-										<h4 style={{textAlign: 'center'}} >
-											Ako ne želite hranu, ne morate ništa odabrati. Samo kliknite na Sačuvaj.
-										</h4>
-										<form onSubmit={this.handleMealFormSubmit}>
-											{this.createMealCheckboxes()}
-											<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-												<button className="btn btn-default" type="submit"> Sačuvaj </button>
-											</div>
-										</form>
-									</div>
-									: null
-								}
-							</div>
-							<div>
-								{ this.state.invitationStep >= 4 ?
-									<div>
-										<h3 style={{textAlign: 'center'}} > Poručena hrana </h3>
-										{this.createBoughtMealsTable()}
-									</div>
-									: null
-								}
-							</div>
-							
-							{ this.state.invitationStep === 4 ?
-								<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-									<button className="btn btn-success btn-lg"
-													onClick={() => this.endInvitationResponse()} > Završi </button>
-								</div>
+							{ this.state.invitationStep === 2 ?
+								<DrinkAndMealChooser lunchGuest={this.props.guest.lunchInvitation.lunchGuest}
+																		 timeStamp={this.props.guest.lunchInvitation.realDate}
+																		 restaurant={this.props.guest.lunchInvitation.restaurant}
+																		 sendMealOrder={this.props.sendMealOrder} />
 								: null
 							}
+							
 						</div>
 					</div>
 				</Col>
