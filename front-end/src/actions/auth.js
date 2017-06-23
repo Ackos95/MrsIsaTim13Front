@@ -9,12 +9,13 @@ export const editInfoSuccess = (editedUserInfo) => ({
 	payload: editedUserInfo
 });
 
-export const editInfo = (userInfo, userToken) => dispatch => {
+export const editInfo = (userInfo, userToken, employeeFlag) => dispatch => {
 	
 	console.log("\n actions auth - edit info actions auth");
 	console.log(userInfo);
 	
-	$post(`${SERVER_URL}/guest/update`, userInfo, addAuthHeader(userToken))
+	const uri = employeeFlag ? 'employees' : 'guest';
+	$post(`${SERVER_URL}/${uri}/update`, userInfo, addAuthHeader(userToken))
 	.then((res) => {
 		if (res.status > 400)
 			console.log("error status : " + res.status + ", errorStatusText : " +  res.statusText);
@@ -77,6 +78,7 @@ export const login = ({ userName, password }) => dispatch => {
     if (res.status > 400) return dispatch(loginError());
 
     const { data } = res;
+    console.log(data);
     return dispatch(loginSuccess({
       id: data.id,
       email: data.email,
@@ -85,7 +87,8 @@ export const login = ({ userName, password }) => dispatch => {
       firstName: data.firstName,
       lastName: data.lastName,
       roles: data.roles,
-      restaurant: data.restaurant
+      restaurant: data.restaurant,
+      changedPassword: data.changedPassword,
     }));
   })
   .catch((err) => { 
@@ -95,7 +98,35 @@ export const login = ({ userName, password }) => dispatch => {
 
 export const logout = () => ({
 	type: types.LOGOUT
-})
+});
+
+
+export const changePasswordStarted = () => ({
+	type: types.CHANGE_PASSWORD_STARTED
+});
+
+export const changePasswordError = (error) => ({
+	type: types.CHANGE_PASSWORD_ERROR,
+	error
+});
+
+export const changePasswordSuccess = (passwordInfo) => ({
+	type: types.CHANGE_PASSWORD_SUCCESS,
+	payload: passwordInfo
+});
+
+export const changePassword = ({ passwordInfo, userToken }) => dispatch => {
+	dispatch(changePasswordStarted());
+
+	$post(`${SERVER_URL}/users/change-password`, passwordInfo, addAuthHeader(userToken))
+		.then((res) => {
+			if (res.status >= 400 || !res.data)
+				return dispatch(changePasswordError(null));
+
+			dispatch(changePasswordSuccess(passwordInfo));
+		})
+		.catch((err) => dispatch(changePasswordError(err)));
+};
 
 
 export const registrationSuccess = (successObject) => ({

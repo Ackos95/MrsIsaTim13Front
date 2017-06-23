@@ -24,15 +24,15 @@ class Profile extends Component {
 	
 	saveInfo() {
 		let oldUser = this.props.user;
-		let newUserName = document.getElementById("newUserName");
+		// let newUserName = document.getElementById("newUserName");
 		let newFirstName = document.getElementById("newFirstName");
 		let newLastName = document.getElementById("newLastName");
 		let newEmail = document.getElementById("newEmail");
 		// let password = document.getElementById("new");
-		let newUserInfo = {id: oldUser.id, userName: newUserName.value, firstName: newFirstName.value,
+		let newUserInfo = {id: oldUser.id, userName: oldUser.userName, firstName: newFirstName.value,
 										lastName: newLastName.value, email: newEmail.value};
 		// preko mapDispatchToProps dobio
-		this.props.editInfo(newUserInfo, oldUser.token);
+		this.props.editInfo(newUserInfo, oldUser.token, this.props.employeeFlag);
 		
 		this.setState({editingInfo : false});
 	}
@@ -72,9 +72,6 @@ class Profile extends Component {
 								{
 									this.state.editingInfo ?
 										<tbody>
-											<tr><td>Username</td>
-												<td> <input id="newUserName" type="text" defaultValue={user.userName} /> </td>
-											</tr>
 											<tr><td>First name</td>
 												<td> <input id="newFirstName" type="text" defaultValue={user.firstName} /> </td>
 											</tr>

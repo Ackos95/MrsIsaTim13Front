@@ -24,7 +24,8 @@ const Guest = new Record({
 	invitedLunchFriends : [],
 	lunchInvitation : null,
 	invitationRestaurant : null,
-	lunchOrderSuccess : null
+	lunchOrderSuccess : null,
+	tableReservationError: false
 });
 
 const initialState = new Guest();
@@ -32,11 +33,15 @@ const initialState = new Guest();
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
 		
+		case types.TABLE_RESERVATION_ERROR:
+			return state.set('tableReservationError', true);
+  	
 		case types.END_RESTAURANT_RESERVATION:
 			return state.set('restaurantConfiguration',  undefined)
 									.set('lunchFriends',  [])
 									.set('invitedLunchFriends', [])
-									.set('lunchOrderSuccess',  null);
+									.set('lunchOrderSuccess',  null)
+									.set('restaurantOnReservation', null);
 
 		case types.SEND_MEAL_ORDER_SUCCESS: {
 			console.log(" SEND_MEAL_ORDER_SUCCESS   >  SEND_MEAL_ORDER_SUCCESS ");

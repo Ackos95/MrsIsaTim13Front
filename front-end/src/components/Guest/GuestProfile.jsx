@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import Loading from '../common/Loading/Loading';
 import Profile from '../common/Profile/ProfileContainer';
 
+import moment from 'moment';
+
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Button } from 'react-bootstrap';
 import { buttonRowStyle, buttonStyle, emptyThStyle , tdStyle } from './css/css';
@@ -128,13 +130,13 @@ class GuestProfile extends Component {
 										<table id="visited-restaurants-table">
 											{
 												restaurants !== undefined && restaurants.length > 0 ?
-													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Distance</th></tr>
+													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Date</th></tr>
 													{ restaurants.map(function (restaurant, index) {
 														return <tr key={ index }>
-														<td style={tdStyle}>{`${restaurant.name}`}</td>
-														<td style={tdStyle}>{`${restaurant.city}`}</td>
-														<td style={tdStyle}>{`${restaurant.description}`}</td>
-														<td style={tdStyle}>{`667`}</td>
+														<td style={tdStyle}>{`${restaurant.restaurant.name}`}</td>
+														<td style={tdStyle}>{`${restaurant.restaurant.city}`}</td>
+														<td style={tdStyle}>{`${restaurant.restaurant.description}`}</td>
+														<td style={tdStyle}> {moment(restaurant.visitDate).format('DD.MM.YYYY. HH:mm')} </td>
 														</tr>
 													}) }
 													</tbody>

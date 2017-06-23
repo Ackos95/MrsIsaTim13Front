@@ -18,8 +18,6 @@ const validateLoginForm = (values) => {
 };
 
 const Login = ({ state, user, inProgress, login }) => {
-	console.log(state);
-  console.log(user);
   if (user.token)
     return <Redirect to="/" />
 
