@@ -1,12 +1,13 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 import PasswordChange from './PasswordChangeContainer';
 
 
 const PasswordChangeRequired = ({ user }) => {
   
-  // if (user.complete)
-  //   return <Redirect to="/" />;
+  if (user.changedPassword)
+    return <Redirect to="/" />;
 
   return (
     <div className="container">

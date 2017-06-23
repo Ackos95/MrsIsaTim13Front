@@ -8,7 +8,6 @@ import TableConfiguration from './TableConfiguration/TableConfigurationContainer
 import Profile from '../../common/Profile/ProfileContainer';
 import PasswordChange from '../../common/Profile/PasswordChange/PasswordChangeContainer';
 
-
 class WaiterProfile extends Component {
 
   static propTypes = {

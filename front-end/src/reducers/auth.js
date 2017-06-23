@@ -41,7 +41,7 @@ const authReducer = (state = initialState, action) => {
       return state.set('passwordChanged', false);
 
     case types.CHANGE_PASSWORD_SUCCESS: {
-      const user = { ...state.user, token: getToken(state.user.userName, action.payload.password) }
+      const user = { ...state.user, changedPassword: true, token: getToken(state.user.userName, action.payload.password) }
 
       localStorage.setItem('user', JSON.stringify(user));
       return state.set('user', user).set('passwordChanged', true);

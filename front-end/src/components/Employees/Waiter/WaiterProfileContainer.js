@@ -7,6 +7,8 @@ import {
   setOrderDone,
 } from '../../../actions/employees';
 
+import { EmployeePasswordGuard } from '../../Guards';
+
 const mapStateToProps = state => ({
   user: state.auth.user,
   waiterSchedules: state.employees.waiterSchedules,
@@ -19,4 +21,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setOrderDone,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(WaiterProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeePasswordGuard(WaiterProfile));

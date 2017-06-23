@@ -7,6 +7,8 @@ import {
   setDrinkDone
 } from '../../../actions/employees';
 
+import { EmployeePasswordGuard } from '../../Guards';
+
 const mapStateToProps = state => ({
   user: state.auth.user,
   barmanSchedules: state.employees.barmanSchedules,
@@ -19,4 +21,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setDrinkDone,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(BarmanProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeePasswordGuard(BarmanProfile));
