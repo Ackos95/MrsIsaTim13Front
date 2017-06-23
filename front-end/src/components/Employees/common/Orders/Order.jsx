@@ -52,11 +52,11 @@ class Order extends Component {
   }
 
   render () {
-    const { order } = this.props;
+    const { userToken, order, options: { setOrderDone } } = this.props;
 
     return (
       <li key={`ORDER_ID_${order.id}`}>
-        <div> ORDER ID: {order.id} </div>
+        <div> ORDER ID: {order.id} {setOrderDone ? <button onClick={() => setOrderDone(order.id, userToken)}>Finish order</button> : null} </div>
 
         <ul>
           {this.renderDrinks(order)}

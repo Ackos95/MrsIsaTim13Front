@@ -1,6 +1,8 @@
 import { Record } from 'immutable';
 import cloneDeep from 'lodash/cloneDeep';
 
+import { getToken } from '../utils/http';
+
 import * as types from '../constants';
 
 const Auth = new Record({
@@ -12,9 +14,11 @@ const Auth = new Record({
     firstName: null,
     lastName: null,
     roles: [],  // { id: <long>, name: <string> },
-    restaurant: null
+    restaurant: null,
+    changedPassword: false,
   },
   inProgress: false,
+  passwordChanged: false,
 	errorMessage: null,
 	confirmedRegistration : false
 });
@@ -24,9 +28,25 @@ const initialState = new Auth();
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
 
-		case types.EDIT_INFO:
-			return state.set('user', {id: action.payload.id, email: action.payload.email, userName: action.payload.userName,
-				token: state.user.token, firstName: action.payload.firstName, lastName: action.payload.lastName });
+		case types.EDIT_INFO: {
+      const newUser = { ...state.user, ...action.payload };
+      
+      localStorage.setItem('user', JSON.stringify(newUser));
+      return state.set('user', newUser);
+
+      // return state.set('user', {id: action.payload.id, email: action.payload.email, userName: action.payload.userName,
+      //   token: state.user.token, firstName: action.payload.firstName, lastName: action.payload.lastName });      
+    }
+
+    case types.CHANGE_PASSWORD_STARTED:
+      return state.set('passwordChanged', false);
+
+    case types.CHANGE_PASSWORD_SUCCESS: {
+      const user = { ...state.user, changedPassword: true, token: getToken(state.user.userName, action.payload.password) }
+
+      localStorage.setItem('user', JSON.stringify(user));
+      return state.set('user', user).set('passwordChanged', true);
+    }
 		
     case types.LOGIN_SUCCESS:
       // store token into storage so it doesn't disapear when page is refreshed
@@ -50,7 +70,8 @@ const authReducer = (state = initialState, action) => {
         firstName: null,
         lastName: null,
         roles: [],  // { id: <long>, name: <string> },
-        restaurant: null
+        restaurant: null,
+        changedPassword: true,
       });
       
 		case types.REGISTRATION_SUCCESS: {

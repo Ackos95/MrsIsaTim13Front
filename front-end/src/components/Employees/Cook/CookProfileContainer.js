@@ -8,6 +8,8 @@ import {
   setMealAccepted,
 } from '../../../actions/employees';
 
+import { EmployeePasswordGuard } from '../../Guards';
+
 const mapStateToProps = state => ({
   user: state.auth.user,
   cookSchedules: state.employees.cookSchedules,
@@ -21,4 +23,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setMealAccepted,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(CookProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(EmployeePasswordGuard(CookProfile));
