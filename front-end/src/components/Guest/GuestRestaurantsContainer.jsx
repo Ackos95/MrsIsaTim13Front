@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getRestaurantsByName, startReservation } from '../../actions/guest';
+import { getRestaurantsByName, startRestaurantReservation } from '../../actions/guest';
 
 import GuestRestaurants from './GuestRestaurants';
 
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	getRestaurantsByName,
-	startReservation
+	startRestaurantReservation
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestRestaurants);

@@ -16,7 +16,7 @@ const Guest = new Record({
 	gettingFriendRequests : false,
 	friendRequests : [],
 	acceptDeclineState : false,
-	restaurantOnReservation : {},
+	restaurantOnReservation : null,
 	reservationStarted : false,
 	restaurantConfiguration : undefined,
 	gettingLunchFriends : false,
@@ -43,6 +43,11 @@ const guestReducer = (state = initialState, action) => {
 									.set('lunchOrderSuccess',  null)
 									.set('restaurantOnReservation', null);
 
+		case types.RESTAURANT_ON_RESERVATION: {
+			console.log("\nRESTAURANT_ON_RESERVATION  >  RESTAURANT_ON_RESERVATION");
+			console.log(action.payload);
+			return state.set('restaurantOnReservation', action.payload);
+		}
 		case types.SEND_MEAL_ORDER_SUCCESS: {
 			console.log(" SEND_MEAL_ORDER_SUCCESS   >  SEND_MEAL_ORDER_SUCCESS ");
 			console.log(action.payload);
