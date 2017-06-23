@@ -128,13 +128,15 @@ class GuestProfile extends Component {
 										<table id="visited-restaurants-table">
 											{
 												restaurants !== undefined && restaurants.length > 0 ?
-													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Distance</th></tr>
+													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Date</th></tr>
 													{ restaurants.map(function (restaurant, index) {
+														let date = new Date(restaurant.visitDate);
 														return <tr key={ index }>
-														<td style={tdStyle}>{`${restaurant.name}`}</td>
-														<td style={tdStyle}>{`${restaurant.city}`}</td>
-														<td style={tdStyle}>{`${restaurant.description}`}</td>
-														<td style={tdStyle}>{`667`}</td>
+														<td style={tdStyle}>{`${restaurant.restaurant.name}`}</td>
+														<td style={tdStyle}>{`${restaurant.restaurant.city}`}</td>
+														<td style={tdStyle}>{`${restaurant.restaurant.description}`}</td>
+														<td style={tdStyle}> { date }</td>
+														<td style={tdStyle} >{`${restaurant.visitDate}`}</td>
 														</tr>
 													}) }
 													</tbody>
