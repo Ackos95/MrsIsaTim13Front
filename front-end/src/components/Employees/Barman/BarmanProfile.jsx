@@ -4,6 +4,8 @@ import { Route, Link, Switch } from 'react-router-dom';
 
 import Schedule from '../common/Schedule';
 import Orders from '../common/Orders/OrdersContainer';
+import Profile from '../../common/Profile/ProfileContainer';
+import PasswordChange from '../../common/Profile/PasswordChange/PasswordChangeContainer';
 
 class BarmanProfile extends Component {
 
@@ -37,6 +39,7 @@ class BarmanProfile extends Component {
           <Switch>
             <Route path="/barman/schedules" render={() => <Schedule schedules={barmanSchedules} />} />
             <Route path="/barman/orders" render={() => <Orders orders={orders} options={{ showDrinks: true, setDrinkDone }} />} />
+            <Route path="/barman/profile" render={() => <div><Profile isEditable={true} employeeFlag={true} /><PasswordChange /></div>} />
           </Switch>
         </div>
       </div>

@@ -15,6 +15,7 @@ import WaiterProfile from './Employees/Waiter/WaiterProfileContainer';
 import CookProfile from './Employees/Cook/CookProfileContainer';
 import Supplier from './Supplier/SupplierContainer';
 import Logout from './Logout/LogoutContainer';
+import PasswordChange from './common/Profile/PasswordChange/PasswordChangeRequired';
 
 import SystemManager from './SystemManager/SystemManagerContainer';
 
@@ -43,6 +44,7 @@ const Root = ({ store, history }) => (
 				<Route path="/lunch-invitation/guest" component={LunchInvitation}/>
 				<Route path="/registration/guest" component={RegistrationConfirmation}/>
         <Route path="/logout" component={Logout} />
+        <Route path="/change-password" component={PasswordChange} />
         <Route path="*" component={NotFound} />
       </Switch>
     </Router>
