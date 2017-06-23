@@ -7,8 +7,26 @@ export const tryToReserveTableError = () => ({
 });
 
 /** transakcijom poduprto - može vratiti grešku */
-export const tryToReserveTable = ( selectedTable, reservationDate, reservationHours, token) => dispatch => {
-	console.log()
+export const tryToReserveTable = ( selectedTables, reservationDate, reservationHours, token) => dispatch => {
+	
+	let tableReservationJson = {selectedTables: selectedTables, reservationDate: reservationDate,
+		reservationHours: reservationHours};
+	
+	console.log("\ntryToReserveTable");
+	console.log(tableReservationJson);
+	
+	$post(`${SERVER_URL}/restaurant/reserveTable`, tableReservationJson, addAuthHeader(token))
+		.then((res) => {
+			if (res.status > 400)
+				console.log("\ngreška u tryToReserveTable > > status > 400");
+			
+			const { data } = res;
+			return dispatch(tryToReserveTableError());
+		})
+		.catch((err) => {
+			console.log("\n\n tryToReserveTableError > ERROR > catch promise");
+		});
+	
 	
 };
 

@@ -49,16 +49,13 @@ class RestaurantReservation extends Component {
 		console.log("console.log(selectedTablesId);");
 		console.log(selectedTablesId);
 		
-		let selectedTableArray = this.props.guest.restaurantConfiguration.tables;
+		let selectedTableArray = this.props.guest.restaurantConfiguration.configuration.tables;
 		
-		console.log(selectedTableArray);
-		for (let i = 0; i < selectedTablesId; i++)
-			selectedTableArray.filter(table => table.id === selectedTablesId[i]);
-		
-		console.log(selectedTableArray);
+		const selectedTables = selectedTablesId.map((id) => selectedTableArray.find((table) => table.id === id));
+		console.log(selectedTables);
 		
 		// tableIdList, reservationDate, reservationHours, token
-		this.props.tryToReserveTable( selectedTablesId, this.state.nonParsedDateTime,
+		this.props.tryToReserveTable( selectedTables, this.state.nonParsedDateTime,
 			this.state.lunchHours, this.props.user.token );
 	}
 	
