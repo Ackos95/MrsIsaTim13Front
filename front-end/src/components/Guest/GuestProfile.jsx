@@ -10,7 +10,7 @@ import moment from 'moment';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Button } from 'react-bootstrap';
-import { buttonRowStyle, buttonStyle, emptyThStyle , tdStyle } from './css/css';
+import { buttonRowStyle, buttonStyle, emptyThStyle } from './css/css';
 import './css/guest.css';
 
 import Reactable from 'reactable';
@@ -147,7 +147,6 @@ class GuestProfile extends Component {
 																<Td column="Description">{`${restaurant.restaurant.description}`}</Td>
 																<Td column="Date">{moment(restaurant.visitDate).format('DD.MM.YYYY. HH:mm')}</Td>
 															</Tr>
-															
 														}) }
 													</Table>
 													:

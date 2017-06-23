@@ -38,6 +38,9 @@ class RestaurantReservation extends Component {
 		this.makeLunchFriendsTable = this.makeLunchFriendsTable.bind(this);
 		this.inviteLunchFriend = this.inviteLunchFriend.bind(this);
 		
+		this.startOver = this.startOver.bind(this);
+		this.reloadTableConfig = this.reloadTableConfig.bind(this);
+		
 		this.tryToReserveTable = this.tryToReserveTable.bind(this);
 		
 		this.endReservation = this.endReservation.bind(this);
@@ -159,6 +162,24 @@ class RestaurantReservation extends Component {
 		
 	}
 	
+	startOver() {
+		this.setState({reservationStep : 1});
+		this.props.resetTableConfigError();
+	}
+	
+	reloadTableConfig() {
+		console.log("\ngetTableConfiguration funkcija");
+		
+		this.props.resetTableConfigError();
+		
+		this.setState({reservationStep : 3});
+		console.log("this.state, a prije smo povecali reservation step za 1");
+		console.log(this.state);
+		
+		this.props.getTableConfiguration(this.state.restaurantOnReservation, this.state.nonParsedDateTime,
+			this.state.lunchHours, this.props.user.token);
+	}
+	
 	render() {
 		const restaurant = this.state.restaurantOnReservation;
 		
@@ -211,10 +232,11 @@ class RestaurantReservation extends Component {
 							{
 								this.props.guest.tableReservationError === true
 									?
-										<div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}} >
-											<h2>Someone has reserved one of the table you tried to reserve. <br/> You can: </h2>
-											<Button> Reload table configuration </Button>
-											<Button> Change date, time and lasting of your reservation. </Button>
+										<div style={{ display: 'flex', justifyContent: 'center' }} >
+											<h2>Someone has occupied one of the table you tried to reserve. <br/> You can: </h2>
+											<Button onClick={ this.reloadTableConfig }> Reload table configuration </Button>
+											<Button onClick={ this.startOver } >
+												Change date, time or lasting of your reservation. </Button>
 										</div>
 									:
 										<div>

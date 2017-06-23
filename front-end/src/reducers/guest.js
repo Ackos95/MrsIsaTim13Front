@@ -33,6 +33,12 @@ const initialState = new Guest();
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
 		
+		case types.RESET_TABLE_CONFIG_ERROR:
+		{
+			console.log("\n\n\nRESET_TABLE_CONFIG_ERROR  >  RESET_TABLE_CONFIG_ERROR");
+			return state.set('tableReservationError', false);
+		}
+  
 		case types.TABLE_RESERVATION_ERROR:
 			return state.set('tableReservationError', true);
   	

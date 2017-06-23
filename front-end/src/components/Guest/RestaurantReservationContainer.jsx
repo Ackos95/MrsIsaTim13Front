@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getTableConfiguration, getLunchFriends, inviteForLunch, sendMealOrder,
-	endRestaurantReservation, tryToReserveTable } from '../../actions/guest';
+	endRestaurantReservation, tryToReserveTable, resetTableConfigError } from '../../actions/guest';
 
 import RestaurantReservation from './RestaurantReservation';
 
@@ -17,7 +17,8 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	inviteForLunch,
 	sendMealOrder,
 	endRestaurantReservation,
-	tryToReserveTable
+	tryToReserveTable,
+	resetTableConfigError
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(RestaurantReservation);

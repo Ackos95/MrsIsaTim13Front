@@ -42,6 +42,8 @@ export const endRestaurantReservation = () => ({
 	type: types.END_RESTAURANT_RESERVATION
 });
 
+export const resetTableConfigError = () => ({type: types.RESET_TABLE_CONFIG_ERROR});
+
 export const dispatchRestaurantOnReservation = (restaurant) => ({
 	type: types.RESTAURANT_ON_RESERVATION,
 	payload: restaurant
