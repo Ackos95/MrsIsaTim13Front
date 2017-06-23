@@ -6,6 +6,8 @@ import React, { Component } from 'react';
 import Loading from '../common/Loading/Loading';
 import Profile from '../common/Profile/ProfileContainer';
 
+import moment from 'moment';
+
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Button } from 'react-bootstrap';
 import { buttonRowStyle, buttonStyle, emptyThStyle , tdStyle } from './css/css';
@@ -135,8 +137,7 @@ class GuestProfile extends Component {
 														<td style={tdStyle}>{`${restaurant.restaurant.name}`}</td>
 														<td style={tdStyle}>{`${restaurant.restaurant.city}`}</td>
 														<td style={tdStyle}>{`${restaurant.restaurant.description}`}</td>
-														<td style={tdStyle}> { date }</td>
-														<td style={tdStyle} >{`${restaurant.visitDate}`}</td>
+														<td style={tdStyle}> {moment(restaurant.visitDate).format('DD.MM.YYYY. HH:mm')} </td>
 														</tr>
 													}) }
 													</tbody>
