@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Panel, Button, Badge, FormGroup, Label } from 'react-bootstrap';
-import { Form, Text } from 'react-form';
+import { Col, Panel, Button, Badge } from 'react-bootstrap';
+import { Form } from 'react-form';
 
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';

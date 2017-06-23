@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Text } from 'react-form';
 
-import { Col, Label, FormGroup } from 'react-bootstrap';
+import { Col, Label } from 'react-bootstrap';
 
 const NewOfferForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
