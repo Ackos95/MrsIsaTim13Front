@@ -4,6 +4,7 @@ import WaiterProfile from './WaiterProfile';
 import { 
   loadSchedule,
   loadOrders,
+  setOrderDone,
 } from '../../../actions/employees';
 
 const mapStateToProps = state => ({
@@ -15,6 +16,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   loadSchedule,
   loadOrders,
+  setOrderDone,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(WaiterProfile);

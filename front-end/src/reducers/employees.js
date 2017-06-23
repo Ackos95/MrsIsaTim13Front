@@ -16,6 +16,8 @@ const Employees = new Record({
   cookSchedules: [],
   waiterSchedules: [],
   orders: [],
+  tableConfiguration: null,
+  selectedTable: null,
 });
 
 const initialState = new Employees();
@@ -33,9 +35,23 @@ const employeesReducer = (state = initialState, action) => {
 
     case types.SET_MEAL_ACCEPTED_SUCCESS:
     case types.SET_MEAL_DONE_SUCCESS:
-      return state.set('orders', updateMealOrders(state.orders, action.payload))
+      return state.set('orders', updateMealOrders(state.orders, action.payload));
     case types.SET_DRINK_DONE_SUCCESS:
-      return state.set('orders', updateDrinkOrders(state.orders, action.payload))
+      return state.set('orders', updateDrinkOrders(state.orders, action.payload));
+
+    case types.LOAD_CONFIGURATION_SUCCESS:
+      return state.set('tableConfiguration', action.payload);
+
+    case types.SELECT_TABLE_EMPLOYEE:
+      return state.set('selectedTable', action.payload);
+
+    case types.SET_ORDER_DONE_SUCCESS:
+      return state.set('orders',  getActiveOrders(state.orders.map((order) => {
+        if (order.id === action.payload.mealOrderId)
+          order.receipt = action.payload;
+
+        return order;
+      })));
 
     default:
       return state;
@@ -43,3 +59,22 @@ const employeesReducer = (state = initialState, action) => {
 }
 
 export default employeesReducer;
+
+
+// ngOnInit() {
+//         //this.setReon();
+//         console.log("aaaaaaaaaaaaaaaaaaaaa");
+//         this.load();
+//         this.registerChangeInRestaurantLocations();
+
+//     }
+
+//     load() {
+//         this.restaurantLocationService.getMyLocation().subscribe((restaurantLocation) => {
+//             this.restaurantLocation = restaurantLocation;
+//             console.log("loc:", this.restaurantLocation);
+//             this.restaurantLocationService.findReons(this.restaurantLocation.id).subscribe((reons) => {
+//                 this.restaurantLocation.reons = reons;
+//             });
+//         });
+//     }

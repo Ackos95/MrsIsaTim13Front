@@ -14,7 +14,7 @@ export const getWaiterSchedules = (scheduleItems) => filter(scheduleItems, (item
 
 export const getCookSchedules = (scheduleItems) => filter(scheduleItems, (item) => find(item.employee.roles, (role) => role.name === COOK_ROLE));
 
-export const getActiveOrders = (orders) => filter(orders, (order) => moment(order.timeStamp).isAfter(moment().day(moment().day() - 1)));
+export const getActiveOrders = (orders) => filter(orders, (order) => moment(order.timeStamp).isAfter(moment().day(moment().day() - 1)) && !order.receipt);
 
 export const updateDrinkOrders = (orders, newDrink) => map(orders, (order) => {
   order.drinks = map(order.drinks, (drink) => drink.id === newDrink.id ? newDrink : drink);

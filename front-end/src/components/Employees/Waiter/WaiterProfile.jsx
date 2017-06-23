@@ -4,7 +4,7 @@ import { Route, Link, Switch } from 'react-router-dom';
 
 import Schedule from '../common/Schedule';
 import Orders from '../common/Orders/OrdersContainer';
-import TableConfiguration from './TableConfiguration';
+import TableConfiguration from './TableConfiguration/TableConfigurationContainer';
 import Profile from '../../common/Profile/ProfileContainer';
 import PasswordChange from '../../common/Profile/PasswordChange/PasswordChangeContainer';
 
@@ -17,6 +17,7 @@ class WaiterProfile extends Component {
     orders: PropTypes.arrayOf(PropTypes.object).isRequired,
     loadSchedule: PropTypes.func.isRequired,
     loadOrders: PropTypes.func.isRequired,
+    setOrderDone: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
@@ -27,7 +28,7 @@ class WaiterProfile extends Component {
   }
 
   render() {
-    const { waiterSchedules, orders } = this.props;
+    const { waiterSchedules, orders, setOrderDone } = this.props;
 
     return (
       <div>
@@ -40,7 +41,7 @@ class WaiterProfile extends Component {
         <div className="employee__main-content">
           <Switch>
             <Route path="/waiter/schedules" render={() => <Schedule schedules={waiterSchedules} />} />
-            <Route path="/waiter/orders" render={() => <div><Orders orders={orders} options={{ showMeals: true, showDrinks: true }} /><TableConfiguration /></div>} />
+            <Route path="/waiter/orders" render={() => <div><Orders orders={orders} options={{ showMeals: true, showDrinks: true, setOrderDone }} /><TableConfiguration /></div>} />
             <Route path="/waiter/profile" render={() => <div><Profile isEditable={true} employeeFlag={true} /><PasswordChange /></div>} />
           </Switch>
         </div>

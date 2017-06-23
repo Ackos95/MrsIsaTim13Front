@@ -140,3 +140,63 @@ export const setDrinkDone = (drinkInfoId, userToken) => dispatch => {
     })
     .catch((err) => dispatch(setDrinkDoneError(err)));
 }
+
+export const loadConfigurationStarted = () => ({
+  type: types.LOAD_CONFIGURATION_STARTED
+});
+
+export const loadConfigurationError = (error) => ({
+  type: types.LOAD_CONFIGURATION_ERROR,
+  error
+});
+
+export const loadConfigurationSuccess = (data) => ({
+  type: types.LOAD_CONFIGURATION_SUCCESS,
+  payload: data
+});
+
+export const loadConfiguration = ({ data, userToken }) => dispatch => {
+  dispatch(loadConfigurationStarted());
+
+  $post(`${SERVER_URL}/restaurant/configuration`, data, addAuthHeader(userToken))
+    .then((res) => {
+      if (res.status >= 400)
+        return dispatch(loadConfigurationError(null));
+
+      dispatch(loadConfigurationSuccess(res.data));
+    })
+    .catch((err) => dispatch(loadConfigurationError(err)));
+};
+
+export const selectTable = (table) => ({
+  type: types.SELECT_TABLE_EMPLOYEE,
+  payload: table
+});
+
+
+export const setOrderDoneStarted = () => ({
+  type: types.SET_ORDER_DONE_STARTED
+});
+
+export const setOrderDoneError = (error) => ({
+  type: types.SET_ORDER_DONE_ERROR,
+  error
+});
+
+export const setOrderDoneSuccess = (data) => ({
+  type: types.SET_ORDER_DONE_SUCCESS,
+  payload: data
+});
+
+export const setOrderDone = (mealOrderId, userToken) => dispatch => {
+  dispatch(setOrderDoneStarted());
+
+  $post(`${SERVER_URL}/employees/create-receipt`, { mealOrderId }, addAuthHeader(userToken))
+    .then((res) => {
+      if (res.status >= 400 || !res.data)
+        return dispatch(setOrderDoneError(null));
+
+      dispatch(setOrderDoneSuccess({ ...res.data, mealOrderId: mealOrderId }));
+    })
+    .catch((err) => dispatch(setOrderDoneError(err)));
+}
