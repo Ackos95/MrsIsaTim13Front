@@ -15,7 +15,7 @@ class GuestRestaurants extends Component {
 	constructor(props) {
 		super(props);
 		
-		this.state = { restaurantOnReservation : null };
+		// this.state = { restaurantOnReservation : null };
 		
 		this.getRestaurantsByName = this.getRestaurantsByName.bind(this);
 		this.restaurantsByNameTable = this.restaurantsByNameTable.bind(this);
@@ -29,7 +29,8 @@ class GuestRestaurants extends Component {
 	}
 	
 	reserveRestaurant(restaurant) {
-		this.setState({restaurantOnReservation: restaurant});
+		this.props.startRestaurantReservation(restaurant);
+		// this.setState({restaurantOnReservation: restaurant});
 	}
 	
 	restaurantsByNameTable (restaurant, index) {
@@ -44,14 +45,14 @@ class GuestRestaurants extends Component {
 	
 	
 	render() {
-		const { gettingRestsByName, restaurantsByName } = this.props.guest;
+		const { gettingRestsByName, restaurantsByName, restaurantOnReservation } = this.props.guest;
 		return (
 			<div>
 				<Col xs={12} sm={12} md={6} lg={6}>
 					<div className='panel panel-default'>
 						{
-							this.state.restaurantOnReservation !== null ?
-								<RestaurantReservation restaurant={this.state.restaurantOnReservation} />
+							restaurantOnReservation !== null ?
+								<RestaurantReservation restaurant={restaurantOnReservation} />
 								:
 								<div className='panel-body'>
 									<div style={{marginLeft: 10 + 'px'}}>

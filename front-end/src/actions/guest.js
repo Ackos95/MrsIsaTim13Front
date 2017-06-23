@@ -42,7 +42,20 @@ export const endRestaurantReservation = () => ({
 	type: types.END_RESTAURANT_RESERVATION
 });
 
-export const sendMealOrderSuccess = ( mealOrderSuccess ) => ({
+export const resetTableConfigError = () => ({type: types.RESET_TABLE_CONFIG_ERROR});
+
+export const dispatchRestaurantOnReservation = (restaurant) => ({
+	type: types.RESTAURANT_ON_RESERVATION,
+	payload: restaurant
+});
+
+export const startRestaurantReservation = ( restaurant ) => dispatch => {
+	console.log("\n startRestaurantReservation  >  console.log(restaurant);");
+	console.log(restaurant);
+	return dispatch(dispatchRestaurantOnReservation(restaurant));
+};
+	
+	export const sendMealOrderSuccess = ( mealOrderSuccess ) => ({
 	type: types.SEND_MEAL_ORDER_SUCCESS,
 	payload: mealOrderSuccess
 });

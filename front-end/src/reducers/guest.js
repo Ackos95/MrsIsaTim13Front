@@ -16,7 +16,7 @@ const Guest = new Record({
 	gettingFriendRequests : false,
 	friendRequests : [],
 	acceptDeclineState : false,
-	restaurantOnReservation : {},
+	restaurantOnReservation : null,
 	reservationStarted : false,
 	restaurantConfiguration : undefined,
 	gettingLunchFriends : false,
@@ -33,6 +33,12 @@ const initialState = new Guest();
 const guestReducer = (state = initialState, action) => {
   switch (action.type) {
 		
+		case types.RESET_TABLE_CONFIG_ERROR:
+		{
+			console.log("\n\n\nRESET_TABLE_CONFIG_ERROR  >  RESET_TABLE_CONFIG_ERROR");
+			return state.set('tableReservationError', false);
+		}
+  
 		case types.TABLE_RESERVATION_ERROR:
 			return state.set('tableReservationError', true);
   	
@@ -43,6 +49,11 @@ const guestReducer = (state = initialState, action) => {
 									.set('lunchOrderSuccess',  null)
 									.set('restaurantOnReservation', null);
 
+		case types.RESTAURANT_ON_RESERVATION: {
+			console.log("\nRESTAURANT_ON_RESERVATION  >  RESTAURANT_ON_RESERVATION");
+			console.log(action.payload);
+			return state.set('restaurantOnReservation', action.payload);
+		}
 		case types.SEND_MEAL_ORDER_SUCCESS: {
 			console.log(" SEND_MEAL_ORDER_SUCCESS   >  SEND_MEAL_ORDER_SUCCESS ");
 			console.log(action.payload);
