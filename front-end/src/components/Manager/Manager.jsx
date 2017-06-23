@@ -5,6 +5,7 @@ import {Tab, Tabs} from 'react-bootstrap';
 import ManagerMain from './ManagerMainContainer';
 import TableConfig from './RestaurantManagement/TableConfigContainer';
 import Schedule from './EmployeesManagement/ScheduleContainer';
+import Reports from './Reports/ReportsContainer'
 
 class Manager extends React.Component {
   constructor(props) {
@@ -34,6 +35,9 @@ class Manager extends React.Component {
         </Tab>
         <Tab eventKey={3} title="Employees management">
           <Schedule />
+        </Tab>
+        <Tab eventKey={4} title="Reports" style={{width: '96%'}}>
+          <Reports />
         </Tab>
         <Tab eventKey={42} title="Tab 42">Tab 42 - the Answer</Tab>
       </Tabs>

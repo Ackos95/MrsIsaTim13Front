@@ -81,10 +81,10 @@ class TableConfig extends Component {
           {/*izbor tipa stola*/}
           <Row>
             {/*https://stackoverflow.com/questions/21733847/react-jsx-selecting-selected-on-selected-select-option*/}
-            <Col xs={7} md={7} style={{paddingLeft: '10%'}}>
-              Choose new table's reon
+            <Col xs={6} md={6} style={{paddingLeft: '10%'}}>
+              New table's reon
             </Col>
-            <Col xs={5} md={5}>
+            <Col xs={6} md={6}>
               <select onChange={this.changeTableColor}>
                 {
                   reons.map((reon, index) => (

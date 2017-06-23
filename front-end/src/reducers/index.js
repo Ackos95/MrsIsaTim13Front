@@ -9,6 +9,7 @@ import supplier from './supplier';
 import supplies from './supplies';
 import restaurant from './restaurant';
 import schedule from './schedule';
+import reports from './reports';
 
 // import visibilityFilter from './visibilityFilter'
 
@@ -22,7 +23,8 @@ const reducers = combineReducers({
   supplies, // note the 's'
   restaurant,
   schedule,
-	guest
+  reports,
+  guest
 });
 
 export default reducers;
