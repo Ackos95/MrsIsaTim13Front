@@ -28,18 +28,14 @@ export const addOfferSuccess = ( createdOffer ) => ({
 });
 
 
-export const addOffer = ({ offer }) => dispatch => {
+export const addOffer = (offer, token) => dispatch => {
   dispatch(addOfferStart());
 
   console.log('forRequest, price: ' + offer.forRequest
-    + ', ' + offer.price + ', token, pa {offer}: ' + offer.token);
+    + ', ' + offer.price + ', token, pa {offer}: ' + token);
   console.log(offer);
 
-  $post(`${SERVER_URL}/supplies/offers`,
-    {
-      token: offer.token,
-      supplyOffer: offer
-    }, addAuthHeader(offer.token))
+  $post(`${SERVER_URL}/supplies/offers`, offer, addAuthHeader(token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(__Error());
 

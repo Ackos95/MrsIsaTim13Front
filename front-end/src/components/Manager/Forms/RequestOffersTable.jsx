@@ -23,7 +23,7 @@ class RequestOfferTable extends React.Component {
             <tbody>
             <tr>
               <th>Price</th>
-              <th>By supplier</th>
+              {/*<th>By supplier</th>*/}
               <th>Guarantee</th>
               <th>Delivered until</th>
               <th>action</th>
@@ -39,7 +39,7 @@ class RequestOfferTable extends React.Component {
                   : <button disabled={true}>ponuda je završena</button>;
                 return <tr key={ index }>
                   <td>{`${offer.price}`}</td>
-                  <td>{`${offer.bySupplier.firstName} ${offer.bySupplier.lastName}`}</td>
+                  {/*<td>{`${offer.bySupplier.firstName} ${offer.bySupplier.lastName}`}</td>*/}
                   <td>{`${offer.guarantee}`}</td>
                   <td>{`${offer.deliveredUntil}`}</td>
                   <td>{endButton}</td>

@@ -11,10 +11,18 @@ class Reports extends React.Component {
     super(props);
     this.state = {
       bool: false,
-      reportText: 'Report name'
+      reportText: 'Report name',
+      dateFrom: '',
+      dateTo: ''
     };
 
-    this.selectEvent = this.selectEvent.bind(this);
+    this.restaurantRatingView = this.restaurantRatingView.bind(this);
+    this.mealRatingView = this.mealRatingView.bind(this);
+    this.waiterRatingView = this.waiterRatingView.bind(this);
+    this.visitsGraphView = this.visitsGraphView.bind(this);
+
+    this.restaurantEarningsView = this.restaurantEarningsView.bind(this);
+    this.waitersEarningsView = this.waitersEarningsView.bind(this);
 
     this.restaurantRating = this.restaurantRating.bind(this);
     this.mealRating = this.mealRating.bind(this);
@@ -23,52 +31,48 @@ class Reports extends React.Component {
 
     this.restaurantEarnings = this.restaurantEarnings.bind(this);
     this.waitersEarnings = this.waitersEarnings.bind(this);
+
+    this.dateFromChanged = this.dateFromChanged.bind(this);
+    this.dateToChanged = this.dateToChanged.bind(this);
   }
+  dateFromChanged(event) {
+    console.log('DateFrom changed: ' + event.target.value);
+    this.setState({dateFrom: event.target.value});
+  }
+
+  dateToChanged(event) {
+    console.log('DateTo changed: ' + event.target.value);
+    this.setState({dateTo: event.target.value});
+  }
+
+  restaurantRatingView() {this.setState({reportText: 'Restaurant rating'});}
+  mealRatingView() {this.setState({reportText: 'Meal rating'});}
+  waiterRatingView() {this.setState({reportText: 'Waiter rating'});}
+  visitsGraphView() {this.setState({reportText: 'Visits graph'});}
+  restaurantEarningsView() {this.setState({reportText: 'Restaurant earnings'});}
+  waitersEarningsView() {this.setState({reportText: 'Waiters earnings'});}
 
   restaurantRating() {
-    console.log();
-    this.setState({reportText: 'Restaurant rating'});
+    this.props.restaurantRating(this.props.user.restaurant.id, this.props.user.token);
   }
 
-  mealRating() {
-    this.setState({reportText: 'Meal rating'});
-  }
-  waiterRating() {
-    this.setState({reportText: 'Waiter rating'});
-  }
+  mealRating() { alert('not implemented :/'); }
+  waiterRating() { alert('not implemented :/'); }
+
   visitsGraph() {
-    this.setState({reportText: 'Visits graph'});
+    // const dateFrom = new Date(document.getElementById('dateFrom').value);
+    // const dateTo = new Date(document.getElementById('dateTo').value);
+    const dateFrom = new Date(this.state.dateFrom);
+    const dateTo = new Date(this.state.dateTo);
+    this.props.visitsGraph(this.props.user.restaurant.id, dateFrom, dateTo, this.props.user.token);
   }
-
 
   restaurantEarnings() {
-    this.setState({reportText: 'Restaurant earnings'});
+    this.props.restaurantEarnings();
   }
 
   waitersEarnings() {
-    this.setState({reportText: 'Waiters earnings'});
-  }
-
-
-
-  deleteTermin() {
-    this.props.deleteTermin(this.props.selectedItem.id, this.props.user.token);
-  }
-
-  loadEmployees() {
-    console.log('LOAD employees');
-    this.props.loadEmployees(this.props.user.token);
-  }
-
-  loadSchedule() {
-    console.log('LOAD schedule ||| restoran: ' + this.props.user.restaurant.id);
-    this.props.loadSchedule(this.props.user.restaurant.id, this.props.user.token);
-  }
-
-  selectEvent(event) {
-    console.log('<<<< event >>>');
-    console.log(event);
-    this.props.selectScheduleItem(event);
+    this.props.waitersEarnings();
   }
 
   render() {
@@ -84,12 +88,12 @@ class Reports extends React.Component {
             }
             {/*{ this.props.confirmationInProgress ? <Notify /> : null }*/}
             <br/>
-            <Button bsStyle='primary' onClick={this.restaurantRating} block>Restaurant rating</Button><br/>
-            <Button bsStyle='primary' onClick={this.mealRating} block>Meal rating</Button><br/>
-            <Button bsStyle='primary' onClick={this.waiterRating} block>Waiter rating</Button><br/>
-            <Button bsStyle='primary' onClick={this.visitsGraph} block>Visits graph</Button><br/><br/>
-            <Button bsStyle='success' onClick={this.restaurantEarnings} block>Restaurant earnings</Button><br/>
-            <Button bsStyle='success' onClick={this.waitersEarnings} block>Waiters earnings</Button>
+            <Button bsStyle='primary' onClick={this.restaurantRatingView} block>Restaurant rating</Button><br/>
+            <Button bsStyle='primary' onClick={this.mealRatingView} block>Meal rating</Button><br/>
+            <Button bsStyle='primary' onClick={this.waiterRatingView} block>Waiter rating</Button><br/>
+            <Button bsStyle='primary' onClick={this.visitsGraphView} block>Visits graph</Button><br/><br/>
+            <Button bsStyle='success' onClick={this.restaurantEarningsView} block>Restaurant earnings</Button><br/>
+            <Button bsStyle='success' onClick={this.waitersEarningsView} block>Waiters earnings</Button>
           </Col>
           <Col xs={12} md={9} mdOffset={1} lg={9} lgOffset={1}>
             <Row>
@@ -100,18 +104,21 @@ class Reports extends React.Component {
                 {(() => {
                   switch (this.state.reportText) {
                     case 'Restaurant rating':
-                      return <RestaurantRating/>;
+                      return <RestaurantRating
+                        value={this.props.restaurantRatingValue}
+                        generateReport={this.restaurantRating}/>;
                     case 'Meal rating':
-                      return <MealRating/>;
+                      return <MealRating generateReport={this.mealRating}/>;
                     case 'Waiter rating':
-                      return <WaiterRating/>;
+                      return <WaiterRating generateReport={this.waiterRating}/>;
                     case 'Visits graph':
-                      return <VisitsGraph/>;
+                      return <VisitsGraph generateReport={this.visitsGraph}/>;
                     case 'Restaurant earnings':
-                      return <RestaurantEarnings/>;
+                      return <RestaurantEarnings generateReport={this.restaurantEarnings}/>;
                     case 'Waiters earnings':
-                      return <WaitersEarnings/>;
-                    default: null;
+                      return <WaitersEarnings generateReport={this.waitersEarnings}/>;
+                    default:
+                      return null;
                   }
                 })()}
               </Col>
@@ -132,7 +139,7 @@ class RestaurantRating extends React.Component {
     return (
       <Col md={6} mdOffset={3}>
         <div>Restaurant Rating component</div>
-        <p>Average rating: {`${this.props.result}`}</p>
+        <p>Average rating: {`${this.props.value}`}</p>
       </Col>
     );
   }
@@ -203,8 +210,8 @@ class WaitersEarnings extends React.Component {
         Waiters Earnings component - earnings per waiter
         <div>
           {
-            this.props.results.map(result => (
-              <p>{`${result.price}`}</p>
+            this.props.results.map(row => (
+              <p>{`${row.waiter.id} - ${row.earnings}`}</p>
             ))
           }
         </div>

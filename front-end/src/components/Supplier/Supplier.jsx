@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 // BS reference: https://react-bootstrap.github.io/components.html
-import { Col, Panel, Button, Badge } from 'react-bootstrap';
-import { Form } from 'react-form';
+import { Col, Panel, Button, Badge, FormGroup, Label } from 'react-bootstrap';
+import { Form, Text } from 'react-form';
 
 import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
@@ -34,18 +34,22 @@ class Supplier extends Component {
     this.setState({showOfferForm: !this.state.showOfferForm});
   }
 
-  sendOffer() {
-    console.log('sendOffer');
+  sendOffer(values) {
+    values['forRequest'] = this.state.selectedRequest;
+
+    console.log('values sa forRequest: ');
+    console.log(values);
+
+    console.log('token: ' + this.props.token);
+    this.props.addOffer(values, this.props.token);
   }
 
   viewRequest(idx) {
-    console.log('viewRequestItems od ' + idx + ' izgleda>>>');
+    console.log('requests[' + idx + ']');
     console.log(this.props.requests[idx]);
 
     this.setState({ selectedRequest: this.props.requests[idx]});
     this.setState({ showOfferForm: true }); // da bi panel reagovao
-
-    console.log(this.state.showOfferForm);
   }
 
   selected() { // samo prvi put se izvršava // poslije na REFRESH
@@ -87,16 +91,17 @@ class Supplier extends Component {
               </button>
               <br/>
               <Form onSubmit={this.sendOffer}>
-                <RequestItemsTable request={this.state.selectedRequest} />
                 {NewOfferForm}
               </Form>
+              <h3>Items preview</h3>
+              <RequestItemsTable request={this.state.selectedRequest} />
               {
                 createdOffer === null || createdOffer.price === null ?
                   null
                   :
                   <Badge>
-                    { `Poslata ponuda sa cijenom ${createdOffer.price}  i
-                    rokom isporuke ${createdOffer.deliveredUntil}.` }
+                    { `Poslata ponuda sa cijenom ${createdOffer.price}
+                    i rokom isporuke ${createdOffer.deliveredUntil}.` }
                   </Badge>
               }
             </Panel>

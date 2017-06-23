@@ -3,9 +3,6 @@ import React from 'react';
 class RequestItemsTable extends React.Component {
   render() {
 
-    console.log('request iz RequestItemsTable');
-    console.log(this.props.request);
-
     return (<table id="request-items">{
         this.props.request !== undefined && this.props.request !== null &&
         this.props.request.supplyItems !== undefined  && this.props.request.supplyItems !== null ?

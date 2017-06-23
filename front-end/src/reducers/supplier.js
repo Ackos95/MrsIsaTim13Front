@@ -43,6 +43,16 @@ const supplierReducer = ( state = initialState, action ) => {
     // case types._STARTED:
       return state.set('inProgress', true);
 
+    case types.END_SUP_REQ_SUCCESS: {
+      let requestsToUpdate = [...state.requests];
+      const endedRequestIndex = state.requests.findIndex(r => r.id === action.payload.endedRequest.id);
+      console.log('Nadjen index: ' + endedRequestIndex);
+      requestsToUpdate[endedRequestIndex] = action.payload.endedRequest;
+
+      return state
+        .set('requests', requestsToUpdate);
+    }
+
     default:
       return state;
   }

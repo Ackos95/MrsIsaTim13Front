@@ -7,30 +7,30 @@ import { Col, Label, FormGroup } from 'react-bootstrap';
 const NewOfferForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
     <Col xs={12}>
-      <FormGroup  className='input-group' >
-        <Label> Price </Label>
+      <div className='form-group'>
+        <Label>Price</Label>
         <Col xs={12}>
           <Text field='price' type='number' min='0' step='any' className='form-control' required='required'/>
         </Col>
-      </FormGroup>
-      <FormGroup className='input-group' >
-        <Label> Guarantee </Label>
+      </div>
+      <div className='form-group'>
+        <Label>Guarantee</Label>
         <Col xs={12}>
           <Text type='number' field='guarantee' min='1' className='form-control' required='required'/>
         </Col>
-      </FormGroup>
-      <FormGroup className='input-group' >
+      </div>
+      <div className='form-group'>
         <Label> Delivered until </Label>
         <Col xs={12}>
           <Text type='date' className='form-control' field='deliveredUntil' required='required'/>
         </Col>
-      </FormGroup>
+      </div>
     </Col>
-    <FormGroup>
+    <div className='form-group'>
       <button type='submit' className='btn btn-default'>
         Submit offer
       </button>
-    </FormGroup>
+    </div>
   </form>
 );
 

@@ -123,6 +123,17 @@ class ManagerMain extends Component {
         </Col>
         <Col xs={12} sm={12} md={6} lg={6}>
           { inProgress || inProgressReqs ? <Loading /> : null }
+          {createdUser !== null && createdUser.id !== null ?
+              <Badge>Napravljen user: {`${createdUser.firstName}`}</Badge>
+              :
+              null}
+          {createdRequest.id !== null ?
+              <Badge>
+                Rezultujući SupplyRequest:
+                {`${createdRequest.dateFrom} ~ ${createdRequest.dateTo}`}
+              </Badge>
+              :
+              null}
           <PanelGroup>
             <Panel collapsible header="Employee addition" eventKey="1" bsStyle="success">
               <Form onSubmit={addEmployee}>
@@ -139,7 +150,10 @@ class ManagerMain extends Component {
                 {SupplyRequestForm}
               </Form>
             </Panel>
-            <Panel collapsible header='Requests overview' onSelect={this.selected} eventKey="4" bsStyle="primary">
+            <Panel collapsible onSelect={this.selected} eventKey="4" bsStyle="primary"
+               header={<span>
+                        <span>Requests overview</span><span className='pull-right'>refresh the page to see new requests</span>
+                       </span>}>
               <RequestsTable requests={requests} viewRequestItems={this.viewRequestItems} viewOffers={this.viewOffers} />
             </Panel>
             {/* OFFERS preview form */}
@@ -168,22 +182,6 @@ class ManagerMain extends Component {
               </Form>
             </Panel>
           </PanelGroup>
-
-          {
-            createdUser !== null && createdUser.id !== null ?
-              <Badge>Napravljen user: {`${createdUser.firstName}`}</Badge>
-              :
-              null
-          }
-          {
-            createdRequest.id !== null ?
-              <Badge>
-                Rezultujući SupplyRequest:
-                {`${createdRequest.publishingDate} ~ ${createdRequest.endingDate}`}
-              </Badge>
-              :
-              null
-          }
         </Col>
       </Panel>
     );

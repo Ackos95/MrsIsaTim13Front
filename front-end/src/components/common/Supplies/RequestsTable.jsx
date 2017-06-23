@@ -18,7 +18,7 @@ class RequestsTable extends React.Component {
             </tr>
             {
               this.props.requests.map((request, index) => {
-                const endButton = this.props.viewOffers !== undefined ?
+                const endButton = this.props.viewOffers !== undefined && !request.ended?
                   <button style={{width: '100%'}}
                     onClick={() => {
                       this.props.viewOffers(index)

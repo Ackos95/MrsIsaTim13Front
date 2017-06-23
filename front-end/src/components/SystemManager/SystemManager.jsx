@@ -6,6 +6,7 @@ import Profile from '../common/Profile/ProfileContainer';
 import Loading from '../common/Loading/Loading';
 
 import NewRestaurantForm from './Forms/NewRestaurantForm';
+import SystemManagerForm from './Forms/SystemManagerForm';
 
 // BS reference: https://react-bootstrap.github.io/components.html
 import { Col, Panel, Accordion, Badge, Label } from 'react-bootstrap';
@@ -93,7 +94,7 @@ class SystemManager extends Component {
             </Panel>
             <Panel header="System manager addition" eventKey="3">
               <Form onSubmit={(values) => (this.addSysManager(values))}>
-                {/*{sistem menadzer Forma}*/}
+                {SystemManagerForm}
               </Form>
             </Panel>
           </Accordion>

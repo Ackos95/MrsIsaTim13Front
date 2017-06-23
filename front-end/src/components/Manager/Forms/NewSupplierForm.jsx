@@ -7,7 +7,7 @@ import { Row, Col } from 'react-bootstrap';
 const NewSupplierForm = ({ submitForm, resetForm }) => (
   <form onSubmit={submitForm}>
     <Col sm={12}>
-      <Row className='form-group'>
+      <Row>
         <Col sm={6}>
           <div className='form-group'>
             <label htmlFor='firstName'>First name</label>
@@ -41,7 +41,7 @@ const NewSupplierForm = ({ submitForm, resetForm }) => (
       />
     </div>
     <Col sm={12}>
-      <Row className='form-group'>
+      <Row >
         <Col sm={6}>
           <div className='form-group'>
             <label htmlFor='userName'>Username</label>

@@ -16,11 +16,11 @@ export const restaurantRatingError = () => ({
   type: types.RESTAURANT_RATING_ERROR
 });
 
-export const restaurantRating = (restaurantId, dateFrom, dateTo, token) => dispatch => {
+export const restaurantRating = (restaurantId, token) => dispatch => {
   dispatch(restaurantRatingStarted());
-  console.log('restaurant Grade: (id,from,to,token) ', restaurantId, dateFrom, dateTo, token);
+  console.log('restaurant Rating: (id, token) ', restaurantId, token);
 
-  $get(`${SERVER_URL}/reports/${restaurantId}/earnings?dateFrom=${dateFrom}&dateTo=${dateTo}`,
+  $get(`${SERVER_URL}/reports/${restaurantId}/rating`,
     undefined, addAuthHeader(token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(__Error());
@@ -38,28 +38,64 @@ export const restaurantRating = (restaurantId, dateFrom, dateTo, token) => dispa
 };
 
 
+/*** MEAL - not implemented ***/
+/*** WAITER - not implemented ***/
 
-/*** MEAL ***/
-export const mealReportStarted = () => ({
-  type: types.MEAL_REPORT_STARTED
+
+/*** VISITS ***/
+export const visitsGraphStarted = () => ({
+  type: types.VISITS_GRAPH_STARTED
 });
-export const mealReportSuccess = (reportData) => ({
-  type: types.MEAL_REPORT_SUCCESS,
-  payload: { reportData }
+export const visitsGraphSuccess = (visitsResult) => ({
+  type: types.VISITS_GRAPH_SUCCESS,
+  payload: { visitsResult }
 });
-export const mealReportError = () => ({
-  type: types.MEAL_REPORT_ERROR
+export const visitsGraphError = () => ({
+  type: types.VISITS_GRAPH_ERROR
 });
 
-export const mealReport = (mealId, token) => dispatch => {
-  dispatch(mealReportStarted());
-  console.log(mealId, token);
+export const visitsGraph = (restaurantId, dateFrom, dateTo, token) => dispatch => {
+  dispatch(visitsGraphStarted());
+  console.log();
   
 };
 
-/*** WAITER ***/
+export const restaurantEarningsStarted = () => ({
+  type: types.RESTAURANT_EARNINGS_STARTED
+});
+export const restaurantEarningsSuccess = (earnings) => ({
+  type: types.RESTAURANT_EARNINGS_SUCCESS,
+  payload: { earnings }
+});
+export const restaurantEarningsError = () => ({
+  type: types.RESTAURANT_EARNINGS_ERROR
+});
 
-/*** VISITS ***/
+export const restaurantEarnings = (restaurantId, dateFrom, dateTo, token) => dispatch => {
+  dispatch(restaurantEarningsStarted());
+  console.log();
+  
+};
+
+export const waitersEarningsStarted = () => ({
+  type: types.WAITERS_EARNINGS_STARTED
+});
+export const waitersEarningsSuccess = (waitersEarningsList) => ({
+  type: types.WAITERS_EARNINGS_SUCCESS,
+  payload: waitersEarningsList
+});
+export const waitersEarningsError = () => ({
+  type: types.WAITERS_EARNINGS_ERROR
+});
+
+export const waitersEarnings = (restaurantId, token) => dispatch => {
+  dispatch(waitersEarningsStarted());
+  console.log('restaurantId', 'token');
+  console.log(restaurantId, token);
+
+  
+};
+
 
 /*** EARNINGS (RESTAURANT) ***/
 

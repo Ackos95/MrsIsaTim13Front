@@ -7,9 +7,6 @@ class DocumentInput extends React.Component {
   render() {
     const item = this.props.item;
 
-    console.log('item');
-    console.log(item);
-
     return (
       <FormGroup>
         {/*<Form field={ `field-${ this.props.index }` }>*/}
@@ -27,7 +24,7 @@ class DocumentInput extends React.Component {
           <Text min='0' step='any' className='form-control'
                 field={ `item${ this.props.index }[amount]` }
                 name={ `item${ this.props.index }[amount]` }
-                placeholder={`${item.amount}`}
+                placeholder='Amount'
           />
         </Col>
         <Col xs={3}>

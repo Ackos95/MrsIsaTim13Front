@@ -121,12 +121,12 @@ export const addSupplyRequestSuccess = ( createdRequest ) => ({
 export const addSupplyRequest = ({ values }) => dispatch => {
   dispatch(addSupplyRequestStart());
 
-  console.log('values');
+  console.log('values u akcijama');
   console.log(values);
 
   // prepare values for sending
   // iterate: https://weblog.west-wind.com/posts/2017/Mar/04/Getting-JavaScript-Properties-for-Object-Maps-by-Index-or-Name
-  let items= []; // supplyItems
+  let items = []; // supplyItems
   Object.keys(values).forEach(function (prop) {
     console.log(values[prop]);
     if (prop[0] === 'i') {
@@ -144,7 +144,8 @@ export const addSupplyRequest = ({ values }) => dispatch => {
       supplyItems: items,
       ended: false,
       restaurant: null,
-      token: values['token']
+      publishingDate: new Date(values.publishingDate),
+      endingDate: new Date(values.endingDate)
     }, addAuthHeader(values.token))
     .then((res) => {
       // here will go if (res.status > 400) dispatch(__Error());
@@ -155,7 +156,8 @@ export const addSupplyRequest = ({ values }) => dispatch => {
         dateFrom: data.publishingDate,
         dateTo: data.endingDate,
         ended: data.ended,
-        restaurant: data.restaurant
+        restaurant: data.restaurant,
+        supplyItems: data.supplyItems,
       }))
     })
     .catch((err) => {
