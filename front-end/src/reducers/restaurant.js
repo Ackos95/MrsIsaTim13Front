@@ -56,7 +56,12 @@ const restaurantReducer = ( state = initialState, action ) => {
         .set('tables', state.tables.filter(t => t.id !== action.payload.deletedId))
         .set('inProgress', false)
         .set('confirmationInProgress', true);
-
+	
+		case types.END_RESTAURANT_RESERVATION:
+			return state.set('selectedTableId',  null)
+									.set('selectedTablesId', [])
+									.set('tables', []);
+		
     case types.SELECT_TABLE:
     {
     	let newSelectedTablesId;
