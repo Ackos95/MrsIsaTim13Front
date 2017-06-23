@@ -132,7 +132,6 @@ class GuestProfile extends Component {
 												restaurants !== undefined && restaurants.length > 0 ?
 													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Date</th></tr>
 													{ restaurants.map(function (restaurant, index) {
-														let date = new Date(restaurant.visitDate);
 														return <tr key={ index }>
 														<td style={tdStyle}>{`${restaurant.restaurant.name}`}</td>
 														<td style={tdStyle}>{`${restaurant.restaurant.city}`}</td>

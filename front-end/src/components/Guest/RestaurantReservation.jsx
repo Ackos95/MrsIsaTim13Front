@@ -57,6 +57,8 @@ class RestaurantReservation extends Component {
 		// tableIdList, reservationDate, reservationHours, token
 		this.props.tryToReserveTable( selectedTables, this.state.nonParsedDateTime,
 			this.state.lunchHours, this.props.user.token );
+		
+		this.setState({reservationStep : this.state.reservationStep + 1});
 	}
 	
 	endReservation() {
@@ -174,7 +176,7 @@ class RestaurantReservation extends Component {
 										<td><input id='input-date-time' type='datetime-local' min='2017-06-30T09:00:00' /></td>
 									</tr>
 									<tr><td>Lasting</td>
-										<td><input id='input-hour' type='number' min='1' max='10' step='0.5' defaultValue={1}/> hour(s)</td>
+										<td><input id='input-hour' type='number' min='1' max='10' step='1' defaultValue={1}/> hour(s)</td>
 									</tr>
 									<tr><td/><td><Button style={{width: 100 + '%', marginTop: 10 + 'px'}}
 																			 onClick={this.choseDateAndTime}>Continue</Button></td></tr>

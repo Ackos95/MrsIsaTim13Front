@@ -21,7 +21,13 @@ export const tryToReserveTable = ( selectedTables, reservationDate, reservationH
 				console.log("\ngreška u tryToReserveTable > > status > 400");
 			
 			const { data } = res;
-			return dispatch(tryToReserveTableError());
+			
+			console.log("\n sendMealOrder data pa res");
+			console.log(data); 									console.log(res);
+			console.log("sendMealOrder data pa res \n");
+			if (res.status === 418 )
+				return dispatch(tryToReserveTableError());
+			
 		})
 		.catch((err) => {
 			console.log("\n\n tryToReserveTableError > ERROR > catch promise");
