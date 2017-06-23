@@ -14,7 +14,8 @@ const Auth = new Record({
     firstName: null,
     lastName: null,
     roles: [],  // { id: <long>, name: <string> },
-    restaurant: null
+    restaurant: null,
+    changedPassword: false,
   },
   inProgress: false,
   passwordChanged: false,
@@ -69,7 +70,8 @@ const authReducer = (state = initialState, action) => {
         firstName: null,
         lastName: null,
         roles: [],  // { id: <long>, name: <string> },
-        restaurant: null
+        restaurant: null,
+        changedPassword: true,
       });
       
 		case types.REGISTRATION_SUCCESS: {

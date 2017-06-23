@@ -78,6 +78,7 @@ export const login = ({ userName, password }) => dispatch => {
     if (res.status > 400) return dispatch(loginError());
 
     const { data } = res;
+    console.log(data);
     return dispatch(loginSuccess({
       id: data.id,
       email: data.email,
@@ -86,7 +87,8 @@ export const login = ({ userName, password }) => dispatch => {
       firstName: data.firstName,
       lastName: data.lastName,
       roles: data.roles,
-      restaurant: data.restaurant
+      restaurant: data.restaurant,
+      changedPassword: data.changedPassword,
     }));
   })
   .catch((err) => { 
