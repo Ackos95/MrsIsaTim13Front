@@ -13,6 +13,13 @@ import { Col, Button } from 'react-bootstrap';
 import { buttonRowStyle, buttonStyle, emptyThStyle , tdStyle } from './css/css';
 import './css/guest.css';
 
+import Reactable from 'reactable';
+
+var Table = Reactable.Table,
+	Tr = Reactable.Tr,
+	Td = Reactable.Td;
+
+
 class GuestProfile extends Component {
 	
 	constructor(props) {
@@ -127,20 +134,24 @@ class GuestProfile extends Component {
 																	style={buttonStyle}> Visited restaurants </button>
 											}
 										</div>
+										{/*<Table/>*/}
+										{/*<Table className="table" data={restaurants} />*/}
 										<table id="visited-restaurants-table">
 											{
 												restaurants !== undefined && restaurants.length > 0 ?
-													<tbody><tr><th>Name</th><th>City</th><th>Description</th><th>Date</th></tr>
-													{ restaurants.map(function (restaurant, index) {
-														return <tr key={ index }>
-														<td style={tdStyle}>{`${restaurant.restaurant.name}`}</td>
-														<td style={tdStyle}>{`${restaurant.restaurant.city}`}</td>
-														<td style={tdStyle}>{`${restaurant.restaurant.description}`}</td>
-														<td style={tdStyle}> {moment(restaurant.visitDate).format('DD.MM.YYYY. HH:mm')} </td>
-														</tr>
-													}) }
-													</tbody>
-													: <tbody><tr><th style={emptyThStyle} > All visited restaurants </th></tr></tbody>
+													<Table className="table" id="table" sortable={true}>
+														{ restaurants.map(function (restaurant, index) {
+															return <Tr key={ index } >
+																<Td column="Name">{`${restaurant.restaurant.name}`}</Td>
+																<Td column="City">{`${restaurant.restaurant.city}`}</Td>
+																<Td column="Description">{`${restaurant.restaurant.description}`}</Td>
+																<Td column="Date">{moment(restaurant.visitDate).format('DD.MM.YYYY. HH:mm')}</Td>
+															</Tr>
+															
+														}) }
+													</Table>
+													:
+													<h3> All visited restaurants </h3>
 											}
 										</table>
 										<br/>
